@@ -45,4 +45,5 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-.docker/data/db
+.docker/data/db/*
+!.docker/data/db/.gitkeep
