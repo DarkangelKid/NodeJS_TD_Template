@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const httpStatus = require('http-status');
-const { omitBy, isNil } = require('lodash');
 const bcrypt = require('bcryptjs');
 const moment = require('moment-timezone');
 const jwt = require('jwt-simple');
@@ -21,28 +20,50 @@ const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      match: /^\S+@\S+\.\S+$/,
       required: true,
       unique: true,
       trim: true,
       lowercase: true,
     },
+
     password: {
       type: String,
       required: true,
-      minlength: 6,
-      maxlength: 128,
     },
     firstname: {
       type: String,
-      maxlength: 20,
-      minlength: 2,
+
       trim: true,
     },
     lastname: {
       type: String,
-      maxlength: 20,
+
+      trim: true,
+    },
+    fullname: {
+      type: String,
+      maxlength: 100,
       minlength: 2,
+      trim: true,
+    },
+    madonvi: {
+      type: String,
+
+      trim: true,
+    },
+    tendonvi: {
+      type: String,
+
+      trim: true,
+    },
+    maphongban: {
+      type: String,
+
+      trim: true,
+    },
+    tenphongban: {
+      type: String,
+
       trim: true,
     },
     services: {
@@ -112,7 +133,19 @@ userSchema.pre('update', async function (next) {
 userSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'firstname', 'lastname', 'picture', 'createdAt', 'email'];
+    const fields = [
+      'id',
+      'firstname',
+      'lastname',
+      'fullname',
+      'madonvi',
+      'tendonvi',
+      'maphongban',
+      'tenphongban',
+      'picture',
+      'createdAt',
+      'email',
+    ];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -122,7 +155,7 @@ userSchema.method({
   },
   publicInfoTransform() {
     const transformed = {};
-    const fields = ['id', 'firstname', 'lastname', 'picture'];
+    const fields = ['id', 'firstname', 'lastname', 'picture', 'fullname', 'madonvi', 'tendonvi', 'maphongban', 'tenphongban'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -173,6 +206,7 @@ userSchema.statics = {
         status: httpStatus.NOT_FOUND,
       });
     } catch (error) {
+      console.log(error);
       throw error;
     }
   },
@@ -221,25 +255,25 @@ userSchema.statics = {
    * @returns {Promise<User[]>}
    */
   async list({ page = 1, perPage = 30, term }) {
-    console.log('vaoday');
-    console.log(term);
     const reg = new RegExp(term, 'i');
     return this.aggregate([
       {
         $project: {
-          fullname: { $concat: ['$firstname', ' ', '$lastname'] },
-          fullname1: { $concat: ['$lastname', ' ', '$firstname'] },
+          fullname: 1,
+          madonvi: 1,
+          tendonvi: 1,
+          maphongban: 1,
+          tenphongban: 1,
           firstname: 1,
           lastname: 1,
           picture: 1,
           id: '$_id',
         },
       },
-      { $match: { $or: [{ fullname: reg }, { fullname1: reg }] } },
+      { $match: { $or: [{ fullname: reg }] } },
       {
         $project: {
           fullname: 0,
-          fullname1: 0,
           _id: 0,
         },
       },
@@ -272,7 +306,9 @@ userSchema.statics = {
     return error;
   },
 
-  async oAuthLogin({ service, id, email, name, picture }) {
+  async oAuthLogin({
+    service, id, email, name, picture,
+  }) {
     const user = await this.findOne({
       $or: [{ [`services.${service}`]: id }, { email }],
     });

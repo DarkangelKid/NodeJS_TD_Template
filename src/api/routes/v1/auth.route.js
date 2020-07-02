@@ -10,7 +10,7 @@ const router = express.Router();
 router
   .route('/register')
   // Đăng kí
-  .post(validate(register), controller.register);
+  .post(/* validate(register),  */controller.register);
 
 router
   .route('/login')
