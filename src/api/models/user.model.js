@@ -33,10 +33,16 @@ const userSchema = new mongoose.Schema(
       minlength: 6,
       maxlength: 128,
     },
-    name: {
+    firstname: {
       type: String,
-      maxlength: 128,
-      index: true,
+      maxlength: 20,
+      minlength: 2,
+      trim: true,
+    },
+    lastname: {
+      type: String,
+      maxlength: 20,
+      minlength: 2,
       trim: true,
     },
     services: {
@@ -80,12 +86,43 @@ userSchema.pre('save', async function save(next) {
 });
 
 /**
+ * Add your
+ * - pre-save hooks
+ * - validations
+ * - virtuals
+ */
+userSchema.pre('update', async function (next) {
+  try {
+    if (!this.isModified('password')) return next();
+
+    const rounds = env === 'test' ? 1 : 10;
+
+    const hash = await bcrypt.hash(this.password, rounds);
+    this.password = hash;
+
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+/**
  * Methods
  */
 userSchema.method({
   transform() {
     const transformed = {};
-    const fields = ['id', 'name', 'email', 'picture', 'role', 'createdAt'];
+    const fields = ['id', 'firstname', 'lastname', 'picture', 'createdAt', 'email'];
+
+    fields.forEach((field) => {
+      transformed[field] = this[field];
+    });
+
+    return transformed;
+  },
+  publicInfoTransform() {
+    const transformed = {};
+    const fields = ['id', 'firstname', 'lastname', 'picture'];
 
     fields.forEach((field) => {
       transformed[field] = this[field];
@@ -136,7 +173,6 @@ userSchema.statics = {
         status: httpStatus.NOT_FOUND,
       });
     } catch (error) {
-      console.log(error);
       throw error;
     }
   },
@@ -149,11 +185,15 @@ userSchema.statics = {
    */
   async findAndGenerateToken(options) {
     const { email, password, refreshObject } = options;
-    if (!email) throw new APIError({ message: 'An email is required to generate a token' });
+    if (!email) {
+      throw new APIError({
+        message: 'An email is required to generate a token',
+      });
+    }
 
     const user = await this.findOne({ email }).exec();
     const err = {
-      status: httpStatus.UNAUTHORIZED,
+      status: httpStatus.BAD_REQUEST,
       isPublic: true,
     };
     if (password) {
@@ -180,14 +220,30 @@ userSchema.statics = {
    * @param {number} limit - Limit number of users to be returned.
    * @returns {Promise<User[]>}
    */
-  list({ page = 1, perPage = 30, name, email, role }) {
-    const options = omitBy({ name, email, role }, isNil);
-
-    return this.find(options)
-      .sort({ createdAt: -1 })
-      .skip(perPage * (page - 1))
-      .limit(perPage)
-      .exec();
+  async list({ page = 1, perPage = 30, term }) {
+    console.log('vaoday');
+    console.log(term);
+    const reg = new RegExp(term, 'i');
+    return this.aggregate([
+      {
+        $project: {
+          fullname: { $concat: ['$firstname', ' ', '$lastname'] },
+          fullname1: { $concat: ['$lastname', ' ', '$firstname'] },
+          firstname: 1,
+          lastname: 1,
+          picture: 1,
+          id: '$_id',
+        },
+      },
+      { $match: { $or: [{ fullname: reg }, { fullname1: reg }] } },
+      {
+        $project: {
+          fullname: 0,
+          fullname1: 0,
+          _id: 0,
+        },
+      },
+    ]);
   },
 
   /**
@@ -217,7 +273,9 @@ userSchema.statics = {
   },
 
   async oAuthLogin({ service, id, email, name, picture }) {
-    const user = await this.findOne({ $or: [{ [`services.${service}`]: id }, { email }] });
+    const user = await this.findOne({
+      $or: [{ [`services.${service}`]: id }, { email }],
+    });
     if (user) {
       user.services[service] = id;
       if (!user.name) user.name = name;

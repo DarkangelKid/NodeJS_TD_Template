@@ -47,3 +47,12 @@ jspm_packages
 
 .docker/data/db/*
 !.docker/data/db/.gitkeep
+
+public/file/*
+!public/file/.gitkeep
+
+public/images/message/*
+!public/images/message/.gitkeep
+
+public/images/users/*
+!public/images/users/.gitkeep

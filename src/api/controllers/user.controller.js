@@ -1,7 +1,13 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const User = require('../models/user.model');
-
+const Contact = require('../models/contact.model');
+const _ = require('lodash');
+const multer = require('multer');
+const fsExtra = require('fs-extra');
+const APIError = require('../utils/APIError');
+const storageAvatar = require('../utils/storageAvatar');
+const { avatarDirectory, avatarTypes, avatarLimitSize } = require('../../config/vars');
 /**
  * Load user and append to req.
  * @public
@@ -22,6 +28,11 @@ exports.load = async (req, res, next, id) => {
  */
 exports.get = (req, res) => res.json(req.locals.user.transform());
 
+exports.getCurrentUser = async (req, res) => {
+  const user = await User.findById(req.user.id);
+  return res.json(user.transform());
+};
+
 /**
  * Get logged in user info
  * @public
@@ -29,52 +40,45 @@ exports.get = (req, res) => res.json(req.locals.user.transform());
 exports.loggedIn = (req, res) => res.json(req.user.transform());
 
 /**
- * Create new user
+ * Update existing user
  * @public
  */
-exports.create = async (req, res, next) => {
-  try {
-    const user = new User(req.body);
-    const savedUser = await user.save();
-    res.status(httpStatus.CREATED);
-    res.json(savedUser.transform());
-  } catch (error) {
-    next(User.checkDuplicateEmail(error));
-  }
-};
+exports.update = async (req, res, next) => {
+  let user = await User.get(req.user.id);
+  // const ommitRole = user.role !== "admin" ? "role" : "";
+  // const ommitPassword = req.body.password !== "admin" ? "role" : "";
 
-/**
- * Replace existing user
- * @public
- */
-exports.replace = async (req, res, next) => {
-  try {
-    const { user } = req.locals;
-    const newUser = new User(req.body);
-    const ommitRole = user.role !== 'admin' ? 'role' : '';
-    const newUserObject = omit(newUser.toObject(), '_id', ommitRole);
-
-    await user.updateOne(newUserObject, { override: true, upsert: true });
-    const savedUser = await User.findById(user._id);
-
-    res.json(savedUser.transform());
-  } catch (error) {
-    next(User.checkDuplicateEmail(error));
-  }
+  const updatedUser = omit(req.body, ['role', 'password']);
+  user = Object.assign(user, updatedUser);
+  user
+    .save()
+    .then((savedUser) => res.json(savedUser.transform()))
+    .catch((e) => next(User.checkDuplicateUsername(e)));
 };
 
 /**
  * Update existing user
  * @public
  */
-exports.update = (req, res, next) => {
-  const ommitRole = req.locals.user.role !== 'admin' ? 'role' : '';
-  const updatedUser = omit(req.body, ommitRole);
-  const user = Object.assign(req.locals.user, updatedUser);
-
-  user.save()
-    .then(savedUser => res.json(savedUser.transform()))
-    .catch(e => next(User.checkDuplicateEmail(e)));
+exports.updatePassword = async (req, res, next) => {
+  try {
+    let user = await User.get(req.user.id);
+    const { oldPassword, newPassword } = req.body;
+    const passwordMatch = await user.passwordMatches(oldPassword);
+    if (passwordMatch) {
+      user = Object.assign(user, { password: newPassword });
+      return user
+        .save()
+        .then(() => res.json({ message: 'update succesfully' }))
+        .catch((e) => next(e));
+    }
+    throw new APIError({
+      message: "Passwords don't match",
+      status: httpStatus.NOT_FOUND,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -83,9 +87,62 @@ exports.update = (req, res, next) => {
  */
 exports.list = async (req, res, next) => {
   try {
-    const users = await User.list(req.query);
-    const transformedUsers = users.map(user => user.transform());
-    res.json(transformedUsers);
+    console.log('list')
+    // search user to add contact
+    let currentUserId = req.user.id;
+    let users = await User.list({ ...req.query });
+    // get userids list
+    let usersId = [];
+    users.forEach((item) => {
+      usersId.push(item.id);
+    });
+    let contacts = await Contact.find({
+      $or: [
+        {
+          $and: [{ userId: { $in: usersId } }, { contactId: currentUserId }],
+        },
+        {
+          $and: [{ userId: currentUserId }, { contactId: { $in: usersId } }],
+        },
+      ],
+    });
+    let responseUsers = [];
+    // users = users.map((user) => user.publicInfoTransform());
+
+    users.forEach((userItem) => {
+      let tempItem = { ...userItem, type: 'notContact' };
+      if (userItem.id == currentUserId) {
+        tempItem.type = 'you';
+      } else {
+        contacts.forEach((contactItem) => {
+          if (userItem.id.toString() == contactItem.userId.toString()) {
+            // request sent
+            if (!!contactItem.status) {
+              // accepted
+              tempItem.type = 'contact';
+              return;
+            } else {
+              tempItem.type = 'request';
+              return;
+            }
+          } else if (userItem.id.toString() == contactItem.contactId.toString()) {
+            // request
+            if (!!contactItem.status) {
+              // accepted
+              tempItem.type = 'contact';
+              return;
+            } else {
+              tempItem.type = 'requestSent';
+              return;
+            }
+          }
+        });
+      }
+      responseUsers.push(tempItem);
+    });
+
+    // const transformedUsers = users.map(user => user.transform());
+    res.json(responseUsers);
   } catch (error) {
     next(error);
   }
@@ -98,7 +155,49 @@ exports.list = async (req, res, next) => {
 exports.remove = (req, res, next) => {
   const { user } = req.locals;
 
-  user.remove()
+  user
+    .remove()
     .then(() => res.status(httpStatus.NO_CONTENT).end())
-    .catch(e => next(e));
+    .catch((e) => next(e));
+};
+
+// let avatarUploadFile = multer({
+//   storage: storageAvatar,
+//   limits: { fileSize: avatarLimitSize },
+// }).single("avatar");
+
+let avatarUploadFile = multer(storageAvatar).single('avatar');
+
+exports.updateAvatar = (req, res, next) => {
+  avatarUploadFile(req, res, async (err) => {
+    try {
+      if (!req.file) {
+        throw new APIError({
+          message: 'Please select a file.',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+
+      let updateUserItem = {
+        picture: req.file.filename,
+        updatedAt: Date.now(),
+      };
+
+      // update user
+      let userUpdate = await User.findOneAndUpdate({ _id: req.user.id }, updateUserItem);
+
+      // Delete old user picture
+      if (userUpdate.picture) {
+        await fsExtra.remove(`${avatarDirectory}/${userUpdate.picture}`); // return old item after updated
+      }
+
+      let result = {
+        message: 'success',
+        picture: `${updateUserItem.picture}`,
+      };
+      return res.send(result);
+    } catch (error) {
+      next(error);
+    }
+  });
 };

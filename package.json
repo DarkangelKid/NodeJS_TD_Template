@@ -2,7 +2,7 @@
   "name": "td_nodejs_template",
   "version": "1.0.0",
   "description": "TD NodeJS templage - Nodejs Express, Mongodb, Docker RESTful APIs",
-  "url" : "http://127.0.0.1",
+  "url": "http://127.0.0.1",
   "title": "TD Nodejs Template RESTful APIs",
   "main": "index.js",
   "scripts": {
@@ -44,6 +44,7 @@
     "email-templates": "^7.0.5",
     "express": "^4.17.1",
     "express-validation": "^3.0.5",
+    "fs-extra": "^9.0.1",
     "helmet": "^3.23.3",
     "http-status": "^1.4.2",
     "jwt-simple": "^0.5.6",
@@ -52,11 +53,16 @@
     "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.20",
     "morgan": "^1.10.0",
+    "multer": "^1.4.2",
     "nodemailer": "^6.4.10",
+    "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
     "pm2": "^4.4.0",
+    "sharp": "^0.25.4",
+    "socket.io": "^2.3.0",
+    "socketio-jwt": "^4.6.2",
     "uuid": "^8.2.0",
     "winston": "^3.3.3"
   },
@@ -67,5 +73,5 @@
     "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4"
   },
-  "apidoc": { }
+  "apidoc": {}
 }

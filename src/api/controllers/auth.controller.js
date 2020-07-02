@@ -84,10 +84,7 @@ exports.refresh = async (req, res, next) => {
       userEmail: email,
       token: refreshToken,
     });
-    const { user, accessToken } = await User.findAndGenerateToken({
-      email,
-      refreshObject,
-    });
+    const { user, accessToken } = await User.findAndGenerateToken({ email, refreshObject });
     const response = generateTokenResponse(user, accessToken);
     return res.json(response);
   } catch (error) {
@@ -107,7 +104,7 @@ exports.sendPasswordReset = async (req, res, next) => {
       return res.json('success');
     }
     throw new APIError({
-      status: httpStatus.UNAUTHORIZED,
+      status: httpStatus.BAD_REQUEST,
       message: 'No account found with that email',
     });
   } catch (error) {
@@ -124,7 +121,7 @@ exports.resetPassword = async (req, res, next) => {
     });
 
     const err = {
-      status: httpStatus.UNAUTHORIZED,
+      status: httpStatus.BAD_REQUEST,
       isPublic: true,
     };
     if (!resetTokenObject) {
@@ -136,9 +133,7 @@ exports.resetPassword = async (req, res, next) => {
       throw new APIError(err);
     }
 
-    const user = await User.findOne({
-      email: resetTokenObject.userEmail,
-    }).exec();
+    const user = await User.findOne({ email: resetTokenObject.userEmail }).exec();
     user.password = password;
     await user.save();
     emailProvider.sendPasswordChangeEmail(user);

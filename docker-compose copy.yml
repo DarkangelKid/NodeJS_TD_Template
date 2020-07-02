@@ -2,10 +2,10 @@ version: "2"
 services:
   app:
     image: td_nodejs_template:v1
-    container_name: td_nodejs_template:v1
+    container_name: td_nodejs_template
     build: .
     environment:
-      - MONGO_URI=mongodb://mongodb:27017/td_nodejs_template
+      - MONGO_URI=mongodb://127.0.0.1:27017/td_nodejs_template
     volumes:
       - .:/app
     ports:

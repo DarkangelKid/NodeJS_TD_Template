@@ -1,0 +1,15 @@
+version: "2"
+services:
+  mongodb:
+    image: mongo:4.2.8-bionic
+    volumes:
+      - .docker/data/db:/data/db
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

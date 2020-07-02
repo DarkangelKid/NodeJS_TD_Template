@@ -162,3 +162,11 @@ yarn deploy
 ## License
 
 [MIT License](README.md) - [Daniel Sousa](https://github.com/danielfsousa)
+
+
+docker-compose down
+docker-compose up
+
+
+Nếu dùng docker thì mongoURI phải đổi thành
+MONGO_URI=mongodb://mongodb:27017/tdnodejs
