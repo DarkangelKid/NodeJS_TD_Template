@@ -305,28 +305,6 @@ userSchema.statics = {
     }
     return error;
   },
-
-  async oAuthLogin({
-    service, id, email, name, picture,
-  }) {
-    const user = await this.findOne({
-      $or: [{ [`services.${service}`]: id }, { email }],
-    });
-    if (user) {
-      user.services[service] = id;
-      if (!user.name) user.name = name;
-      if (!user.picture) user.picture = picture;
-      return user.save();
-    }
-    const password = uuidv4();
-    return this.create({
-      services: { [service]: id },
-      email,
-      password,
-      name,
-      picture,
-    });
-  },
 };
 
 /**
