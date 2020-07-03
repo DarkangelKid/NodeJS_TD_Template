@@ -1,6 +1,4 @@
-const {
-  emitNotifyToArray,
-} = require('../helper');
+const { emitNotifyToArray } = require('../helper');
 
 const sentMessage = (io, data, clients, user) => {
   if (data.conversationType === 'ChatGroup') {
@@ -11,13 +9,7 @@ const sentMessage = (io, data, clients, user) => {
     });
   } else if (data.conversationType === 'User') {
     if (clients[data.receiver._id]) {
-      emitNotifyToArray(
-        clients,
-        data.receiver._id,
-        io,
-        'res-sent-message',
-        data,
-      );
+      emitNotifyToArray(clients, data.receiver._id, io, 'res-sent-message', data);
     }
     if (clients[data.sender._id]) {
       emitNotifyToArray(clients, data.sender._id, io, 'res-sent-message', data);

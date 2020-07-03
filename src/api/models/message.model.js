@@ -87,8 +87,8 @@ messageSchema.statics = {
       .sort('-createdAt')
       .limit(parseInt(limit, 10))
       .skip(parseInt(skip, 10))
-      .populate('sender', 'id picture lastname firstname')
-      .populate('receiver', 'id picture lastname firstname')
+      .populate('sender', 'id picture lastname firstname fullname')
+      .populate('receiver', 'id picture lastname firstname fullname')
       .exec();
   },
 
@@ -100,7 +100,7 @@ messageSchema.statics = {
       .sort('-createdAt')
       .limit(parseInt(limit, 10))
       .skip(parseInt(skip, 10))
-      .populate('sender', 'id picture lastname firstname')
+      .populate('sender', 'id picture lastname firstname fullname')
       .exec();
   },
 
@@ -159,11 +159,13 @@ messageSchema.statics = {
           'sender._id': 1,
           'sender.firstname': 1,
           'sender.lastname': 1,
+          'sender.fullname': 1,
           'sender.picture': 1,
           'receiver._id': 1,
           'receiver.firstname': 1,
           'receiver.lastname': 1,
           'receiver.picture': 1,
+          'receiver.fullname': 1,
           updatedAt: 1,
         },
       },

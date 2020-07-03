@@ -33,7 +33,6 @@ chatGroupSchema.method({
 
     return transformed;
   },
-
 });
 
 /**
@@ -74,15 +73,14 @@ chatGroupSchema.statics = {
    * @param {number} limit - Limit number of chatGroups to be returned.
    * @returns {Promise<ChatGroup[]>}
    */
-  async list({
-    skip = 0, userId, limit = 12,
-  }) {
+  async list({ skip = 0, userId, limit = 12 }) {
     return this.find({
       members: {
         $in: userId,
       },
     })
-      .skip(+skip).limit(+limit)
+      .skip(+skip)
+      .limit(+limit)
       .sort({ updatedAt: -1 })
       .exec();
   },
