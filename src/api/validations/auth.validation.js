@@ -14,7 +14,7 @@ module.exports = {
   // POST /v1/auth/login
   login: {
     body: Joi.object({
-      email: Joi.string().email().required(),
+      email: Joi.string().required(),
       password: Joi.string().required().max(128),
     }),
   },
@@ -30,7 +30,7 @@ module.exports = {
   // POST /v1/auth/refresh
   refresh: {
     body: Joi.object({
-      email: Joi.string().email().required(),
+      email: Joi.string().required(),
       refreshToken: Joi.string().required(),
     }),
   },
@@ -38,14 +38,14 @@ module.exports = {
   // POST /v1/auth/refresh
   sendPasswordReset: {
     body: Joi.object({
-      email: Joi.string().email().required(),
+      email: Joi.string().required(),
     }),
   },
 
   // POST /v1/auth/password-reset
   passwordReset: {
     body: Joi.object({
-      email: Joi.string().email().required(),
+      email: Joi.string().required(),
       password: Joi.string().required().min(6).max(128),
       resetToken: Joi.string().required(),
     }),

@@ -24,7 +24,7 @@ router
   // tìm kiếm người dùng
   .get(authorize(LOGGED_USER), controller.list)
   // Cập nhật người dùng
-  .patch(authorize(LOGGED_USER), validate(updateUser), controller.update);
+  .patch(authorize(LOGGED_USER), /* validate(updateUser), */ controller.update);
 
 router
   .route('/profile')

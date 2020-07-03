@@ -63,6 +63,9 @@ exports.update = async (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   try {
     let user = await User.get(req.user.id);
+
+    console.log(user)
+
     const { oldPassword, newPassword } = req.body;
     const passwordMatch = await user.passwordMatches(oldPassword);
     if (passwordMatch) {
@@ -87,7 +90,6 @@ exports.updatePassword = async (req, res, next) => {
  */
 exports.list = async (req, res, next) => {
   try {
-    console.log('list')
     // search user to add contact
     let currentUserId = req.user.id;
     let users = await User.list({ ...req.query });

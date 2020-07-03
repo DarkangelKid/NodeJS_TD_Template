@@ -273,7 +273,7 @@ userSchema.statics = {
       { $match: { $or: [{ fullname: reg }] } },
       {
         $project: {
-          fullname: 0,
+          
           _id: 0,
         },
       },

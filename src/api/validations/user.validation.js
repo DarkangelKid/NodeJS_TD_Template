@@ -14,7 +14,7 @@ module.exports = {
   // PATCH /v1/users/:userId
   updateUser: {
     body: Joi.object({
-      email: Joi.string().email(),
+      email: Joi.string(),
       firstname: Joi.string().max(128),
       lastname: Joi.string().max(128),
     }),
@@ -23,8 +23,8 @@ module.exports = {
   // PATCH /v1/users/:userId
   updatePassword: {
     body: Joi.object({
-      oldPassword: Joi.string().min(6).max(128).required(),
-      newPassword: Joi.string().min(6).max(128).required(),
+      oldPassword: Joi.string().min(1).max(128).required(),
+      newPassword: Joi.string().min(1).max(128).required(),
     }),
   },
 };
