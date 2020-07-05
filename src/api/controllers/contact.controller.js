@@ -172,8 +172,8 @@ exports.list = async (req, res, next) => {
       };
     }
     const contacts = await Contact.find(options)
-      .populate('userId', 'id firstname lastname picture createdAt')
-      .populate('contactId', 'id firstname lastname picture createdAt');
+      .populate('userId', 'id firstname lastname picture createdAt fullname')
+      .populate('contactId', 'id firstname lastname picture createdAt fullname');
 
     // get list users
     const responseList = [];

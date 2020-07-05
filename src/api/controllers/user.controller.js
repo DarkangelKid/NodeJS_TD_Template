@@ -64,7 +64,7 @@ exports.updatePassword = async (req, res, next) => {
   try {
     let user = await User.get(req.user.id);
 
-    console.log(user)
+    console.log(user);
 
     const { oldPassword, newPassword } = req.body;
     const passwordMatch = await user.passwordMatches(oldPassword);

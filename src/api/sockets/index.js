@@ -27,6 +27,7 @@ const initSockets = (io) => {
     }),
   );
   let clients = {};
+  console.log('aaa');
   console.log(clients);
   io.on('connection', async (socket) => {
     try {
@@ -35,12 +36,18 @@ const initSockets = (io) => {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
       }
 
+      console.log(user);
+
       // handle disconnect
       socket.on('disconnect', () => {
         clients = removeSocketIdToArray(clients, user.id, socket);
       });
 
-      socket.on('sent-message', (data) => sentMessage(io, data, clients, user));
+      socket.on('sent-message', (data) => {
+        console.log('sent-messagesent-message');
+        console.log(data);
+        sentMessage(io, data, clients, user);
+      });
       socket.on('create-group', (data) => createGroup(io, data, clients, user));
       socket.on('add-new-contact', (data) => addNewContact(io, data, clients, user));
       socket.on('accept-request-contact', (data) => acceptRequestContact(io, data, clients, user));

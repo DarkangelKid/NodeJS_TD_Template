@@ -77,6 +77,7 @@ exports.get = async (req, res, next) => {
           id: member.id,
           firstname: member.firstname,
           lastname: member.lastname,
+          fullname: member.fullname,
           picture: member.picture,
         };
         if (member.id === receiverInfo.admin) {
@@ -108,6 +109,7 @@ exports.get = async (req, res, next) => {
         picture: receiverInfo.picture,
         firstname: receiverInfo.firstname,
         lastname: receiverInfo.lastname,
+        fullname: receiverInfo.fullname,
         id: receiverInfo.id,
       };
     }
@@ -232,7 +234,7 @@ exports.list = async (req, res, next) => {
         updatedAt: item.updatedAt,
       };
       let lastMessage = await Message.find({ receiver: item.id })
-        .populate('sender', 'firstname lastname')
+        .populate('sender', 'firstname lastname fullname')
         .sort({ updatedAt: -1 })
         .limit(1);
       if (lastMessage.length && lastMessage.length > 0) {
