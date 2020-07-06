@@ -29,4 +29,7 @@ module.exports = {
   // fileTypes: ["image/png", "image/jpg", "image/jpeg"],
 
   staticUrl: process.env.STATIC_URL,
+
+  firebase_service_accout_key_Path: process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH,
+  firebase_service_url: process.env.FIREBASE_SERVICE_URL,
 };
