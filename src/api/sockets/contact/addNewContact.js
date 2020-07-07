@@ -4,13 +4,16 @@ const {emitNotifyToArray} = require('../helper')
  */
 
 let addNewContact = (io, data, clients, user) => {
+  
   let notif = {
-    message: `${user.lastname} ${user.firstname} wants to add you to the contacts`,
+    message: `${user.fullname} muốn thêm bạn làm bạn bè`,
     picture: user.picture,
     firstname: user.firstname,
     lastname: user.lastname,
+    fullname: user.fullname,
     id: user.id
   };
+  console.log(notif)
   // emit notifications
   if (clients[data.contactId]) {
     emitNotifyToArray(

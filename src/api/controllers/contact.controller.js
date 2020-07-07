@@ -37,11 +37,14 @@ exports.loggedIn = (req, res) => res.json(req.contact.transform());
 exports.create = async (req, res, next) => {
   try {
     // check user exists
+
+    console.log('VAODAY')
+
     const contactUser = await User.get(req.query.user);
     const currentUser = req.user;
 
     console.log('currentUser');
-    console.log(currentUser.id);
+    console.log(req.query.user);
 
     // contact user and current is not should equal
     if (req.query.user === currentUser.id) {

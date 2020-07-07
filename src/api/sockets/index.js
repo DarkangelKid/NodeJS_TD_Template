@@ -36,7 +36,6 @@ const initSockets = (io) => {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
       }
 
-      console.log(user);
 
       // handle disconnect
       socket.on('disconnect', () => {
@@ -44,8 +43,6 @@ const initSockets = (io) => {
       });
 
       socket.on('sent-message', (data) => {
-        console.log('sent-messagesent-message');
-        console.log(data);
         sentMessage(io, data, clients, user);
       });
       socket.on('create-group', (data) => createGroup(io, data, clients, user));

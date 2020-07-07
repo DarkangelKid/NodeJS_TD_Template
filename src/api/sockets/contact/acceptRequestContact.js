@@ -5,11 +5,15 @@ const { emitNotifyToArray } = require("../helper");
 
 let acceptRequestContact = (io, data, clients, user) => {
   let notif = {
-    message: `${user.firstname} ${user.lastname} has added you to the contacts`,
+    message: `${user.fullname} đã đồng ý kết bạn`,
     picture: user.picture,
     firstname: user.firstname,
     lastname: user.lastname,
+    fullname: user.fullname,
   };
+
+  console.log('DONG Y KET BAN')
+
   // emit notifications
   if (clients[data.id]) {
     emitNotifyToArray(

@@ -43,9 +43,6 @@ exports.get = async (req, res, next) => {
     let responsceList = [];
     let responeData = {};
 
-    console.log('receiverInfo');
-
-    console.log(receiverInfo);
 
     if (!receiverInfo) {
       // Tìm id hiện tại có phải là group chat hay không
@@ -337,8 +334,15 @@ exports.addPhotos = (req, res, next) => {
 let filesUpload = multer(storageFile).single('files');
 
 exports.addFiles = (req, res, next) => {
+
+  console.log("UPLOAD FILE")
+
   filesUpload(req, res, async (err) => {
     try {
+
+      /* console.log('UPLOAD FILE');
+      console.log(req) */
+
       if (!req.file) {
         console.log(err);
         throw new APIError({
