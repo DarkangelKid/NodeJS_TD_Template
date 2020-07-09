@@ -72,7 +72,7 @@ exports.create = async (req, res, next) => {
     res.status(httpStatus.CREATED);
     res.json({
       ...chatGroup.transform(),
-      admin: { id: req.user.id, firstname: req.user.firstname, lastname: req.user.lastname, picture: req.user.picture },
+      admin: { id: req.user.id, firstname: req.user.firstname, lastname: req.user.lastname, fullname: req.user.fullname,  picture: req.user.picture },
     });
   } catch (error) {
     next(error);
@@ -167,8 +167,8 @@ exports.list = async (req, res, next) => {
       };
     }
     const chatGroups = await ChatGroup.find(options)
-      .populate('userId', 'id firstname lastname email picture createdAt')
-      .populate('chatGroupId', 'id firstname lastname email picture createdAt');
+      .populate('userId', 'id firstname lastname email picture createdAt fullname')
+      .populate('chatGroupId', 'id firstname lastname email picture createdAt fullname');
 
     // get list users
     let responseList = [];

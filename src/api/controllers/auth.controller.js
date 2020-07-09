@@ -48,6 +48,10 @@ exports.register = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
+
+    console.log(user)
+    console.log(accessToken)
+
     const token = generateTokenResponse(user, accessToken);
     const userTransformed = user.transform();
     return res.json({ token, user: userTransformed });

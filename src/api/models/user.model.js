@@ -231,6 +231,8 @@ userSchema.statics = {
       isPublic: true,
     };
     if (password) {
+    const { email, password, refreshObject } = options;
+      console.log(password)
       if (user && (await user.passwordMatches(password))) {
         return { user, accessToken: user.token() };
       }

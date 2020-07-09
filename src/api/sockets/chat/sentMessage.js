@@ -1,6 +1,10 @@
 const { emitNotifyToArray } = require('../helper');
 
 const sentMessage = (io, data, clients, user) => {
+
+  console.log('send')
+  console.log(data)
+
   if (data.conversationType === 'ChatGroup') {
     data.receiver.members.forEach((item) => {
       if (clients[item]) {
