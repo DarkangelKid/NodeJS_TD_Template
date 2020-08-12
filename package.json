@@ -54,6 +54,7 @@
     "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.20",
     "morgan": "^1.10.0",
+    "mssql": "^6.2.1",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.10",
     "nodemailer-smtp-transport": "^2.7.4",

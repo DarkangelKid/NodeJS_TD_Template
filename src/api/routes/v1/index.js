@@ -1,6 +1,8 @@
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
+const authRoutesSQL = require('./auth.sql.route');
+
 const contactRoutes = require('./contact.route');
 const messageRoutes = require('./message.route');
 const chatGroupRoutes = require('./chatGroup.route');
@@ -21,6 +23,7 @@ router.use('/docs', express.static('docs'));
 
 router.use('/user', userRoutes);
 router.use('/auth', authRoutes);
+router.use('/authsql', authRoutesSQL);
 router.use('/contact', contactRoutes);
 router.use('/message', messageRoutes);
 router.use('/chat-group', chatGroupRoutes);
