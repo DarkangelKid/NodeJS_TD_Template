@@ -170,3 +170,6 @@ docker-compose up
 
 Nếu dùng docker thì mongoURI phải đổi thành
 MONGO_URI=mongodb://mongodb:27017/tdnodejs
+
+
+https://sequelize.org/master/manual/model-basics.html

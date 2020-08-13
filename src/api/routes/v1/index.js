@@ -9,6 +9,8 @@ const chatGroupRoutes = require('./chatGroup.route');
 
 const notificationRoutes = require('./notification.route');
 
+const testRoutes = require('./test.route');
+
 const router = express.Router();
 
 /**
@@ -28,5 +30,7 @@ router.use('/contact', contactRoutes);
 router.use('/message', messageRoutes);
 router.use('/chat-group', chatGroupRoutes);
 router.use('/notifi', notificationRoutes);
+
+router.use('/test', testRoutes);
 
 module.exports = router;
