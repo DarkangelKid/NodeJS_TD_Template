@@ -1,29 +1,28 @@
 const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
-	const RefreshToken = sequelize.define(
-		'refreshToken',
+	const Group = sequelize.define(
+		'group',
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				primaryKey: true
 			},
-			token: {
+			name: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
-      userEmail: {
-        type: DataTypes.STRING
-      }
+			avatarUrl: {
+				type: DataTypes.STRING
+			},
+			description: {
+				type: DataTypes.STRING
+			}
 		},
 		{
 			freezeTableName: true,
 		},
 	);
 
-	return RefreshToken;
+	return Group;
 };

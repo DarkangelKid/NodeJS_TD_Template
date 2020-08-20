@@ -10,7 +10,7 @@ const db = require('./config/mssql');
 // open mongoose connection
 mongoose.connect();
 
-//mssql.connect();
+// mssql.connect();
 
 db.sequelize.sync();
 

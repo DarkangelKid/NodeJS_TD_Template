@@ -1,14 +1,14 @@
-const { emitNotifyToArray } = require("../helper");
+const { emitNotifyToArray } = require('../helper');
 
-let callerRequestCall = (io, data, clients, user) => {
+const callerRequestCall = (io, data, clients, user) => {
   if (clients[data.listener.id]) {
-    // b9: gửi cancel request call tới listener 
+    // b9: gửi cancel request call tới listener
     emitNotifyToArray(
       clients,
       data.listener.id,
       io,
-      "server-listener-cancel-request-call",
-      data
+      'server-listener-cancel-request-call',
+      data,
     );
   }
 };

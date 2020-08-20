@@ -1,14 +1,14 @@
-const { emitNotifyToArray } = require("../helper");
+const { emitNotifyToArray } = require('../helper');
 
-let callerRequestCall = (io, data, clients, user) => {
+const callerRequestCall = (io, data, clients, user) => {
   if (clients[data.listener.id]) {
-    // b8. gửi yêu cầu call tới listener 
+    // b8. gửi yêu cầu call tới listener
     emitNotifyToArray(
       clients,
       data.listener.id,
       io,
-      "server-listener-request-call",
-      data
+      'server-listener-request-call',
+      data,
     );
   }
 };

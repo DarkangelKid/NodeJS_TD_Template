@@ -1,10 +1,10 @@
-const { emitNotifyToArray } = require("../helper");
+const { emitNotifyToArray } = require('../helper');
 /**
  * @param {*} io from socket.io library
  */
 
-let acceptRequestContact = (io, data, clients, user) => {
-  let notif = {
+const acceptRequestContact = (io, data, clients, user) => {
+  const notif = {
     message: `${user.fullname} đã đồng ý kết bạn`,
     picture: user.picture,
     firstname: user.firstname,
@@ -12,7 +12,7 @@ let acceptRequestContact = (io, data, clients, user) => {
     fullname: user.fullname,
   };
 
-  console.log('DONG Y KET BAN')
+  console.log('DONG Y KET BAN');
 
   // emit notifications
   if (clients[data.id]) {
@@ -20,8 +20,8 @@ let acceptRequestContact = (io, data, clients, user) => {
       clients,
       data.id,
       io,
-      "res-accept-request-contact",
-      notif
+      'res-accept-request-contact',
+      notif,
     );
   }
 };

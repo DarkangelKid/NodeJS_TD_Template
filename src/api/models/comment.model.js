@@ -1,17 +1,30 @@
+const { DataTypes, Sequelize, ENUM } = require("sequelize");
+
 module.exports = (sequelize, Sequelize) => {
   const Comment = sequelize.define(
     'comment',
     {
-      title: {
-        type: Sequelize.STRING,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+      },
+      userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      description: {
-        type: Sequelize.STRING,
+      parentId: {
+        type: DataTypes.INTEGER,
       },
-      published: {
-        type: Sequelize.BOOLEAN,
+      postId:{
+        type: DataTypes.INTEGER
       },
+      postType: {
+        type: DataTypes.INTEGER
+      },
+      content: {
+        type: DataTypes.STRING,
+      },
+
     },
     {
       freezeTableName: true,

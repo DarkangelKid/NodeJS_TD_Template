@@ -1,13 +1,13 @@
-const { emitNotifyToArray } = require("../helper");
+const { emitNotifyToArray } = require('../helper');
 
-let callEnded = (io, data, clients, user) => {
-  // nhận sự kiện 1 trong 2 user kết thúc cuộc hội thoại 
+const callEnded = (io, data, clients, user) => {
+  // nhận sự kiện 1 trong 2 user kết thúc cuộc hội thoại
   if (clients[data.id]) {
     emitNotifyToArray(
       clients,
       data.id,
       io,
-      "server--call-ended"
+      'server--call-ended',
     );
   }
 };

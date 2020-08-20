@@ -36,7 +36,6 @@ const initSockets = (io) => {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
       }
 
-
       // handle disconnect
       socket.on('disconnect', () => {
         clients = removeSocketIdToArray(clients, user.id, socket);

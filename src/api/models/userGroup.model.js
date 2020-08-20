@@ -1,29 +1,25 @@
 const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
-	const Contact = sequelize.define(
-		'contact',
+	const UserGroup = sequelize.define(
+		'userGroup',
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				primaryKey: true
 			},
-			senderId : {
+			userId: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 			},
-			receiverId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.STRING
-      }
+			groupId: {
+				type: DataTypes.INTEGER
+			}
 		},
 		{
 			freezeTableName: true,
 		},
 	);
 
-	return Contact;
+	return UserGroup;
 };
