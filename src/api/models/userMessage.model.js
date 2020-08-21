@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
     const UserMessage = sequelize.define(
         'userMessage',
         {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             senderId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

@@ -4,12 +4,9 @@ module.exports = (sequelize, Sequelize) => {
   const Notification = sequelize.define(
     'notification',
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      },
       receiverId: {
         type: DataTypes.INTEGER,
+        allowNull: false
       },
       content: {
         type: DataTypes.STRING

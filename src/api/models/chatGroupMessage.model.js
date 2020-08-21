@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
     const ChatGroupMessage = sequelize.define(
         'chatGroupMessage',
         {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,

@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
 	const UserPost = sequelize.define(
 		'userPost',
 		{
-			id: {
-				type: DataTypes.INTEGER,
-				primaryKey: true
-			},
 			content: {
 				type: DataTypes.STRING,
 			},

@@ -4,10 +4,6 @@ module.exports = (sequelize, Sequelize) => {
 	const GroupPost = sequelize.define(
 		'groupPost',
 		{
-			id: {
-				type: DataTypes.INTEGER,
-				primaryKey: true
-			},
 			content: {
 				type: DataTypes.STRING,
 			},
@@ -19,7 +15,8 @@ module.exports = (sequelize, Sequelize) => {
                 allowNull: false
             },
             userId: {
-                type: DataTypes.INTEGER
+				type: DataTypes.INTEGER,
+				allowNull: false
             }
 		},
 		{
