@@ -1,20 +1,48 @@
 const httpStatus = require('http-status');
 const moment = require('moment-timezone');
 const { omit } = require('lodash');
-const User = require('../models/user.model');
-const RefreshToken = require('../models/refreshToken.model');
-const PasswordResetToken = require('../models/passwordResetToken.model');
-const { jwtExpirationInterval } = require('../../config/vars');
-const APIError = require('../utils/APIError');
-const emailProvider = require('../services/emails/emailProvider');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
-/**
- * Returns a formated object with tokens
- * @private
- */
-function generateTokenResponse(user, accessToken) {
+const jwt = require('jwt-simple');
+const APIError = require('../utils/APIError');
+const { jwtSecret, jwtExpirationInterval } = require('../../config/vars');
+
+const db = require('../../config/mssql');
+
+const RefreshToken = db.refreshTokens;
+const User = db.users;
+
+function generateToken(user) {
+  const playload = {
+    exp: moment().add(jwtExpirationInterval, 'minutes').unix(),
+    iat: moment().unix(),
+    sub: user.userName,
+  };
+  return jwt.encode(playload, jwtSecret);
+}
+
+const createRefreshToken = async (user) => {
+  const userId = user.id;
+  const { userName } = user;
+  const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
+  const expires = moment().add(30, 'days').toDate();
+
+  const tmp = await RefreshToken.create({
+    token,
+    userId,
+    userName,
+    expires,
+  });
+
+  return tmp;
+};
+
+const generateTokenResponse = async (user, accessToken) => {
   const tokenType = 'Bearer';
-  const refreshToken = RefreshToken.generate(user).token;
+  const tmp = await createRefreshToken(user);
+  const refreshToken = tmp.token;
+
   const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
   return {
     tokenType,
@@ -22,128 +50,95 @@ function generateTokenResponse(user, accessToken) {
     refreshToken,
     expiresIn,
   };
-}
+};
 
-/**
- * Returns jwt token if registration was successful
- * @public
- */
 exports.register = async (req, res, next) => {
   try {
     const userData = omit(req.body, 'role');
-    const user = await new User(userData).save();
-    const userTransformed = user.transform();
-    const token = generateTokenResponse(user, user.token());
+
+    const rounds = 10;
+
+    const hash = await bcrypt.hash(userData.password, rounds);
+    userData.password = hash;
+
+    const user = await User.create(userData)
+      .then((result) => result)
+      .catch((err) => next(err));
+
+    const token = await generateTokenResponse(user, generateToken(user));
+
     res.status(httpStatus.CREATED);
-    return res.json({ token, user: userTransformed });
+    return res.json({ token });
   } catch (error) {
-    return next(User.checkDuplicateEmail(error));
+    console.log(error);
+    // return next(User.checkDuplicateEmail(error));
   }
 };
 
-/**
- * Returns jwt token if valid username and password is provided
- * @public
- */
+const passwordMatches = async (password, password2) => bcrypt.compare(password, password2);
+
+const findAndGenerateToken = async (options) => {
+  const { userName, password, refreshObject } = options;
+
+  if (!userName) {
+    throw new APIError({
+      message: 'An userName is required to generate a token',
+    });
+  }
+
+  const user = await User.findOne({
+    where: {
+      userName,
+    },
+  });
+
+  const err = {
+    status: httpStatus.BAD_REQUEST,
+    isPublic: true,
+  };
+
+  if (password) {
+    if (user && (await passwordMatches(password, user.password))) {
+      return { user, accessToken: generateToken(user) };
+    }
+
+    err.message = 'Incorrect email or password';
+  } else if (refreshObject && refreshObject.userName === userName) {
+    if (moment(refreshObject.expires).isBefore()) {
+      err.message = 'Invalid refresh token.';
+    } else {
+      return { user, accessToken: generateToken(user) };
+    }
+  } else {
+    err.message = 'Incorrect email or refreshToken';
+  }
+  throw new APIError(err);
+};
+
 exports.login = async (req, res, next) => {
   try {
-    const { user, accessToken } = await User.findAndGenerateToken(req.body);
+    const { user, accessToken } = await findAndGenerateToken(req.body);
 
-    console.log(user)
-    console.log(accessToken)
+    const token = await generateTokenResponse(user, accessToken);
 
-    const token = generateTokenResponse(user, accessToken);
-    const userTransformed = user.transform();
-    return res.json({ token, user: userTransformed });
+    return res.json({ token });
   } catch (error) {
     return next(error);
   }
 };
 
-/**
- * login with an existing user or creates a new one if valid accessToken token
- * Returns jwt token
- * @public
- */
-exports.oAuth = async (req, res, next) => {
-  try {
-    const { user } = req;
-    const accessToken = user.token();
-    const token = generateTokenResponse(user, accessToken);
-    const userTransformed = user.transform();
-    return res.json({ token, user: userTransformed });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-/**
- * Returns a new jwt when given a valid refresh token
- * @public
- */
 exports.refresh = async (req, res, next) => {
   try {
-    const { email, refreshToken } = req.body;
-    const refreshObject = await RefreshToken.findOneAndRemove({
-      userEmail: email,
-      token: refreshToken,
+    const { userName, refreshToken } = req.body;
+    const refreshObject = await RefreshToken.findOne({
+      where: {
+        userName,
+        token: refreshToken,
+      },
     });
-    const { user, accessToken } = await User.findAndGenerateToken({ email, refreshObject });
-    const response = generateTokenResponse(user, accessToken);
+    const { user, accessToken } = await findAndGenerateToken({ userName, refreshObject });
+    const response = await generateTokenResponse(user, accessToken);
     return res.json(response);
-  } catch (error) {
-    return next(error);
-  }
-};
-
-exports.sendPasswordReset = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email }).exec();
-
-    if (user) {
-      const passwordResetObj = await PasswordResetToken.generate(user);
-      emailProvider.sendPasswordReset(passwordResetObj);
-      res.status(httpStatus.OK);
-      return res.json('success');
-    }
-    throw new APIError({
-      status: httpStatus.BAD_REQUEST,
-      message: 'No account found with that email',
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-exports.resetPassword = async (req, res, next) => {
-  try {
-    const { email, password, resetToken } = req.body;
-    const resetTokenObject = await PasswordResetToken.findOneAndRemove({
-      userEmail: email,
-      resetToken,
-    });
-
-    const err = {
-      status: httpStatus.BAD_REQUEST,
-      isPublic: true,
-    };
-    if (!resetTokenObject) {
-      err.message = 'Cannot find matching reset token';
-      throw new APIError(err);
-    }
-    if (moment().isAfter(resetTokenObject.expires)) {
-      err.message = 'Reset token is expired';
-      throw new APIError(err);
-    }
-
-    const user = await User.findOne({ email: resetTokenObject.userEmail }).exec();
-    user.password = password;
-    await user.save();
-    emailProvider.sendPasswordChangeEmail(user);
-
-    res.status(httpStatus.OK);
-    return res.json('Password Updated');
   } catch (error) {
     return next(error);
   }

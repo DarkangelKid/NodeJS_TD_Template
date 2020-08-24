@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
-const { emailConfig } = require('../../../config/vars');
 const Email = require('email-templates');
 const smtpTransport = require('nodemailer-smtp-transport');
+const { emailConfig } = require('../../../config/vars');
 // SMTP is the main transport in Nodemailer for delivering messages.
 // SMTP is also the protocol used between almost all email hosts, so its truly universal.
 // if you dont want to use SMTP you can create your own transport here
@@ -40,7 +40,7 @@ exports.sendPasswordReset = async (passwordResetObject) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: 'noreply.awesomechat@gmail.com',
+      from: 'noreply.tandanjsc@gmail.com',
     },
     // uncomment below to send emails in development/test env:
     send: true,
@@ -57,7 +57,7 @@ exports.sendPasswordReset = async (passwordResetObject) => {
         productName: 'Awesome Chat',
         // passwordResetUrl should be a URL to your app that displays a view where they
         // can enter a new password along with passing the resetToken in the params
-        passwordResetUrl: `http://chat.manhpham.xyz/new-password?resetToken=${passwordResetObject.resetToken}&email=${passwordResetObject.userEmail}`,
+        passwordResetUrl: `http://domain.com/new-password?resetToken=${passwordResetObject.resetToken}&email=${passwordResetObject.userEmail}`,
       },
     })
     .catch((error) => {
@@ -70,7 +70,7 @@ exports.sendPasswordChangeEmail = async (user) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
-      from: 'noreply.awesomechat@gmail.com',
+      from: 'noreply.tandanjsc@gmail.com',
     },
     // uncomment below to send emails in development/test env:
     send: true,
@@ -88,7 +88,7 @@ exports.sendPasswordChangeEmail = async (user) => {
         name: user.name,
       },
     })
-    .catch(() => {
+    .catch((error) => {
       console.log('error sending change password email');
       console.log(error);
     });

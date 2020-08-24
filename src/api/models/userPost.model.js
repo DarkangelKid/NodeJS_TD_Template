@@ -1,22 +1,18 @@
 const { DataTypes, Sequelize } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-  const RefreshToken = sequelize.define(
-    'refreshToken',
+  const UserPost = sequelize.define(
+    'userPost',
     {
-      token: {
+      content: {
         type: DataTypes.STRING,
-        allowNull: false,
+      },
+      attachments: {
+        type: DataTypes.STRING,
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      userName: {
-        type: DataTypes.STRING,
-      },
-      expires: {
-        type: DataTypes.DATE,
       },
     },
     {
@@ -24,5 +20,5 @@ module.exports = (sequelize, Sequelize) => {
     },
   );
 
-  return RefreshToken;
+  return UserPost;
 };

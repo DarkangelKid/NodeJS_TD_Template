@@ -1,22 +1,31 @@
-module.exports = (sequelize, Sequelize) => {
-  const Comment = sequelize.define(
-    'comment',
-    {
-      title: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: Sequelize.STRING,
-      },
-      published: {
-        type: Sequelize.BOOLEAN,
-      },
-    },
-    {
-      freezeTableName: true,
-    },
-  );
+const { DataTypes, Sequelize, ENUM } = require("sequelize");
 
-  return Comment;
+module.exports = (sequelize, Sequelize) => {
+	const Comment = sequelize.define(
+		'comment',
+		{
+			userId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+			parentId: {
+				type: DataTypes.INTEGER,
+			},
+			postId: {
+				type: DataTypes.INTEGER
+			},
+			postType: {
+				type: DataTypes.INTEGER
+			},
+			content: {
+				type: DataTypes.STRING,
+			},
+
+		},
+		{
+			freezeTableName: true,
+		},
+	);
+
+	return Comment;
 };

@@ -1,14 +1,16 @@
 const { DataTypes, Sequelize } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-  const ChatGroup = sequelize.define(
-    'chatGroup',
+  const Office = sequelize.define(
+    'office',
     {
+      parentId: {
+        type: DataTypes.INTEGER,
+      },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      avatarUrl: {
+      code: {
         type: DataTypes.STRING,
       },
       description: {
@@ -20,5 +22,5 @@ module.exports = (sequelize, Sequelize) => {
     },
   );
 
-  return ChatGroup;
+  return Office;
 };
