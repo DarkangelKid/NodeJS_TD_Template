@@ -7,7 +7,6 @@ const sequelize = new Sequelize(sqlconfig.database, sqlconfig.user, sqlconfig.pa
   host: sqlconfig.server,
   port: sqlconfig.port,
   dialect: 'mssql',
-  operatorsAliases: false,
 
   pool: {
     max: 5,
