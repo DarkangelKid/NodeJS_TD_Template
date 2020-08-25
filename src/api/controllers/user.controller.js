@@ -1,6 +1,5 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
-const User = require('../models/user.model');
 const Contact = require('../models/contact.model');
 const _ = require('lodash');
 const multer = require('multer');
@@ -8,13 +7,18 @@ const fsExtra = require('fs-extra');
 const APIError = require('../utils/APIError');
 const storageAvatar = require('../utils/storageAvatar');
 const { avatarDirectory, avatarTypes, avatarLimitSize } = require('../../config/vars');
-/**
- * Load user and append to req.
- * @public
- */
+
+const db = require('../../config/mssql');
+const User = db.users;
+
 exports.load = async (req, res, next, id) => {
   try {
-    const user = await User.get(id);
+    const user = await User.findByPk(id);
+    /*  const user = await User.findOne({
+      where: {
+        userName,
+      },
+    }); */
     req.locals = { user };
     return next();
   } catch (error) {
@@ -26,18 +30,20 @@ exports.load = async (req, res, next, id) => {
  * Get user
  * @public
  */
-exports.get = (req, res) => res.json(req.locals.user.transform());
+exports.get = (req, res) => res.json(req.locals.user);
 
 exports.getCurrentUser = async (req, res) => {
-  const user = await User.findById(req.user.id);
-  return res.json(user.transform());
+  const user = await User.findByPk(req.user.id);
+  return res.json(user);
 };
 
 /**
  * Get logged in user info
  * @public
  */
-exports.loggedIn = (req, res) => res.json(req.user.transform());
+exports.loggedIn = (req, res) => {
+  return res.json(req.user.transform());
+};
 
 /**
  * Update existing user

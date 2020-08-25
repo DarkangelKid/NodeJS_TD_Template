@@ -1,14 +1,110 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes, Sequelize, Model } = require('sequelize');
 const jwt = require('jwt-simple');
 const moment = require('moment-timezone');
 const bcrypt = require('bcryptjs');
 const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
+const APIError = require('../utils/APIError');
+const httpStatus = require('http-status');
+
+const roles = ['user', 'admin'];
 
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define(
-    'user',
+  class User extends Model {
+    getFullname() {
+      return [this.firstName, this.lastName].join(' ');
+    }
+
+    transform() {
+      const transformed = {};
+      const fields = ['id', 'username', 'email', 'firstName', 'lastName', 'avatarUrl', 'officeId', 'position'];
+
+      fields.forEach((field) => {
+        transformed[field] = this[field];
+      });
+
+      return transformed;
+    }
+
+    publicInfoTransform() {
+      const transformed = {};
+      const fields = ['id', 'username', 'email', 'firstName', 'lastName', 'avatarUrl', 'officeId', 'position'];
+
+      fields.forEach((field) => {
+        transformed[field] = this[field];
+      });
+
+      return transformed;
+    }
+
+    token() {
+      const playload = {
+        exp: moment().add(jwtExpirationInterval, 'minutes').unix(),
+        iat: moment().unix(),
+        sub: this.username,
+      };
+      return jwt.encode(playload, jwtSecret);
+    }
+
+    async passwordMatches(password) {
+      return bcrypt.compare(password, this.password);
+    }
+
+    static async get(id) {
+      try {
+        const user = await User.findByPk(id);
+
+        if (user) {
+          return user;
+        }
+
+        throw new APIError({
+          message: 'User does not exist',
+          status: httpStatus.NOT_FOUND,
+        });
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+
+    static async findAndGenerateToken(options) {
+      const { username, password, refreshObject } = options;
+      if (!username) {
+        throw new APIError({
+          message: 'An email is required to generate a token',
+        });
+      }
+
+      const user = await User.findOne({
+        where: {
+          username,
+        },
+      });
+      const err = {
+        status: httpStatus.BAD_REQUEST,
+        isPublic: true,
+      };
+      if (password) {
+        if (user && (await user.passwordMatches(password))) {
+          return { user, accessToken: user.token() };
+        }
+        err.message = 'Incorrect email or password';
+      } else if (refreshObject && refreshObject.username === username) {
+        if (moment(refreshObject.expires).isBefore()) {
+          err.message = 'Invalid refresh token.';
+        } else {
+          return { user, accessToken: user.token() };
+        }
+      } else {
+        err.message = 'Incorrect email or refreshToken';
+      }
+      throw new APIError(err);
+    }
+  }
+
+  User.init(
     {
-      userName: {
+      username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -38,11 +134,17 @@ module.exports = (sequelize, Sequelize) => {
       position: {
         type: DataTypes.STRING,
       },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: 'user',
+      },
       officeId: {
         type: DataTypes.INTEGER,
       },
     },
     {
+      sequelize,
+      modelName: 'user',
       freezeTableName: true,
     },
   );

@@ -1,7 +1,10 @@
 const httpStatus = require('http-status');
 const passport = require('passport');
-const User = require('../models/user.model');
 const APIError = require('../utils/APIError');
+
+const db = require('../../config/mssql');
+
+const User = db.users;
 
 const ADMIN = 'admin';
 const LOGGED_USER = '_loggedUser';
@@ -22,8 +25,11 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
     return next(apiError);
   }
 
+  /*   console.log('USER');
+  console.log(user.role);
+
   if (roles === LOGGED_USER) {
-    if (user.role !== 'user' && req.params.userId !== user._id.toString()) {
+    if (user.role !== 'user' && req.params.userId !== user.id.toString()) {
       apiError.status = httpStatus.FORBIDDEN;
       apiError.message = 'Forbidden';
       return next(apiError);
@@ -35,6 +41,21 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
   } else if (err || !user) {
     return next(apiError);
   }
+  
+
+  console.log('AAVVVVAV'); */
+
+  if (roles === ADMIN) {
+    if (user.role !== 'admin') {
+      apiError.status = httpStatus.FORBIDDEN;
+      apiError.message = 'Forbidden';
+      return next(apiError);
+    }
+  }
+
+  if (err || !user) {
+    return next(apiError);
+  }
 
   req.user = user;
 
@@ -44,4 +65,5 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
 exports.ADMIN = ADMIN;
 exports.LOGGED_USER = LOGGED_USER;
 
-exports.authorize = (roles = User.roles) => (req, res, next) => passport.authenticate('jwt', { session: false }, handleJWT(req, res, next, roles))(req, res, next);
+exports.authorize = (roles) => (req, res, next) =>
+  passport.authenticate('jwt', { session: false }, handleJWT(req, res, next, roles))(req, res, next);

@@ -14,7 +14,7 @@ module.exports = {
   // POST /v1/auth/login
   login: {
     body: Joi.object({
-      userName: Joi.string().required(),
+      username: Joi.string().required(),
       password: Joi.string().required().max(128),
     }),
   },
@@ -30,7 +30,7 @@ module.exports = {
   // POST /v1/auth/refresh
   refresh: {
     body: Joi.object({
-      userName: Joi.string().required(),
+      username: Joi.string().required(),
       refreshToken: Joi.string().required(),
     }),
   },
