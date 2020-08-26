@@ -2,41 +2,12 @@ const httpStatus = require('http-status');
 const moment = require('moment-timezone');
 const { omit } = require('lodash');
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-
-const jwt = require('jwt-simple');
-const APIError = require('../utils/APIError');
-const { jwtSecret, jwtExpirationInterval } = require('../../config/vars');
+const { jwtExpirationInterval } = require('../../config/vars');
 
 const db = require('../../config/mssql');
 
 const RefreshToken = db.refreshTokens;
 const User = db.users;
-
-function generateToken(user) {
-  const playload = {
-    exp: moment().add(jwtExpirationInterval, 'minutes').unix(),
-    iat: moment().unix(),
-    sub: user.username,
-  };
-  return jwt.encode(playload, jwtSecret);
-}
-
-const createRefreshToken = async (user) => {
-  const userId = user.id;
-  const { username } = user;
-  const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
-  const expires = moment().add(30, 'days').toDate();
-
-  const tmp = await RefreshToken.create({
-    token,
-    userId,
-    username,
-    expires,
-  });
-
-  return tmp;
-};
 
 const generateTokenResponse = async (user, accessToken) => {
   const tokenType = 'Bearer';
@@ -75,46 +46,6 @@ exports.register = async (req, res, next) => {
   }
 };
 
-const passwordMatches = async (password, password2) => bcrypt.compare(password, password2);
-
-const findAndGenerateToken = async (options) => {
-  const { username, password, refreshObject } = options;
-
-  if (!username) {
-    throw new APIError({
-      message: 'An username is required to generate a token',
-    });
-  }
-
-  const user = await User.findOne({
-    where: {
-      username,
-    },
-  });
-
-  const err = {
-    status: httpStatus.BAD_REQUEST,
-    isPublic: true,
-  };
-
-  if (password) {
-    if (user && (await passwordMatches(password, user.password))) {
-      return { user, accessToken: generateToken(user) };
-    }
-
-    err.message = 'Incorrect email or password';
-  } else if (refreshObject && refreshObject.username === username) {
-    if (moment(refreshObject.expires).isBefore()) {
-      err.message = 'Invalid refresh token.';
-    } else {
-      return { user, accessToken: generateToken(user) };
-    }
-  } else {
-    err.message = 'Incorrect email or refreshToken';
-  }
-  throw new APIError(err);
-};
-
 exports.login = async (req, res, next) => {
   try {
     console.log('loginloginloginlogin');
@@ -141,8 +72,9 @@ exports.refresh = async (req, res, next) => {
         token: refreshToken,
       },
     });
-    const { user, accessToken } = await User.findAndGenerateToken({ email, refreshObject });
-    const response = generateTokenResponse(user, accessToken);
+    const { user, accessToken } = await User.findAndGenerateToken({ username, refreshObject });
+
+    const response = await generateTokenResponse(user, accessToken);
     return res.json(response);
   } catch (error) {
     return next(error);

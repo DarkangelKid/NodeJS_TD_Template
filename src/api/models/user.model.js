@@ -2,9 +2,9 @@ const { DataTypes, Sequelize, Model } = require('sequelize');
 const jwt = require('jwt-simple');
 const moment = require('moment-timezone');
 const bcrypt = require('bcryptjs');
+const httpStatus = require('http-status');
 const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
 const APIError = require('../utils/APIError');
-const httpStatus = require('http-status');
 
 const roles = ['user', 'admin'];
 
@@ -80,6 +80,7 @@ module.exports = (sequelize, Sequelize) => {
           username,
         },
       });
+
       const err = {
         status: httpStatus.BAD_REQUEST,
         isPublic: true,
@@ -131,15 +132,10 @@ module.exports = (sequelize, Sequelize) => {
       avatarUrl: {
         type: DataTypes.STRING,
       },
-      position: {
-        type: DataTypes.STRING,
-      },
+
       role: {
         type: DataTypes.STRING,
         defaultValue: 'user',
-      },
-      officeId: {
-        type: DataTypes.INTEGER,
       },
     },
     {

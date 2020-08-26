@@ -3,17 +3,17 @@ const httpStatus = require('http-status');
 const APIError = require('../utils/APIError');
 
 module.exports = (sequelize, Sequelize) => {
-  class Office extends Model {
+  class Role extends Model {
     static async get(id) {
       try {
-        const item = await Office.findByPk(id);
+        const item = await Role.findByPk(id);
 
         if (item) {
           return item;
         }
 
         throw new APIError({
-          message: 'Office does not exist',
+          message: 'Role does not exist',
           status: httpStatus.NOT_FOUND,
         });
       } catch (error) {
@@ -23,29 +23,28 @@ module.exports = (sequelize, Sequelize) => {
     }
   }
 
-  Office.init(
+  Role.init(
     {
-      parentId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        unique: true,
       },
       description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       code: { type: DataTypes.STRING, allowNull: false },
       active: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {
       sequelize,
-      modelName: 'office',
+      modelName: 'role',
       freezeTableName: true,
     },
   );
 
-  return Office;
+  
+
+  return Role;
 };

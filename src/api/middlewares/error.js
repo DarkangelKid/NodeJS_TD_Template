@@ -20,7 +20,7 @@ const handler = (err, req, res, next) => {
   }
 
   res.status(err.status);
-  res.json(response);
+  res.json({ error: response });
 };
 exports.handler = handler;
 
