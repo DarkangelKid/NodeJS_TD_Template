@@ -17,10 +17,10 @@ router
 router
   .route('/pedding')
   // tìm kiếm
-  .get(authorize(LOGGED_USER), controller.danhsachbanbe);
+  .get(authorize(LOGGED_USER), controller.yeucauchoxl);
 
 router
-  .route('/danhsachbanbe')
+  .route('/friends')
   // tìm kiếm
   .get(authorize(LOGGED_USER), controller.danhsachbanbe);
 
