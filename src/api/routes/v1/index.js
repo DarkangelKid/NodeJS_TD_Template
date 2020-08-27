@@ -4,6 +4,11 @@ const userRoutes = require('./user.route');
 const roleRoutes = require('./role.route');
 const permissionRoutes = require('./permission.route');
 
+const officeRoutes = require('./office.route');
+const positionRoutes = require('./position.route');
+
+const contactRoutes = require('./contact.route');
+
 const router = express.Router();
 
 /**
@@ -17,6 +22,10 @@ router.get('/status', (req, res) => res.send('OK'));
 router.use('/docs', express.static('docs'));
 router.use('/role', roleRoutes);
 router.use('/permission', permissionRoutes);
+router.use('/office', officeRoutes);
+router.use('/position', positionRoutes);
+
+router.use('/contact', contactRoutes);
 
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);

@@ -7,6 +7,8 @@ const db = require('./config/mssql');
 
 db.sequelize.sync();
 
+//db.sequelize.sync({ force: true });
+
 // listen to requests
 server.listen(port, () => logger.info(`server started on port ${port} (${env})`));
 

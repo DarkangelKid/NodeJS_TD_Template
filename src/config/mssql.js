@@ -29,6 +29,8 @@ db.roles = require('../api/models/role.model')(sequelize, Sequelize);
 db.permissions = require('../api/models/permission.model')(sequelize, Sequelize);
 db.role_permission = require('../api/models/role_permission.model')(sequelize, Sequelize);
 
+db.contacts = require('../api/models/contact.model')(sequelize, Sequelize);
+
 const User = db.users;
 const Position = db.positions;
 const Office = db.offices;
@@ -41,10 +43,28 @@ User.belongsTo(Position, {
   as: 'position',
 });
 
+Office.hasMany(Office, { as: 'offices' });
+Office.belongsTo(Office, {
+  foreignKey: 'parentId',
+  as: 'office',
+});
+
 Office.hasMany(User, { as: 'users' });
 User.belongsTo(Office, {
   foreignKey: 'officeId',
   as: 'office',
+});
+
+User.belongsToMany(Role, {
+  through: 'user_role',
+  as: 'roles',
+  foreignKey: 'userId',
+});
+
+Role.belongsToMany(User, {
+  through: 'user_role',
+  as: 'users',
+  foreignKey: 'roleId',
 });
 
 Permission.belongsToMany(Role, {

@@ -21,6 +21,9 @@ exports.findOne = async (req, res, next) => {
         model: Permission,
         as: 'permissions',
         attributes: ['id', 'name', 'code', 'description'],
+        through: {
+          attributes: ['permissionId', 'roleId'],
+        },
       },
     ],
   })
@@ -83,12 +86,6 @@ exports.update = async (req, res, next) => {
         }),
       );
 
-      /* const updatedItem = omit(req.body, ['id']);
-    item = Object.assign(item, updatedItem);
-    item
-      .save()
-      .then((data) => res.json(data))
-      .catch((e) => next(e)); */
       res.json(item);
     } else {
       res.json(item);

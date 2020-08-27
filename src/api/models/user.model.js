@@ -112,8 +112,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -122,6 +120,9 @@ module.exports = (sequelize, Sequelize) => {
           const rounds = 10;
           this.setDataValue('password', bcrypt.hash(value, rounds));
         }, */
+      },
+      fullName: {
+        type: DataTypes.STRING,
       },
       firstName: {
         type: DataTypes.STRING,
@@ -132,10 +133,14 @@ module.exports = (sequelize, Sequelize) => {
       avatarUrl: {
         type: DataTypes.STRING,
       },
-
-      role: {
+      phoneNumber: {
         type: DataTypes.STRING,
-        defaultValue: 'user',
+      },
+      sex: {
+        type: DataTypes.STRING,
+      },
+      address: {
+        type: DataTypes.STRING(1000),
       },
     },
     {

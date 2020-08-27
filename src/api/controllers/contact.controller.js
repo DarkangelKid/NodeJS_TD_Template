@@ -1,68 +1,46 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
-const Contact = require('../models/contact.model');
-const User = require('../models/user.model');
-const APIError = require('../utils/APIError');
 
-/**
- * Load contact and append to req.
- * @public
- */
-exports.load = async (req, res, next, id) => {
+const APIError = require('../utils/APIError');
+const db = require('../../config/mssql');
+
+const Contact = db.contacts;
+const User = db.users;
+const { Op } = db.Sequelize;
+
+exports.findOne = async (req, res, next) => {
   try {
-    const contact = await Contact.get(id);
-    req.locals = { contact };
-    return next();
+    const { id } = req.params;
+
+    Contact.findOne({
+      where: { id },
+    })
+      .then((results) => res.json(results))
+      .catch((e) => next(e));
   } catch (error) {
-    return next(error);
+    next(error);
   }
 };
 
-/**
- * Get contact
- * @public
- */
-exports.get = (req, res) => res.json(req.locals.contact.transform());
-
-/**
- * Get logged in contact info
- * @public
- */
-exports.loggedIn = (req, res) => res.json(req.contact.transform());
-
-/**
- * Create new contact
- * @public
- */
 exports.create = async (req, res, next) => {
   try {
-    // check user exists
-
-    console.log('VAODAY')
-
-    const contactUser = await User.get(req.query.user);
     const currentUser = req.user;
+    const contactUserId = req.body.id;
 
-    console.log('currentUser');
-    console.log(req.query.user);
+    const userOneId = currentUser.id < contactUserId ? currentUser.id : contactUserId;
+    const userTwoId = currentUser.id > contactUserId ? currentUser.id : contactUserId;
 
-    // contact user and current is not should equal
-    if (req.query.user === currentUser.id) {
+    if (!userOneId || !userTwoId || userOneId === userTwoId) {
       throw new APIError({
         message: 'Something went wrong',
         status: httpStatus.BAD_REQUEST,
       });
     }
-    // check contact exists
+
     const checkContact = await Contact.findOne({
-      $or: [
-        {
-          $and: [{ userId: currentUser.id }, { contactId: contactUser.id }],
-        },
-        {
-          $and: [{ userId: contactUser.id }, { contactId: currentUser.id }],
-        },
-      ],
+      where: {
+        [Op.and]: [{ userOneId }, { userTwoId }],
+      },
     });
 
     if (checkContact) {
@@ -72,161 +50,110 @@ exports.create = async (req, res, next) => {
       });
     }
 
-    const contact = new Contact({
-      userId: currentUser.id,
-      contactId: contactUser.id,
-    });
-    const savedContact = await contact.save();
+    const item = await Contact.create({
+      userOneId,
+      userTwoId,
+      status: 0,
+      actionUserId: currentUser.id,
+    })
+      .then((result) => result)
+      .catch((err) => next(err));
+
     res.status(httpStatus.CREATED);
-    res.json(savedContact.transform());
+    return res.json(item);
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Replace existing contact
- * @public
- */
-exports.replace = async (req, res, next) => {
-  try {
-    const { contact } = req.locals;
-    const newContact = new Contact(req.body);
-    const ommitRole = contact.role !== 'admin' ? 'role' : '';
-    const newContactObject = omit(newContact.toObject(), '_id', ommitRole);
-
-    await contact.updateOne(newContactObject, { override: true, upsert: true });
-    const savedContact = await Contact.findById(contact._id);
-
-    res.json(savedContact.transform());
-  } catch (error) {
-    next(Contact.checkDuplicateEmail(error));
-  }
-};
-
-/**
- * Update existing contact
- * @public
- */
 exports.update = async (req, res, next) => {
   try {
-    // check user exists
-    const contactUser = await User.get(req.query.user);
+    const { id } = req.params;
     const currentUser = req.user;
+    let item = await Contact.findByPk(id);
 
-    // check contact exists
-    const contact = await Contact.findOne({
-      $or: [
-        {
-          $and: [{ userId: currentUser.id }, { contactId: contactUser.id }],
-        },
-        {
-          $and: [{ userId: contactUser.id }, { contactId: currentUser.id }],
-        },
-      ],
-    });
-    if (contact) {
-      contact.status = true;
-      const savedContact = await contact.save();
-      res.status(httpStatus.CREATED);
-      res.json(savedContact.transform());
-    } else {
+    const { status } = req.body;
+
+    if (!status || !id) {
       throw new APIError({
-        message: 'Contact does not exist',
+        message: 'Something went wrong',
         status: httpStatus.BAD_REQUEST,
       });
     }
+
+    item = Object.assign(item, { status, actionUserId: currentUser.id });
+    item
+      .save()
+      .then((data) => res.json(data))
+      .catch((e) => next(e));
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Get contact list
- * @public
- */
-exports.list = async (req, res, next) => {
+exports.remove = (req, res, next) => {
+  const { id } = req.params;
+
+  Contact.destroy({
+    where: {
+      id,
+    },
+  })
+    .then((data) => res.json(data))
+    .catch((e) => next(e));
+};
+
+exports.danhsachbanbe = async (req, res, next) => {
   try {
-    const currentUserId = req.user.id;
+    const currentUser = req.user;
 
-    // get type
-    const type = ['request', 'contact', 'requestsent'].includes(req.query.type.toLowerCase())
-      ? req.query.type.toLowerCase()
-      : 'contact';
+    const { page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
 
-    // get conditions
-    let options = {};
-    if (type === 'request') {
-      options = {
-        $and: [{ status: false }, { contactId: currentUserId }],
-      };
-    } else if (type === 'requestsent') {
-      options = {
-        $and: [{ status: false }, { userId: currentUserId }],
-      };
-    } else {
-      options = {
-        $and: [
-          {
-            $or: [{ contactId: currentUserId }, { userId: currentUserId }],
-          },
-          { status: true },
-        ],
-      };
-    }
-    const contacts = await Contact.find(options)
-      .populate('userId', 'id firstname lastname picture createdAt fullname')
-      .populate('contactId', 'id firstname lastname picture createdAt fullname');
-
-    // get list users
-    const responseList = [];
-    contacts.forEach((item) => {
-      if (item.userId.id === currentUserId) {
-        responseList.push(item.contactId.transform());
-      } else if (item.contactId.id === currentUserId) {
-        responseList.push(item.userId.transform());
-      }
+    const contacts = await Contact.findAndCountAll({
+      where: {
+        [Op.and]: [{ status: 1 }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
+      },
+      limit,
+      offset,
     });
-    res.json(responseList);
+
+    let dataUsers = [];
+    await Promise.all(
+      contacts.rows.map(async (i) => {
+        let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {
+          attributes: ['id', 'fullName', 'username', 'avatarUrl', 'phoneNumber'],
+        });
+        user = user.toJSON();
+        dataUsers.push(user);
+      }),
+    );
+
+    const response = getPagingData(Object.assign(contacts, { rows: dataUsers }), page, limit);
+
+    return res.json(response);
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Delete contact
- * @public
- */
-exports.remove = async (req, res, next) => {
-  try {
-    // check user exists
-    const contactUser = await User.get(req.query.user);
-    const currentUser = req.user;
+const getPagination = (page, perpage) => {
+  const limit = perpage ? +perpage : 10;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: listItems } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
 
-    // check contact exists
-    const contact = await Contact.findOne({
-      $or: [
-        {
-          $and: [{ userId: currentUser.id }, { contactId: contactUser.id }],
-        },
-        {
-          $and: [{ userId: contactUser.id }, { contactId: currentUser.id }],
-        },
-      ],
-    });
-
-    if (contact) {
-      contact
-        .remove()
-        .then(() => res.status(httpStatus.OK).end())
-        .catch((e) => next(e));
-    } else {
-      throw new APIError({
-        message: 'Contact does not exist',
-        status: httpStatus.BAD_REQUEST,
-      });
-    }
-  } catch (error) {
-    next(error);
-  }
+  return {
+    meta: {
+      total: totalItems,
+      pages: totalPages,
+      page: currentPage,
+      perpage: limit,
+    },
+    data: listItems,
+  };
 };

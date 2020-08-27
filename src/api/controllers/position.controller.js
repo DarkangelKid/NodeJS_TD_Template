@@ -3,7 +3,7 @@ const { omit } = require('lodash');
 
 const db = require('../../config/mssql');
 
-const Permission = db.permissions;
+const Position = db.positions;
 
 const { Op } = db.Sequelize;
 
@@ -12,7 +12,7 @@ exports.findOne = async (req, res, next) => {
     const { id } = req.params;
     const attributes = ['id', 'name', 'code', 'description'];
 
-    Permission.findOne({
+    Position.findOne({
       where: { id },
       attributes,
     })
@@ -27,10 +27,7 @@ exports.create = async (req, res, next) => {
   try {
     const itemData = omit(req.body, 'id');
 
-    console.log('aaa');
-    console.log(req.body);
-
-    const item = await Permission.create(itemData)
+    const item = await Position.create(itemData)
       .then((result) => result)
       .catch((err) => next(err));
 
@@ -43,7 +40,7 @@ exports.create = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   const { id } = req.params;
-  let item = await Permission.findByPk(id);
+  let item = await Position.findByPk(id);
 
   const updatedItem = omit(req.body, ['role', 'password']);
   item = Object.assign(item, updatedItem);
@@ -56,7 +53,7 @@ exports.update = async (req, res, next) => {
 exports.remove = (req, res, next) => {
   const { id } = req.params;
 
-  Permission.destroy({
+  Position.destroy({
     where: {
       id,
     },
@@ -71,7 +68,7 @@ exports.findAll = async (req, res, next) => {
   const condition = q ? { name: { [Op.like]: `%${q}%` } } : null;
   const attributes = ['id', 'name', 'code', 'description'];
 
-  Permission.findAndCountAll({
+  Position.findAndCountAll({
     where: condition,
     limit,
     offset,
