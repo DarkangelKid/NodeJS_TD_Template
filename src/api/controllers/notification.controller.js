@@ -17,12 +17,8 @@ exports.create = async (req, res) => {
 }
 
 exports.getById = async (req, res) => {
-    await db.notifications.findAll({
-        where: {
-            id: req.params.id
-        }
-    })
-        .then(results => res.json(results[0]))
+    await db.notifications.findByPk(req.params.id)
+        .then(result => res.json(result))
         .catch(err => res.json(err));
 }
 

@@ -19,12 +19,8 @@ exports.create = async (req, res) => {
 }
 
 exports.getById = async (req, res) => {
-    await db.groupPosts.findAll({
-        where: {
-            id: req.params.id
-        }
-    })
-        .then(results => res.json(results[0]))
+    await db.groupPosts.findByPk(req.params.id)
+        .then(result => res.json(result))
         .catch(err => res.json(err));
 }
 

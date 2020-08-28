@@ -1,6 +1,6 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
   const Notification = sequelize.define(
     'notification',
     {
