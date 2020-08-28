@@ -1,22 +1,21 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes, Sequelize, Model } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-	const UserChatGroup = sequelize.define(
-		'userChatGroup',
-		{
-			userId: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
-			chatGroupId: {
-				type: DataTypes.INTEGER,
-				allowNull: false
-			}
-		},
-		{
-			freezeTableName: true,
-		},
-	);
+  class User_ChatGroup extends Model {}
 
-	return UserChatGroup;
+  User_ChatGroup.init(
+    {
+      type: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'user_chatGroup',
+      freezeTableName: true,
+    },
+  );
+
+  return User_ChatGroup;
 };

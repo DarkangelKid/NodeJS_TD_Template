@@ -1,6 +1,6 @@
 const express = require('express');
 const { validate } = require('express-validation');
-const controller = require('../../controllers/contact.controller');
+const controller = require('../../controllers/chatGroup.controller');
 const { authorize, LOGGED_USER, ADMIN } = require('../../middlewares/auth');
 
 const router = express.Router();
@@ -15,19 +15,18 @@ router
   .post(authorize(LOGGED_USER), controller.create);
 
 router
-  .route('/pending')
-  // tìm kiếm
-  .get(authorize(LOGGED_USER), controller.yeucauchoxl);
+  .route('/')
+  // danh sách
+  .get(authorize(LOGGED_USER), controller.danhsachnhomchat);
 
-router
-  .route('/friends')
-  // tìm kiếm
-  .get(authorize(LOGGED_USER), controller.danhsachbanbe);
+router.route('/member').post(authorize(LOGGED_USER), controller.addMember).delete(authorize(), controller.removeMember);
+
+router.route('/avatar/:id').post(authorize(LOGGED_USER), controller.updateAvatar);
 
 router
   .route('/:id')
   // lấy thông tin
-  .get(authorize(), controller.findOne)
+  .get(authorize(), controller.getThongTin)
   // sửa thông tin
   .patch(authorize(), controller.update)
   // xóa thông tin

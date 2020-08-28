@@ -176,7 +176,7 @@ exports.remove = (req, res, next) => {
 
 let avatarUploadFile = multer(storageAvatar).single('avatar');
 
-exports.updateAvatar = (req, res, next) => {
+exports.UploadProfilePicture = (req, res, next) => {
   avatarUploadFile(req, res, async (err) => {
     try {
       if (!req.file) {
@@ -191,13 +191,11 @@ exports.updateAvatar = (req, res, next) => {
         updatedAt: Date.now(),
       };
 
-      // update user
-      let userUpdate = await User.findOneAndUpdate({ _id: req.user.id }, updateUserItem);
+      let user = await User.get(req.user.id);
 
-      // Delete old user picture
-      if (userUpdate.picture) {
-        await fsExtra.remove(`${avatarDirectory}/${userUpdate.picture}`); // return old item after updated
-      }
+      user = Object.assign(user, { avatarUrl: req.file.filename });
+
+      await user.save();
 
       let result = {
         message: 'success',

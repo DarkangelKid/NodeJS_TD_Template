@@ -27,7 +27,6 @@ exports.create = async (req, res, next) => {
   try {
     const itemData = omit(req.body, 'id');
 
-    console.log('aaa');
     console.log(req.body);
 
     const item = await Permission.create(itemData)

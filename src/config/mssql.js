@@ -31,11 +31,19 @@ db.role_permission = require('../api/models/role_permission.model')(sequelize, S
 
 db.contacts = require('../api/models/contact.model')(sequelize, Sequelize);
 
+db.chatGroups = require('../api/models/chatGroup.model')(sequelize, Sequelize);
+
+db.user_chatGroup = require('../api/models/userChatGroup.model')(sequelize, Sequelize);
+
 const User = db.users;
 const Position = db.positions;
 const Office = db.offices;
 const Role = db.roles;
+
+const ChatGroup = db.chatGroups;
 const Permission = db.permissions;
+
+const UserChatGroup = db.user_chatGroup;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
@@ -77,6 +85,18 @@ Role.belongsToMany(Permission, {
   through: 'role_permission',
   as: 'permissions',
   foreignKey: 'roleId',
+});
+
+User.belongsToMany(ChatGroup, {
+  through: 'user_chatGroup',
+  as: 'chatGroups',
+  foreignKey: 'userId',
+});
+
+ChatGroup.belongsToMany(User, {
+  through: 'user_chatGroup',
+  as: 'users',
+  foreignKey: 'chatGroupId',
 });
 
 module.exports = db;

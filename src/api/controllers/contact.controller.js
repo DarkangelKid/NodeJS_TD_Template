@@ -103,6 +103,40 @@ exports.remove = (req, res, next) => {
     .catch((e) => next(e));
 };
 
+exports.yeucauchoxl = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    const contacts = await Contact.findAndCountAll({
+      where: {
+        [Op.and]: [{ status: 0 }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
+      },
+      limit,
+      offset,
+    });
+
+    const dataUsers = [];
+    await Promise.all(
+      contacts.rows.map(async (i) => {
+        let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {
+          attributes: ['id', 'fullName', 'username', 'avatarUrl', 'phoneNumber'],
+        });
+        user = user.toJSON();
+        dataUsers.push(user);
+      }),
+    );
+
+    const response = getPagingData(Object.assign(contacts, { rows: dataUsers }), page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.danhsachbanbe = async (req, res, next) => {
   try {
     const currentUser = req.user;
@@ -118,7 +152,7 @@ exports.danhsachbanbe = async (req, res, next) => {
       offset,
     });
 
-    let dataUsers = [];
+    const dataUsers = [];
     await Promise.all(
       contacts.rows.map(async (i) => {
         let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {

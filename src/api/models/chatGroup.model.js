@@ -1,8 +1,9 @@
-const { DataTypes, Sequelize } = require('sequelize');
+const { DataTypes, Sequelize, Model } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-  const ChatGroup = sequelize.define(
-    'chatGroup',
+  class ChatGroup extends Model {}
+
+  ChatGroup.init(
     {
       name: {
         type: DataTypes.STRING,
@@ -10,12 +11,16 @@ module.exports = (sequelize, Sequelize) => {
       },
       avatarUrl: {
         type: DataTypes.STRING,
+        allowNull: true,
       },
       description: {
         type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {
+      sequelize,
+      modelName: 'chatGroup',
       freezeTableName: true,
     },
   );

@@ -8,6 +8,7 @@ const officeRoutes = require('./office.route');
 const positionRoutes = require('./position.route');
 
 const contactRoutes = require('./contact.route');
+const chatGroupRoutes = require('./chatGroup.route');
 
 const router = express.Router();
 
@@ -26,6 +27,7 @@ router.use('/office', officeRoutes);
 router.use('/position', positionRoutes);
 
 router.use('/contact', contactRoutes);
+router.use('/chatgroup', chatGroupRoutes);
 
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);

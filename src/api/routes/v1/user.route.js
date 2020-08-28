@@ -12,9 +12,6 @@ const router = express.Router();
 
 router.param('userId', controller.load);
 
-// Cập nhật ảnh đại diện
-router.route('/avatar').post(authorize(LOGGED_USER), controller.updateAvatar);
-
 // Thay đổi mật khẩu
 router.route('/change-password').patch(authorize(LOGGED_USER), validate(updatePassword), controller.updatePassword);
 
@@ -29,6 +26,9 @@ router
   .route('/profile')
   // Lấy thông tin người dùng hiện tại
   .get(authorize(), controller.loggedIn);
+
+// Cập nhật ảnh đại diện
+router.route('/UploadProfilePicture').post(authorize(), controller.UploadProfilePicture);
 
 router
   .route('/:userId')
