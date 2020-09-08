@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 const { DataTypes, Sequelize, Model } = require('sequelize');
 const jwt = require('jwt-simple');
 const moment = require('moment-timezone');
@@ -16,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
 
     transform() {
       const transformed = {};
-      const fields = ['id', 'username', 'email', 'firstName', 'lastName', 'avatarUrl', 'officeId', 'position'];
+      const fields = ['id', 'username', 'email', 'fullName', 'avatarUrl'];
 
       fields.forEach((field) => {
         transformed[field] = this[field];
@@ -51,7 +53,10 @@ module.exports = (sequelize, Sequelize) => {
 
     static async get(id) {
       try {
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(id, {
+          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address'],
+          include: ['office'],
+        });
 
         if (user) {
           return user;

@@ -41,8 +41,11 @@ exports.getCurrentUser = async (req, res) => {
  * Get logged in user info
  * @public
  */
-exports.loggedIn = (req, res) => {
-  return res.json(req.user.transform());
+exports.loggedIn = async (req, res) => {
+  //return res.json(req.user.transform());
+
+  let user = await User.get(req.user.id);
+  return res.json(user);
 };
 
 /**
@@ -69,8 +72,6 @@ exports.update = async (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   try {
     let user = await User.get(req.user.id);
-
-    console.log(user);
 
     const { oldPassword, newPassword } = req.body;
     const passwordMatch = await user.passwordMatches(oldPassword);

@@ -3,6 +3,7 @@ const moment = require('moment-timezone');
 const { omit } = require('lodash');
 const bcrypt = require('bcryptjs');
 const { jwtExpirationInterval } = require('../../config/vars');
+const jwt = require('jwt-simple');
 
 const db = require('../../config/mssql');
 
@@ -39,7 +40,7 @@ exports.register = async (req, res, next) => {
     const token = await generateTokenResponse(user, user.token());
 
     res.status(httpStatus.CREATED);
-    return res.json({ token });
+    return res.json({ token, user: user.transform() });
   } catch (error) {
     console.log(error);
     // return next(User.checkDuplicateEmail(error));
@@ -48,16 +49,12 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    console.log('loginloginloginlogin');
-
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
 
-    console.log('AAAAA');
-    console.log(user);
-
     const token = await generateTokenResponse(user, accessToken);
+    const user_ = await User.get(user.id);
 
-    return res.json({ token });
+    return res.json({ token, user: user.transform() });
   } catch (error) {
     return next(error);
   }
