@@ -3,12 +3,11 @@ const authRoutes = require('./auth.route');
 const userRoutes = require('./user.route');
 const roleRoutes = require('./role.route');
 const permissionRoutes = require('./permission.route');
-
 const officeRoutes = require('./office.route');
 const positionRoutes = require('./position.route');
-
 const contactRoutes = require('./contact.route');
 const chatGroupRoutes = require('./chatGroup.route');
+const messageRoutes = require('./message.route');
 
 const router = express.Router();
 
@@ -28,7 +27,7 @@ router.use('/position', positionRoutes);
 
 router.use('/contact', contactRoutes);
 router.use('/chatgroup', chatGroupRoutes);
-
+router.use('/message', messageRoutes);
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
 

@@ -1,431 +1,518 @@
+/* eslint-disable camelcase */
+/* eslint-disable consistent-return */
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
-const Message = require('../models/message.model');
-const ChatGroup = require('../models/chatGroup.model');
-const User = require('../models/user.model');
-const APIError = require('../utils/APIError');
 const multer = require('multer');
-const { v4: uuidv4 } = require('uuid');
-const { staticUrl } = require('../../config/vars');
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
-const storagePhoto = require('../utils/storagePhoto');
-const storageFile = require('../utils/storageFile');
+
 const _ = require('lodash');
-const logger = require('../../config/logger');
+const APIError = require('../utils/APIError');
+const db = require('../../config/mssql');
 
-/**
- * Load message and append to req.
- * @public
- */
-exports.load = async (req, res, next, id) => {
+const storageAvatar = require('../utils/storageAvatar');
+
+const User = db.users;
+const ChatGroup = db.chatGroups;
+const User_ChatGroup = db.user_chatGroup;
+const Message = db.message;
+
+const avatarUploadFile = multer(storageAvatar).single('avatar');
+
+const { Op } = db.Sequelize;
+
+exports.createMessage = async (req, res, next) => {
   try {
-    const message = await Message.get(id);
-    req.locals = { message };
-    return next();
-  } catch (error) {
-    return next(error);
-  }
-};
+    const currentUser = req.user;
 
-/**
- * Get message
- * Lấy nhưng danh sách những tin nhắn cho receiver
- * @public
- */
-exports.get = async (req, res, next) => {
-  try {
-    let senderId = req.user.id;
-    let receiverId = req.params.receiverId;
-    let { skip, limit } = req.query;
-    let receiverInfo = await User.findById(receiverId);
-    let responsceList = [];
-    let responeData = {};
+    const { type, message, conversationType } = req.body;
 
-
-    if (!receiverInfo) {
-      // Tìm id hiện tại có phải là group chat hay không
-      receiverInfo = await ChatGroup.findById(receiverId);
-      // Nếu không phải group chat thì trả về lỗi không tìm thấý
-      if (!receiverInfo || !receiverInfo.members.includes(req.user.id)) {
-        throw new APIError({
-          message: 'Not found',
-          status: httpStatus.BAD_REQUEST,
-        });
-      }
-
-      // Lấy danh sách cuộc trò chuyện
-      const groupMessages = await Message.getGroup({
-        groupId: receiverInfo.id,
-        skip,
-        limit,
-      });
-
-      // Lấy thông tin của admin
-      let admin = await User.findById(receiverInfo.admin);
-
-      // Lấy thông tin members
-      let members = await User.find({
-        _id: { $in: receiverInfo.members },
-      });
-      members = members.map((member) => {
-        let tempMember = {
-          id: member.id,
-          firstname: member.firstname,
-          lastname: member.lastname,
-          fullname: member.fullname,
-          picture: member.picture,
-        };
-        if (member.id === receiverInfo.admin) {
-          tempMember.admin = true;
-        }
-        return tempMember;
-      });
-
-      // Transform kết quả trả về
-      responsceList = await groupMessages.map((message) => message.transform());
-      responeData.conversationType = 'ChatGroup';
-      responeData.receiver = {
-        id: receiverInfo.id,
-        picture: receiverInfo.picture,
-        name: receiverInfo.name,
-        members,
-      };
-    } else {
-      // personal chat
-      const personalMessages = await Message.getPersonal({
-        senderId,
-        receiverId,
-        skip,
-        limit,
-      });
-      responsceList = await personalMessages.map((message) => message.transform());
-      responeData.conversationType = 'User';
-      responeData.receiver = {
-        picture: receiverInfo.picture,
-        firstname: receiverInfo.firstname,
-        lastname: receiverInfo.lastname,
-        fullname: receiverInfo.fullname,
-        id: receiverInfo.id,
-      };
-    }
-
-    responeData.messages = responsceList.reverse();
-    res.json(responeData);
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
- * Create new message
- * Gửi tin nhắn cho bạn bè
- * @public
- */
-exports.create = async (req, res, next) => {
-  try {
-    const sender = req.user.id;
-    const { conversationType } = req.body;
     // Nếu tin nhắn group thì conversation id = group id
     let conversationId = null;
     if (conversationType === 'ChatGroup') {
       // check group có tồn tại không?
-      const group = await ChatGroup.findById(req.body.receiver);
+      const group = await ChatGroup.findOne({ where: { id: req.body.receiver } });
 
       // check user hiện tại có phải là member hay không?
-      if (group && group.members.includes(req.user.id)) conversationId = req.body.receiver;
+      // if (group && group.members.includes(req.user.id)) conversationId = req.body.receiver;
+      if (group) conversationId = req.body.receiver;
     } else if (conversationType === 'User') {
       // check người dùng tồn tại hay không
-      const user = await User.findById(req.body.receiver);
-      if (user) conversationId = [sender, req.body.receiver].sort().join('.');
+      const user = await User.findOne({ where: { id: req.body.receiver } });
+      if (user) conversationId = req.body.receiver;
     }
 
     if (!conversationId) {
-      // Nếu không tồn tại users hay group => return lỗi
       throw new APIError({
         message: 'Something went wrong',
         status: httpStatus.BAD_REQUEST,
       });
     }
-    const message = new Message({ ...req.body, sender, conversationId });
-    let savedMessage = await message.save();
 
-    savedMessage = await savedMessage
-      .populate('receiver', 'id picture lastname firstname name members')
-      .populate('sender', 'id picture lastname firstname')
-      .execPopulate();
-    res.status(httpStatus.CREATED);
-    res.json({ ...savedMessage.transform() });
+    const dataItem = { type, message, conversationType };
+
+    const messageCreated = await Message.create(dataItem);
+
+    const user = await User.findByPk(currentUser.id);
+    messageCreated.senderId = user.id;
+
+    // console.log(user);
+
+    // await messageCreated.createSender(user);
+
+    if (conversationType === 'ChatGroup') {
+      const group = await ChatGroup.findOne({ where: { id: req.body.receiver } });
+      messageCreated.chatGroupId = group.id;
+
+      // await messageCreated.createChatGroup(group);
+    } else if (conversationType === 'User') {
+      // check người dùng tồn tại hay không
+      const user_ = await User.findOne({ where: { id: req.body.receiver } });
+      // await messageCreated.createReceiver(user_);
+      messageCreated.receiverId = user_.id;
+    }
+
+    await messageCreated.save();
+
+    return res.json(messageCreated);
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Update existing message
- * @public
- */
-exports.update = async (req, res, next) => {
+exports.getConversation = async (req, res, next) => {
   try {
-    // check user exists
-    const messageUser = await User.get(req.query.user);
     const currentUser = req.user;
+    const { id, conversationType } = req.query;
 
-    // check message exists
-    const message = await Message.findOne({
-      $or: [
+    const messages = await Message.findAll({
+      where: {
+        [Op.or]: [
+          {
+            [Op.and]: [
+              { conversationType },
+              {
+                [Op.or]: [
+                  { [Op.and]: [{ senderId: currentUser.id }, { receiverId: id }] },
+                  { [Op.and]: [{ senderId: id }, { receiverId: currentUser.id }] },
+                ],
+              },
+            ],
+          },
+          {
+            [Op.and]: [{ conversationType }, { chatGroupId: id }],
+          },
+        ],
+      },
+      order: [['updatedAt', 'DESC']],
+
+      include: [
         {
-          $and: [{ userId: currentUser.id }, { messageId: messageUser.id }],
+          model: User,
+          as: 'sender',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
         },
         {
-          $and: [{ userId: messageUser.id }, { messageId: currentUser.id }],
+          model: User,
+          as: 'receiver',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+        {
+          model: ChatGroup,
+          as: 'chatGroup',
+          include: {
+            model: User,
+            as: 'users',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
         },
       ],
     });
 
-    if (message) {
-      message.status = true;
-      const savedMessage = await message.save();
-      res.status(httpStatus.CREATED);
-      res.json(savedMessage.transform());
-    } else {
-      throw new APIError({
-        message: 'Message does not exist',
-        status: httpStatus.BAD_REQUEST,
-      });
-    }
+    return res.json(messages);
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Get message list
- * Lấy danh sách những tin nhắn gần nhất
- * @public
- */
-exports.list = async (req, res, next) => {
+exports.getConversations = async (req, res, next) => {
   try {
-    console.log('aaaa');
+    const currentUser = req.user;
 
-    let sender = req.user._id;
-    let personalMessages = await Message.listPersonal({ userId: sender, skip: req.query.pskip });
+    const mess_tmp = await Message.findAll({
+      where: {
+        [Op.and]: [{ conversationType: 'User' }, { [Op.or]: [{ senderId: currentUser.id }, { receiverId: currentUser.id }] }],
+      },
+      order: [['updatedAt', 'DESC']],
 
-    // Lấy danh sách chat nhóm
-    let groupMessages = await ChatGroup.list({
-      userId: [sender.toString()],
-      skip: req.query.gskip,
-    });
-    let groupMessagesPromise = groupMessages.map(async (item) => {
-      let tempItem = {
-        receiver: {
-          _id: item.id,
-          name: item.name,
-          picture: item.picture,
+      include: [
+        {
+          model: User,
+          as: 'sender',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
         },
-        message: '',
-        sender: '',
-        type: '',
-        conversationType: 'ChatGroup',
-        updatedAt: item.updatedAt,
-      };
-      let lastMessage = await Message.find({ receiver: item.id })
-        .populate('sender', 'firstname lastname fullname')
-        .sort({ updatedAt: -1 })
-        .limit(1);
-      if (lastMessage.length && lastMessage.length > 0) {
-        tempItem.message = lastMessage[0].message;
-        tempItem.sender = lastMessage[0].sender;
-        tempItem.type = lastMessage[0].type;
-        tempItem.conversationType = lastMessage[0].conversationType;
-        tempItem.updatedAt = lastMessage[0].updatedAt;
-      }
-
-      return tempItem;
+        {
+          model: User,
+          as: 'receiver',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+      ],
     });
 
-    let personalMessagesResponse = await Promise.all(groupMessagesPromise);
-    let messages = personalMessages.concat(personalMessagesResponse);
+    const mess = _.groupBy(mess_tmp, (sub) => {
+      let key = `${sub.senderId}_${sub.receiverId}`;
+      if (sub.senderId > sub.receiverId) key = `${sub.receiverId}_${sub.senderId}`;
+      return key;
+    });
 
-    res.json(
-      _.sortBy(messages, (item) => {
-        return -item.updatedAt;
+    console.log(mess);
+
+    let personalMessages = [];
+
+    _.mapKeys(mess, (value, key) => personalMessages.push(value[0]));
+
+    const chatGroups = await ChatGroup.findAll({
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        required: true,
+        where: {
+          id: currentUser.id,
+        },
+      },
+    });
+
+    const groupMessages = [];
+    await Promise.all(
+      chatGroups.map(async (i) => {
+        const item = await Message.findAll({
+          where: { chatGroupId: i.id },
+          limit: 1,
+          order: [['updatedAt', 'DESC']],
+          include: [
+            {
+              model: User,
+              as: 'sender',
+              attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+            },
+            {
+              model: ChatGroup,
+              as: 'chatGroup',
+              include: {
+                model: User,
+                as: 'users',
+                attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+              },
+            },
+          ],
+        });
+        console.log(item);
+        groupMessages.push(item[0]);
       }),
     );
+
+    const messages = personalMessages.concat(groupMessages);
+    return res.json(messages);
   } catch (error) {
     next(error);
   }
 };
 
-/**
- * Delete message
- * @public
- */
-exports.remove = async (req, res, next) => {
+exports.getThongTin = async (req, res, next) => {
   try {
-    // check user exists
-    const messageUser = await User.get(req.query.user);
+    const { id } = req.params;
+
+    ChatGroup.findOne({
+      where: { id },
+      attributes: ['id', 'name', 'avatarUrl', 'description'],
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id', 'username', 'email', 'fullName'],
+      },
+    })
+      .then((results) => res.json(results))
+      .catch((e) => next(e));
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.create = async (req, res, next) => {
+  try {
     const currentUser = req.user;
 
-    // check message exists
-    const message = await Message.findOne({
-      $or: [
-        {
-          $and: [{ userId: currentUser.id }, { messageId: messageUser.id }],
-        },
-        {
-          $and: [{ userId: messageUser.id }, { messageId: currentUser.id }],
-        },
-      ],
+    const { name, description, users } = req.body;
+
+    const dataItem = { name, description };
+
+    const chatGroup = await ChatGroup.create(dataItem);
+
+    const user = await User.findByPk(currentUser.id);
+    chatGroup.addUser(user, { through: { type: 1 } });
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findByPk(i);
+            chatGroup.addUser(user_, { through: { type: 0 } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json(chatGroup);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { users, id } = req.body;
+
+    const item_tmp = await User_ChatGroup.findOne({
+      where: {
+        userId: currentUser.id,
+        chatGroupId: id,
+      },
     });
 
-    if (message) {
-      message
-        .remove()
-        .then(() => res.status(httpStatus.OK).end())
-        .catch((e) => next(e));
-    } else {
+    if (item_tmp.type !== 1) {
       throw new APIError({
-        message: 'Message does not exist',
+        message: 'Không có quyền.',
         status: httpStatus.BAD_REQUEST,
       });
     }
+
+    const chatGroup = await ChatGroup.findByPk(id);
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findByPk(i);
+            chatGroup.addUser(user_, { through: { type: 0 } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json(chatGroup);
   } catch (error) {
     next(error);
   }
 };
 
-let photosUploadFile = multer(storagePhoto).single('photos');
+exports.removeMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
 
-exports.addPhotos = (req, res, next) => {
-  photosUploadFile(req, res, async (err) => {
+    const { users, id } = req.body;
+
+    const item_tmp = await User_ChatGroup.findOne({
+      where: {
+        userId: currentUser.id,
+        chatGroupId: id,
+      },
+    });
+
+    if (item_tmp.type !== 1) {
+      throw new APIError({
+        message: 'Không có quyền.',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const chatGroup = await ChatGroup.findByPk(id);
+
+    await Promise.all(
+      users.map(async (i) => {
+        try {
+          await User_ChatGroup.destroy({
+            where: {
+              userId: i,
+              chatGroupId: id,
+            },
+          });
+        } catch (error_) {
+          console.log(error_);
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json(chatGroup);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.update = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    const { id } = req.params;
+
+    const item_tmp = await User_ChatGroup.findOne({
+      where: {
+        userId: currentUser.id,
+        chatGroupId: id,
+      },
+    });
+
+    if (item_tmp.type !== 1) {
+      throw new APIError({
+        message: 'Không có quyền sửa.',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    let item = await ChatGroup.findByPk(id);
+    const updatedItem = omit(req.body, ['id']);
+
+    item = Object.assign(item, updatedItem);
+    item
+      .save()
+      .then((data) => res.json(data))
+      .catch((e) => next(e));
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.remove = async (req, res, next) => {
+  const currentUser = req.user;
+  const { id } = req.params;
+
+  const item_tmp = await User_ChatGroup.findOne({
+    where: {
+      userId: currentUser.id,
+      chatGroupId: id,
+    },
+  });
+
+  if (item_tmp.type !== 1) {
+    throw new APIError({
+      message: 'Không có quyền.',
+      status: httpStatus.BAD_REQUEST,
+    });
+  }
+
+  ChatGroup.destroy({
+    where: {
+      id,
+    },
+  })
+    .then((data) => res.json(data))
+    .catch((e) => next(e));
+};
+
+exports.danhsachnhomchat = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    const chatGroups = await ChatGroup.findAndCountAll({
+      /* where: {
+        [Op.and]: [{ status: 1 }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
+      }, */
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id', 'username'],
+        required: true,
+        where: {
+          id: currentUser.id,
+        },
+      },
+      limit,
+      offset,
+    });
+
+    const dataUsers = [];
+    await Promise.all(
+      chatGroups.rows.map(async (i) => {
+        let user = await ChatGroup.findByPk(i.id, {
+          attributes: ['id', 'name', 'avatarUrl', 'description'],
+          include: {
+            model: User,
+            as: 'users',
+            attributes: ['id', 'username', 'email', 'fullName'],
+          },
+        });
+        user = user.toJSON();
+        dataUsers.push(user);
+      }),
+    );
+
+    const response = getPagingData(Object.assign(chatGroups, { rows: dataUsers }), page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateAvatar = (req, res, next) => {
+  avatarUploadFile(req, res, async (err) => {
     try {
       if (!req.file) {
-        console.log(err);
         throw new APIError({
-          message: err,
+          message: 'Please select a file.',
           status: httpStatus.BAD_REQUEST,
         });
       }
-      let outputFile = req.file.path + '.jpg';
+      const { id } = req.params;
+      let item = await ChatGroup.findByPk(id);
+      item = Object.assign(item, { avatarUrl: req.file.filename });
 
-      await sharp(req.file.path).jpeg({ quality: 80 }).toFile(outputFile);
+      await item.save();
 
-      // delete old file
-      fs.unlinkSync(req.file.path);
+      // update user
+      // let chatGroupUpdate = await ChatGroup.findOneAndUpdate({ _id: req.params.chatGroupId }, { picture: req.file.filename });
+      // Delete old user picture
+      /*  if (chatGroupUpdate.picture) {
+        await fsExtra.remove(`${avatarDirectory}/${chatGroupUpdate.picture}`); // return old item after updated
+      } */
 
-      let temp = {
-        uid: uuidv4(),
-        name: `${req.file.filename}.jpg`,
-        path: `/images/message/${req.file.filename}.jpg`,
-        status: 'done',
-        response: { status: 'success' },
-        linkProps: { download: 'image' },
-        thumbUrl: `${staticUrl}/images/message/${req.file.filename}.jpg`,
+      const result = {
+        message: 'success',
+        picture: `${req.file.filename}`,
       };
-      return res.json(temp);
+      return res.send(result);
     } catch (error) {
       next(error);
     }
   });
 };
 
-let filesUpload = multer(storageFile).single('files');
-
-exports.addFiles = (req, res, next) => {
-
-  console.log("UPLOAD FILE")
-
-  filesUpload(req, res, async (err) => {
-    try {
-
-      /* console.log('UPLOAD FILE');
-      console.log(req) */
-
-      if (!req.file) {
-        console.log(err);
-        throw new APIError({
-          message: err,
-          status: httpStatus.BAD_REQUEST,
-        });
-      }
-
-      let temp = {
-        uid: uuidv4(),
-        name: req.file.filename,
-        path: `/files/${req.file.filename}`,
-        status: 'done',
-        response: { status: 'success' },
-        linkProps: { download: 'file' },
-      };
-      return res.json(temp);
-    } catch (error) {
-      next(error);
-    }
-  });
+const getPagination = (page, perpage) => {
+  const limit = perpage ? +perpage : 10;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
 };
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: listItems } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
 
-exports.imagesList = async (req, res, next) => {
-  try {
-    let { id, skip, limit } = req.query;
-    // Kiểm tra xem id hiện tại có phải là User hay không.
-    let isUser = await User.findById(id);
-    let conversationId = null;
-    if (isUser) {
-      conversationId = [id, req.user._id].sort().join('.');
-    } else {
-      // Kiểm tra xem id có phải của group chat hay không
-      let isGroupChat = await ChatGroup.findById(id);
-      if (isGroupChat) {
-        conversationId = id;
-      }
-    }
-
-    // Nếu không tồn tại Id return lỗi Not Found
-    if (!conversationId) {
-      throw new APIError({
-        message: 'Not found.',
-        status: httpStatus.NOT_FOUND,
-      });
-    }
-
-    let images = await Message.imagesList({ conversationId, limit, skip });
-    images = images[0] ? images[0].list : [];
-    return res.json({ images });
-  } catch (error) {
-    next(error);
-  }
-};
-
-exports.filesList = async (req, res, next) => {
-  try {
-    let { id, skip, limit } = req.query;
-    // Kiểm tra xem id hiện tại có phải là User hay không.
-    let isUser = await User.findById(id);
-    let conversationId = null;
-    if (isUser) {
-      conversationId = [id, req.user._id].sort().join('.');
-    } else {
-      // Kiểm tra xem id có phải của group chat hay không
-      let isGroupChat = await ChatGroup.findById(id);
-      if (isGroupChat) {
-        conversationId = id;
-      }
-    }
-
-    // Nếu không tồn tại Id return lỗi Not Found
-    if (!conversationId) {
-      throw new APIError({
-        message: 'Not found.',
-        status: httpStatus.NOT_FOUND,
-      });
-    }
-
-    let files = await Message.filesList({ conversationId, limit, skip });
-    files = files[0] ? files[0].list : [];
-    return res.json({ files });
-  } catch (error) {
-    next(error);
-  }
+  return {
+    meta: {
+      total: totalItems,
+      pages: totalPages,
+      page: currentPage,
+      perpage: limit,
+    },
+    data: listItems,
+  };
 };

@@ -28,22 +28,21 @@ db.refreshTokens = require('../api/models/refreshToken.model')(sequelize, Sequel
 db.roles = require('../api/models/role.model')(sequelize, Sequelize);
 db.permissions = require('../api/models/permission.model')(sequelize, Sequelize);
 db.role_permission = require('../api/models/role_permission.model')(sequelize, Sequelize);
-
 db.contacts = require('../api/models/contact.model')(sequelize, Sequelize);
-
 db.chatGroups = require('../api/models/chatGroup.model')(sequelize, Sequelize);
-
 db.user_chatGroup = require('../api/models/userChatGroup.model')(sequelize, Sequelize);
+db.message = require('../api/models/message.model')(sequelize, Sequelize);
+db.attachment = require('../api/models/attachment.model')(sequelize, Sequelize);
 
 const User = db.users;
 const Position = db.positions;
 const Office = db.offices;
 const Role = db.roles;
-
 const ChatGroup = db.chatGroups;
 const Permission = db.permissions;
-
 const UserChatGroup = db.user_chatGroup;
+const Message = db.message;
+const Attachment = db.attachment;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
@@ -97,6 +96,29 @@ ChatGroup.belongsToMany(User, {
   through: 'user_chatGroup',
   as: 'users',
   foreignKey: 'chatGroupId',
+});
+
+// User.hasMany(Message, { as: 'messages' });
+Message.belongsTo(User, {
+  foreignKey: 'senderId',
+  as: 'sender',
+});
+
+Message.belongsTo(User, {
+  foreignKey: 'receiverId',
+  as: 'receiver',
+});
+
+ChatGroup.hasMany(Message, { as: 'messages' });
+Message.belongsTo(ChatGroup, {
+  foreignKey: 'chatGroupId',
+  as: 'chatGroup',
+});
+
+Message.hasMany(Attachment, { as: 'attachments' });
+Attachment.belongsTo(Message, {
+  foreignKey: 'messageId',
+  as: 'message',
 });
 
 module.exports = db;
