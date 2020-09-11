@@ -38,7 +38,7 @@ exports.create = async (req, res, next) => {
   try {
     // check user exists
 
-    console.log('VAODAY')
+    console.log('VAODAY');
 
     const contactUser = await User.get(req.query.user);
     const currentUser = req.user;
