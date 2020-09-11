@@ -27,11 +27,11 @@ const initSockets = (io) => {
     }),
   );
   let clients = {};
-  console.log('aaa');
-  console.log(clients);
+
   io.on('connection', async (socket) => {
     try {
-      const user = await getUserInfo(socket.decoded_token.sub);
+      // const user = await getUserInfo(socket.decoded_token.sub);
+      const user = await getUserInfo(socket.decoded_token.context.user.userName);
       if (user) {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
       }

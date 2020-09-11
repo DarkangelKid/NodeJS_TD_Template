@@ -13,13 +13,19 @@ const jwtOptions = {
 
 const jwt = async (payload, done) => {
   try {
-    // const user = await User.findById(payload.sub);
-    // const user = await User.findByPk(payload.sub);
-    const user = await User.findOne({
+    /* const user = await User.findOne({
       where: {
         userName: payload.sub,
       },
+    }); */
+
+    const user = await User.findOne({
+      where: {
+        userName: payload.context.user.userName,
+      },
     });
+
+    console.log(user);
 
     if (user) return done(null, user);
     return done(null, false);

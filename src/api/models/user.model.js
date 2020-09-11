@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
 
     transform() {
       const transformed = {};
-      const fields = ['id', 'username', 'email', 'fullName', 'avatarUrl'];
+      const fields = ['id', 'username', 'email', 'fullName', 'avatarUrl', 'displayName'];
 
       fields.forEach((field) => {
         transformed[field] = this[field];
@@ -43,6 +43,12 @@ module.exports = (sequelize, Sequelize) => {
         exp: moment().add(jwtExpirationInterval, 'minutes').unix(),
         iat: moment().unix(),
         sub: this.username,
+        context: {
+          user: {
+            userName: this.username,
+            displayName: this.displayName ,
+          },
+        },
       };
       return jwt.encode(playload, jwtSecret);
     }
@@ -54,7 +60,7 @@ module.exports = (sequelize, Sequelize) => {
     static async get(id) {
       try {
         const user = await User.findByPk(id, {
-          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address'],
+          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName'],
           include: ['office'],
         });
 
@@ -127,6 +133,9 @@ module.exports = (sequelize, Sequelize) => {
         }, */
       },
       fullName: {
+        type: DataTypes.STRING,
+      },
+      displayName: {
         type: DataTypes.STRING,
       },
       firstName: {
