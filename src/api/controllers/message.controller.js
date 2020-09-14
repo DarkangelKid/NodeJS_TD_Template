@@ -137,6 +137,10 @@ exports.getConversations = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
+    const { gskip, pskip, perpage } = req.query;
+
+    if ((gskip && gskip > 0) || (pskip && pskip > 0)) return res.json([]);
+
     const mess_tmp = await Message.findAll({
       where: {
         [Op.and]: [{ conversationType: 'User' }, { [Op.or]: [{ senderId: currentUser.id }, { receiverId: currentUser.id }] }],
@@ -163,9 +167,7 @@ exports.getConversations = async (req, res, next) => {
       return key;
     });
 
-    console.log(mess);
-
-    let personalMessages = [];
+    const personalMessages = [];
 
     _.mapKeys(mess, (value, key) => personalMessages.push(value[0]));
 

@@ -8,6 +8,74 @@ const Contact = db.contacts;
 const User = db.users;
 const { Op } = db.Sequelize;
 
+exports.GetContacts = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const queryType = req.query.type ? req.query.type : '';
+
+    const type = ['request', 'contact', 'requestsent'].includes(
+      queryType.toLowerCase(),
+    )
+      ? queryType.toLowerCase()
+      : 'contact';
+    // console.log(`TYPE: ${type}`);
+
+    let status = 1;
+    let query = {};
+
+    switch (type) {
+      case 'contact':
+        status = 1;
+        query = {
+          [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
+        };
+        break;
+      case 'requestsent':
+        status = 0;
+        query = {
+          [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }, { actionUserId: currentUser.id }],
+        };
+        break;
+      case 'request':
+        status = 0;
+        query = {
+          [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }, { actionUserId: { [Op.ne]: currentUser.id } }],
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    const { page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    const contacts = await Contact.findAndCountAll({
+      where: query,
+      limit,
+      offset,
+    });
+
+    const dataUsers = [];
+    await Promise.all(
+      contacts.rows.map(async (i) => {
+        let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {
+          attributes: ['id', 'fullName', 'username', 'avatarUrl', 'phoneNumber'],
+        });
+        user = user.toJSON();
+        dataUsers.push(user);
+      }),
+    );
+
+    const response = getPagingData(Object.assign(contacts, { rows: dataUsers }), page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.findOne = async (req, res, next) => {
   try {
     const { id } = req.params;

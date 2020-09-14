@@ -10,6 +10,11 @@ const router = express.Router();
  */
 
 router
+  .route('/GetContacts')
+// tìm kiếm
+  .get(authorize(LOGGED_USER), controller.GetContacts);
+
+router
   .route('/')
   // tạo mới
   .post(authorize(LOGGED_USER), controller.create);

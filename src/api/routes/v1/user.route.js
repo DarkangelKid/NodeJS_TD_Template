@@ -27,6 +27,11 @@ router
   // Lấy thông tin người dùng hiện tại
   .get(authorize(), controller.loggedIn);
 
+router
+  .route('/current')
+  // Lấy thông tin người dùng hiện tại
+  .get(authorize(), controller.loggedIn);
+
 // Cập nhật ảnh đại diện
 router.route('/UploadProfilePicture').post(authorize(), controller.UploadProfilePicture);
 
