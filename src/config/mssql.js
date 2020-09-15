@@ -121,4 +121,10 @@ Attachment.belongsTo(Message, {
   as: 'message',
 });
 
+User.hasMany(Attachment, { as: 'attachments' });
+Attachment.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
 module.exports = db;

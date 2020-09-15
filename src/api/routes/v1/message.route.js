@@ -9,6 +9,10 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
+console.log('aaavaoady');
+router.route('/photos').post(authorize(), controller.addPhotos);
+router.route('/files').post(authorize(), controller.addFiles);
+
 router
   .route('/')
   // Lấy danh sách cuộc trò chuyện và tin nhắn cuối cùng
@@ -20,5 +24,11 @@ router
   .route('/getConversation')
   // lấy thông tin
   .get(authorize(), controller.getConversation);
+
+router
+  .route('/:conversationId')
+
+  // Lấy thông tin cuộc trò chuyện dựa vào id
+  .get(authorize(LOGGED_USER), controller.getMessage);
 
 module.exports = router;

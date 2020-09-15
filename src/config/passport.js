@@ -25,8 +25,6 @@ const jwt = async (payload, done) => {
       },
     });
 
-    console.log(user);
-
     if (user) return done(null, user);
     return done(null, false);
   } catch (error) {

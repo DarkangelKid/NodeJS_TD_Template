@@ -46,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
         context: {
           user: {
             userName: this.username,
-            displayName: this.displayName ,
+            displayName: this.displayName,
           },
         },
       };

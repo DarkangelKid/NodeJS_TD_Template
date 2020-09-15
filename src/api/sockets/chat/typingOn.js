@@ -1,9 +1,10 @@
 const { emitNotifyToArray } = require('../helper');
 
 const typingOn = (io, data, clients, user) => {
+  console.log(clients);
   if (data.conversationType === 'ChatGroup') {
     // lọc danh sách, bỏ id của người hiện tại
-    const receivers = data.receiver.members.filter((item) => item.id !== data.info.id);
+    const receivers = data.receiver.users.filter((item) => item.id !== data.info.id);
     receivers.forEach((item) => {
       if (clients[item.id]) {
         emitNotifyToArray(clients, item.id, io, 'res-typing-on', data);

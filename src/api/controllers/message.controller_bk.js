@@ -207,7 +207,6 @@ exports.update = async (req, res, next) => {
  */
 exports.list = async (req, res, next) => {
   try {
-    console.log('aaaa');
 
     let sender = req.user._id;
     let personalMessages = await Message.listPersonal({ userId: sender, skip: req.query.pskip });

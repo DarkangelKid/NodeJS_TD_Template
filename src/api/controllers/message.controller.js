@@ -3,17 +3,23 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const multer = require('multer');
-
+const sharp = require('sharp');
+const fs = require('fs');
 const _ = require('lodash');
+const { v4: uuidv4 } = require('uuid');
 const APIError = require('../utils/APIError');
 const db = require('../../config/mssql');
+const { staticUrl } = require('../../config/vars');
 
 const storageAvatar = require('../utils/storageAvatar');
+const storagePhoto = require('../utils/storagePhoto');
+const storageFile = require('../utils/storageFile');
 
 const User = db.users;
 const ChatGroup = db.chatGroups;
 const User_ChatGroup = db.user_chatGroup;
 const Message = db.message;
+const Attachment = db.attachment;
 
 const avatarUploadFile = multer(storageAvatar).single('avatar');
 
@@ -23,7 +29,13 @@ exports.createMessage = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    const { type, message, conversationType } = req.body;
+    let {
+      type, message, conversationType, files,
+    } = req.body;
+
+    console.log(files);
+
+    if (!type) type = 'text';
 
     // Nếu tin nhắn group thì conversation id = group id
     let conversationId = null;
@@ -51,6 +63,20 @@ exports.createMessage = async (req, res, next) => {
 
     const messageCreated = await Message.create(dataItem);
 
+    if (type === 'text') {
+
+    } else if (type === 'file') {
+      await Promise.all(
+        files.map(async (i) => {
+          const itemFile = await Attachment.findByPk(i.id);
+
+          console.log(itemFile);
+
+          await messageCreated.addAttachment(itemFile);
+        }),
+      );
+    }
+
     const user = await User.findByPk(currentUser.id);
     messageCreated.senderId = user.id;
 
@@ -59,20 +85,53 @@ exports.createMessage = async (req, res, next) => {
     // await messageCreated.createSender(user);
 
     if (conversationType === 'ChatGroup') {
-      const group = await ChatGroup.findOne({ where: { id: req.body.receiver } });
-      messageCreated.chatGroupId = group.id;
+      // const group = await ChatGroup.findOne({ where: { id: req.body.receiverId } });
+      messageCreated.chatGroupId = conversationId;
 
       // await messageCreated.createChatGroup(group);
     } else if (conversationType === 'User') {
       // check người dùng tồn tại hay không
-      const user_ = await User.findOne({ where: { id: req.body.receiver } });
+      // const user_ = await User.findOne({ where: { id: req.body.receiverId } });
       // await messageCreated.createReceiver(user_);
-      messageCreated.receiverId = user_.id;
+      messageCreated.receiverId = conversationId;
     }
 
     await messageCreated.save();
 
-    return res.json(messageCreated);
+    const messageRes = await Message.findOne({
+      where: {
+        id: messageCreated.id,
+      },
+
+      include: [
+        {
+          model: Attachment,
+          as: 'attachments',
+          attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+        },
+        {
+          model: User,
+          as: 'receiver',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+        {
+          model: ChatGroup,
+          as: 'chatGroup',
+          include: {
+            model: User,
+            as: 'users',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
+        },
+        {
+          model: User,
+          as: 'sender',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+      ],
+    });
+
+    return res.json(messageRes);
   } catch (error) {
     next(error);
   }
@@ -102,6 +161,7 @@ exports.getConversation = async (req, res, next) => {
           },
         ],
       },
+
       order: [['updatedAt', 'DESC']],
 
       include: [
@@ -133,11 +193,143 @@ exports.getConversation = async (req, res, next) => {
   }
 };
 
+exports.getMessage = async (req, res, next) => {
+  try {
+    const { conversationId } = req.params;
+
+    const currentUser = req.user;
+    const { skip } = req.query;
+    const limit_ = req.query.limit;
+    const { limit, offset } = getPagination(skip, limit_);
+
+    const responeData = {};
+
+    let messages = [];
+
+    if (!conversationId) {
+      throw new APIError({
+        message: 'Không tồn tại conversationId',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    let receiverInfo = await User.findOne({ where: { username: conversationId }, attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'] });
+
+    if (!receiverInfo) {
+      receiverInfo = await ChatGroup.findOne({
+        where: { id: conversationId },
+        attributes: ['id', 'name', 'avatarUrl', 'description'],
+        include: {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'username', 'email', 'fullName'],
+        },
+      });
+      if (!receiverInfo) {
+        throw new APIError({
+          message: 'Something went wrong',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+
+            {
+              [Op.and]: [{ conversationType: 'ChatGroup' }, { chatGroupId: conversationId }],
+            },
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+          },
+          {
+            model: User,
+            as: 'sender',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
+          {
+            model: User,
+            as: 'receiver',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
+          {
+            model: ChatGroup,
+            as: 'chatGroup',
+            include: {
+              model: User,
+              as: 'users',
+              attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+            },
+          },
+        ],
+      });
+      responeData.conversationType = 'ChatGroup';
+      responeData.receiver = receiverInfo;
+      // const response = getPagingData(Object.assign(contacts, { rows: messages }), page, limit);
+    } else {
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { conversationType: 'User' },
+                {
+                  [Op.or]: [
+                    { [Op.and]: [{ senderId: currentUser.id }, { receiverId: receiverInfo.id }] },
+                    { [Op.and]: [{ senderId: receiverInfo.id }, { receiverId: currentUser.id }] },
+                  ],
+                },
+              ],
+            },
+
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+          },
+          {
+            model: User,
+            as: 'sender',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
+          {
+            model: User,
+            as: 'receiver',
+            attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+          },
+
+        ],
+      });
+      responeData.conversationType = 'User';
+      responeData.receiver = receiverInfo;
+    }
+    responeData.messages = messages.reverse();
+    return res.json(responeData);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getConversations = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    const { gskip, pskip, perpage } = req.query;
+    const { gskip, pskip } = req.query;
 
     if ((gskip && gskip > 0) || (pskip && pskip > 0)) return res.json([]);
 
@@ -169,7 +361,7 @@ exports.getConversations = async (req, res, next) => {
 
     const personalMessages = [];
 
-    _.mapKeys(mess, (value, key) => personalMessages.push(value[0]));
+    _.mapKeys(mess, (value) => personalMessages.push(value[0]));
 
     const chatGroups = await ChatGroup.findAll({
       include: {
@@ -207,7 +399,6 @@ exports.getConversations = async (req, res, next) => {
             },
           ],
         });
-        console.log(item);
         groupMessages.push(item[0]);
       }),
     );
@@ -425,9 +616,6 @@ exports.danhsachnhomchat = async (req, res, next) => {
     const { limit, offset } = getPagination(page, perpage);
 
     const chatGroups = await ChatGroup.findAndCountAll({
-      /* where: {
-        [Op.and]: [{ status: 1 }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
-      }, */
       include: {
         model: User,
         as: 'users',
@@ -466,7 +654,7 @@ exports.danhsachnhomchat = async (req, res, next) => {
 };
 
 exports.updateAvatar = (req, res, next) => {
-  avatarUploadFile(req, res, async (err) => {
+  avatarUploadFile(req, res, async () => {
     try {
       if (!req.file) {
         throw new APIError({
@@ -479,13 +667,6 @@ exports.updateAvatar = (req, res, next) => {
       item = Object.assign(item, { avatarUrl: req.file.filename });
 
       await item.save();
-
-      // update user
-      // let chatGroupUpdate = await ChatGroup.findOneAndUpdate({ _id: req.params.chatGroupId }, { picture: req.file.filename });
-      // Delete old user picture
-      /*  if (chatGroupUpdate.picture) {
-        await fsExtra.remove(`${avatarDirectory}/${chatGroupUpdate.picture}`); // return old item after updated
-      } */
 
       const result = {
         message: 'success',
@@ -517,4 +698,77 @@ const getPagingData = (data, page, limit) => {
     },
     data: listItems,
   };
+};
+
+const photosUploadFile = multer(storagePhoto).single('photos');
+
+exports.addPhotos = (req, res, next) => {
+  photosUploadFile(req, res, async (err) => {
+    try {
+      if (!req.file) {
+        console.log(err);
+        throw new APIError({
+          message: err,
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+      const outputFile = `${req.file.path}.jpg`;
+
+      await sharp(req.file.path).jpeg({ quality: 80 }).toFile(outputFile);
+
+      // delete old file
+      fs.unlinkSync(req.file.path);
+
+      const temp = {
+        uid: uuidv4(),
+        name: `${req.file.filename}.jpg`,
+        path: `/images/message/${req.file.filename}.jpg`,
+        status: 'done',
+        response: { status: 'success' },
+        linkProps: { download: 'image' },
+        thumbUrl: `${staticUrl}/images/message/${req.file.filename}.jpg`,
+      };
+      return res.json(temp);
+    } catch (error) {
+      next(error);
+    }
+  });
+};
+
+const filesUpload = multer(storageFile).single('files');
+
+exports.addFiles = (req, res, next) => {
+  const currentUser = req.user;
+
+  filesUpload(req, res, async (err) => {
+    try {
+      if (!req.file) {
+        console.log(err);
+        throw new APIError({
+          message: err,
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+
+      const temp = {
+        uid: uuidv4(),
+        name: req.file.filename,
+        path: `/files/${req.file.filename}`,
+        status: 'done',
+        response: { status: 'success' },
+        linkProps: { download: 'file' },
+      };
+
+      const dataItem = {
+        type: 'file', name: req.file.filename, path: `${req.file.filename}`, userId: currentUser.id,
+      };
+
+      const messageCreated = await Attachment.create(dataItem);
+      await messageCreated.save();
+
+      return res.json(messageCreated);
+    } catch (error) {
+      next(error);
+    }
+  });
 };

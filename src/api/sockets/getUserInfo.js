@@ -1,8 +1,14 @@
-const User = require('../models/user.model');
+const db = require('../../config/mssql');
+
+const User = db.users;
 
 const getUserInfo = async (id) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findOne({
+      where: {
+        username: id,
+      },
+    });
 
     if (user) return user.transform();
     return null;
