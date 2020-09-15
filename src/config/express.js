@@ -23,6 +23,11 @@ const app = express();
 // static file
 app.use('/public', express.static(path.join(__dirname, '../../public')));
 
+app.use(express.static(path.join(__dirname, '../../build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+});
+
 // Init server with socket.io and express app
 const server = http.createServer(app);
 const io = socketio(server, { path: '/chat/socket.io' });
