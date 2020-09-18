@@ -11,7 +11,7 @@ module.exports = {
 
   sqlconfig: {
     server: process.env.SQL_SERVER,
-    port: 1433,
+    port: process.env.SQL_PORT,
     database: process.env.SQL_DATABASE,
     user: process.env.SQL_USER,
     password: process.env.SQL_PASSWORD,

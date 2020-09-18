@@ -24,9 +24,6 @@ const app = express();
 app.use('/public', express.static(path.join(__dirname, '../../public')));
 
 app.use(express.static(path.join(__dirname, '../../build')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
-});
 
 // Init server with socket.io and express app
 const server = http.createServer(app);
@@ -60,7 +57,9 @@ passport.use('jwt', strategies.jwt);
 
 // mount api v1 routes
 app.use('/v1', routes);
-
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+});
 // Init all sockets
 initSockets(io);
 
@@ -72,5 +71,7 @@ app.use(error.notFound);
 
 // error handler, send stacktrace only during development
 app.use(error.handler);
+
+
 
 module.exports = server;

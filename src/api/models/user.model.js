@@ -112,6 +112,30 @@ module.exports = (sequelize, Sequelize) => {
       }
       throw new APIError(err);
     }
+
+    static async findAndGenerateTokenSSO(options) {
+      const { username, password, refreshObject } = options;
+      if (!username) {
+        throw new APIError({
+          message: 'An email is required to generate a token',
+        });
+      }
+
+      const user = await User.findOne({
+        where: {
+          username,
+        },
+      });
+
+      const err = {
+        status: httpStatus.BAD_REQUEST,
+        isPublic: true,
+      };
+      if (user) {
+        return { user, accessToken: user.token() };
+      }
+      throw new APIError(err);
+    }
   }
 
   User.init(

@@ -35,7 +35,7 @@ const initSockets = (io) => {
       // const user = await getUserInfo(socket.decoded_token.context.user.userName);
       if (user) {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
-      }
+      } else return;
 
       // handle disconnect
       socket.on('disconnect', () => {

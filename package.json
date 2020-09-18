@@ -68,7 +68,9 @@
     "socketio-jwt": "^4.6.2",
     "tedious": "^9.1.0",
     "uuid": "^8.2.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "apidoc": "^0.23.0",

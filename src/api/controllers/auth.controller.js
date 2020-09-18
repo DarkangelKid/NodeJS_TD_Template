@@ -2,8 +2,13 @@ const httpStatus = require('http-status');
 const moment = require('moment-timezone');
 const { omit } = require('lodash');
 const bcrypt = require('bcryptjs');
-const { jwtExpirationInterval } = require('../../config/vars');
 const jwt = require('jwt-simple');
+const axios = require('axios');
+const convert = require('xml-js');
+const { jwtExpirationInterval } = require('../../config/vars');
+
+const parseXML = require('xml2js').parseString;
+const XMLprocessors = require('xml2js/lib/processors');
 
 const db = require('../../config/mssql');
 
@@ -55,6 +60,73 @@ exports.login = async (req, res, next) => {
     const user_ = await User.get(user.id);
 
     return res.json({ token, user: user.transform() });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.loginsso = async (req, res, next) => {
+  try {
+    const { ticket } = req.query;
+
+    const str = `https://dangnhap.namdinh.gov.vn/p3/serviceValidate?ticket=${ticket}&service=https://chat.namdinh.gov.vn/v1/auth/login`;
+    // console.log(str);
+    // return res.redirect(str);
+    /*  const dataUser = await axios.get(str)
+      .then((response) => {
+        const jsonData = JSON.parse(convert.xml2json(response.data, { compact: true, spaces: 2 }));
+        console.log(jsonData);
+        return jsonData;
+        // return res.send(jsonData);
+      })
+      .catch((error) => {
+        console.log('error');
+        console.log(error);
+        return null;
+      })
+      .then(() => null);
+ */
+    let dataUser = null;
+    const result_ = await axios.get(str);
+
+    parseXML(result_.data, {
+      trim: true,
+      normalize: true,
+      explicitArray: false,
+      tagNameProcessors: [XMLprocessors.normalize, XMLprocessors.stripPrefix],
+    }, (err, result) => {
+      if (err) {
+        return ('Response from CAS server was bad.');
+      }
+      try {
+        const failure = result.serviceresponse.authenticationfailure;
+        if (failure) {
+          return (`CAS authentication failed (${failure.$.code}).`);
+        }
+        const success = result.serviceresponse.authenticationsuccess;
+        if (success) {
+          dataUser = (success.user);
+          // console.log(success.attributes);
+        }
+
+        return ('CAS authentication failed.');
+      } catch (er) {
+        return ('CAS authentication failed.');
+      }
+    });
+
+    if (dataUser) {
+      const { user, accessToken } = await User.findAndGenerateTokenSSO({ username: dataUser });
+
+      const token = await generateTokenResponse(user, accessToken);
+      const user_ = await User.get(user.id);
+
+      return res.redirect(`https://chat.namdinh.gov.vn/loginwithtoken&token=${token.accessToken}`);
+
+      // return res.json({ token, user: user.transform() });
+    }
+
+    return res.redirect('https://chat.namdinh.gov.vn');
   } catch (error) {
     return next(error);
   }

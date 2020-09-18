@@ -12,6 +12,8 @@ npm-debug.log*
 # Documentation
 docs
 
+build
+
 # Runtime data
 pids
 *.pid
