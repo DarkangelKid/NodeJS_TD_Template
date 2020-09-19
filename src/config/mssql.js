@@ -34,6 +34,8 @@ db.user_chatGroup = require('../api/models/userChatGroup.model')(sequelize, Sequ
 db.message = require('../api/models/message.model')(sequelize, Sequelize);
 db.attachment = require('../api/models/attachment.model')(sequelize, Sequelize);
 
+db.notification = require('../api/models/notification.model')(sequelize, Sequelize);
+
 const User = db.users;
 const Position = db.positions;
 const Office = db.offices;
@@ -43,6 +45,7 @@ const Permission = db.permissions;
 const UserChatGroup = db.user_chatGroup;
 const Message = db.message;
 const Attachment = db.attachment;
+const Notification = db.notification;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {

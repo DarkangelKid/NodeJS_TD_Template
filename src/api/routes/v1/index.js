@@ -8,6 +8,7 @@ const positionRoutes = require('./position.route');
 const contactRoutes = require('./contact.route');
 const chatGroupRoutes = require('./chatGroup.route');
 const messageRoutes = require('./message.route');
+const notificationRoutes = require('./notification.route');
 
 const router = express.Router();
 
@@ -30,5 +31,7 @@ router.use('/chatgroup', chatGroupRoutes);
 router.use('/message', messageRoutes);
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
+
+router.use('/notifi', notificationRoutes);
 
 module.exports = router;
