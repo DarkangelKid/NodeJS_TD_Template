@@ -1,6 +1,5 @@
 const { DataTypes, Sequelize, Model } = require('sequelize');
 const httpStatus = require('http-status');
-const { MAX } = require('mssql');
 const APIError = require('../utils/APIError');
 
 module.exports = (sequelize, Sequelize) => {
@@ -65,7 +64,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       data: {
-        type: DataTypes.STRING(MAX),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       isRead: {
