@@ -26,17 +26,11 @@ exports.sendtoTopic = async (req, res, next) => {
     const { notification } = data;
     const dataNotifi = data.data;
 
-    const message = {
-      data: dataNotifi,
-      notification: data.notification,
-      tokens: data.registrationTokens,
-    };
-
     const messages = [];
 
     registrationTokens.map((registrationToken) => {
       messages.push({
-        data: dataNotifi,
+        data: {},
         notification,
         token: registrationToken,
       });
@@ -45,7 +39,7 @@ exports.sendtoTopic = async (req, res, next) => {
     await Promise.all(
       topics.map(async (topic) => {
         const notifi = {
-          data: dataNotifi,
+          data: {},
           notification,
           topic,
         };
@@ -59,6 +53,7 @@ exports.sendtoTopic = async (req, res, next) => {
             appType,
           });
           const savedNotifi = await notifi.save(); */
+
           const item = await Notification.create({
             username: topic, title: notification.title, body: notification.body, appType, data: JSON.stringify(dataNotifi),
           });
