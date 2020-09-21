@@ -65,7 +65,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       data: {
-        type: DataTypes.STRING(MAX),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       isRead: {
