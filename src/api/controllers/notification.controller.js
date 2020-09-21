@@ -5,6 +5,8 @@ const APIError = require('../utils/APIError');
 
 const db = require('../../config/mssql');
 
+const { Op } = db.Sequelize;
+
 const { firebase_service_accout_key_Path, firebase_service_url } = require('../../config/vars');
 
 const serviceAccount = require(firebase_service_accout_key_Path);
@@ -55,7 +57,11 @@ exports.sendtoTopic = async (req, res, next) => {
           const savedNotifi = await notifi.save(); */
 
           const item = await Notification.create({
-            username: topic, title: notification.title, body: notification.body, appType, data: JSON.stringify(dataNotifi),
+            username: topic,
+            title: notification.title,
+            body: notification.body,
+            appType,
+            data: JSON.stringify(dataNotifi),
           });
         }
       }),
@@ -103,12 +109,51 @@ exports.replace = async (req, res, next) => {
 
 exports.list = async (req, res, next) => {
   try {
+    const currentUserId = req.user.username;
+    const key = req.user.email;
+    const type = req.query.type ? req.query.type : '';
+    const { skip, limit } = req.query;
+    const notifis = await Notification.list({
+      type,
+      key,
+      skip,
+      limit,
+    });
+    res.json(notifis);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.findAll = async (req, res, next) => {
+  const { q, page, perpage, username } = req.query;
+  const { limit, offset } = getPagination(page, perpage);
+  const condition = q ? { name: { [Op.like]: `%${q}%` } } : null;
+  const attributes = ['id', 'name', 'code', 'description', 'parentId'];
+
+  Notification.findAndCountAll({
+    where: { username },
+    limit,
+    offset,
+  })
+    .then((data) => {
+      const response = getPagingData(data, page, limit);
+      res.json(response);
+    })
+    .catch((e) => next(e));
+};
+
+exports.list_bk = async (req, res, next) => {
+  try {
     const currentUserId = req.user.id;
     const key = req.user.email;
     const type = req.query.type ? req.query.type : '';
     const { skip, limit } = req.query;
     const notifis = await Notification.list({
-      type, key, skip, limit,
+      type,
+      key,
+      skip,
+      limit,
     });
     res.json(notifis);
   } catch (error) {
@@ -141,7 +186,8 @@ exports.removeAll = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    Notification.remove({ topic: currentUser.email }).then(() => res.status(httpStatus.OK).end())
+    Notification.remove({ topic: currentUser.email })
+      .then(() => res.status(httpStatus.OK).end())
       .catch((e) => next(e));
   } catch (error) {
     next(error);
@@ -152,9 +198,31 @@ exports.isReadAll = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    Notification.update({ topic: currentUser.email }, { isRead: true }).then(() => res.status(httpStatus.OK).end())
+    Notification.update({ topic: currentUser.email }, { isRead: true })
+      .then(() => res.status(httpStatus.OK).end())
       .catch((e) => next(e));
   } catch (error) {
     next(error);
   }
+};
+
+const getPagination = (page, perpage) => {
+  const limit = perpage ? +perpage : 10;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: listItems } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return {
+    meta: {
+      total: totalItems,
+      pages: totalPages,
+      page: currentPage,
+      perpage: limit,
+    },
+    data: listItems,
+  };
 };

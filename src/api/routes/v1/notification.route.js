@@ -14,7 +14,7 @@ router.route('/isReadAll').put(authorize(LOGGED_USER), controller.isReadAll);
 
 router
   .route('/')
-  .get(authorize(LOGGED_USER), controller.list);
+  .get(controller.findAll);
 
 router
   .route('/:notifiId')
