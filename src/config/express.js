@@ -1,4 +1,6 @@
 const express = require('express');
+var session = require('express-session');
+
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compress = require('compression');
@@ -14,11 +16,54 @@ const { logs } = require('./vars');
 const strategies = require('./passport');
 const error = require('../api/middlewares/error');
 const initSockets = require('../api/sockets');
+
+var CASAuthentication = require('../api/controllers/CASAuthentication');
+
 /**
-* Express instance
-* @public
-*/
+ * Express instance
+ * @public
+ */
+
 const app = express();
+
+app.use(
+  session({
+    secret: '11091991',
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
+
+// Create a new instance of CASAuthentication.
+var cas = new CASAuthentication({
+  cas_url: 'https://dangnhap.hanhchinhcong.net',
+  service_url: 'http://127.0.0.1:8080',
+  return_to: 'http://127.0.0.1:8080',
+});
+
+// Unauthenticated clients will be redirected to the CAS login and then back to
+// this route once authenticated.
+app.get('/app', cas.bounce, function (req, res) {
+  res.send('<html><body>Hello!</body></html>');
+});
+
+// Unauthenticated clients will receive a 401 Unauthorized response instead of
+// the JSON data.
+app.get('/api', cas.block, function (req, res) {
+  res.json({ success: true });
+});
+
+app.get('/api/user', cas.block, function (req, res) {
+  res.json({ cas_user: req.session[cas.session_name] });
+});
+
+// Unauthenticated clients will be redirected to the CAS login and then to the
+// provided "redirectTo" query parameter once authenticated.
+app.get('/authenticate', cas.bounce_redirect);
+
+// This route will de-authenticate the client with the Express server and then
+// redirect the client to the CAS logout page.
+app.get('/logout', cas.logout);
 
 // static file
 app.use('/public', express.static(path.join(__dirname, '../../public')));
@@ -71,7 +116,5 @@ app.use(error.notFound);
 
 // error handler, send stacktrace only during development
 app.use(error.handler);
-
-
 
 module.exports = server;
