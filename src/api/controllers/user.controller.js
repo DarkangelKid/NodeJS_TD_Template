@@ -12,6 +12,8 @@ const { avatarDirectory, avatarTypes, avatarLimitSize } = require('../../config/
 const db = require('../../config/mssql');
 const User = db.users;
 const Contact = db.contacts;
+const Position = db.positions;
+const Office = db.offices;
 
 const { Op } = db.Sequelize;
 
@@ -20,19 +22,46 @@ const DataNguoiDung = require('../data/NguoiDung_NamDinh.json');
 exports.ImportUser = async (req, res, next) => {
   try {
     let count = 0;
+
     await Promise.all(
       DataNguoiDung.data.map(async (item) => {
         const rounds = 10;
         const hash = await bcrypt.hash('Tandan123', rounds);
-
+        console.log(item);
         let positon = item.Position?.Name ?? null;
+        let groupCode = item.Group?.GroupCode ?? null;
+        let officeCode = item.UserOffice?.GroupCode ?? null;
 
         let positionId = null;
         let officeId = null;
         let nhomId = null;
 
+        if (groupCode) {
+          groupCode = groupCode.replace(/-/g, '.');
+
+          let officeItem = await Office.findOne({ where: { code: groupCode } });
+
+          if (officeItem) {
+            nhomId = officeItem.id;
+          }
+        }
+
+        if (officeCode) {
+          officeCode = officeCode.replace(/-/g, '.');
+
+          let officeItem = await Office.findOne({ where: { code: officeCode } });
+
+          if (officeItem) {
+            officeId = officeItem.id;
+          }
+        }
+
         if (positon) {
-          
+          let officeItem = await Position.findOne({ where: { name: positon } });
+
+          if (officeItem) {
+            positionId = officeItem.id;
+          }
         }
 
         let itemData = {
@@ -44,6 +73,9 @@ exports.ImportUser = async (req, res, next) => {
           email: item.UserProfile.Email,
           phoneNumber: item.UserProfile.Phone,
           password: hash,
+          positionId: positionId,
+          officeId: officeId,
+          nhomId: nhomId,
         };
         try {
           const itemUser = await User.create(itemData);
