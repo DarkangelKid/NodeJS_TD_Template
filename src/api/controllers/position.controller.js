@@ -6,6 +6,7 @@ const db = require('../../config/mssql');
 const Position = db.positions;
 
 const { Op } = db.Sequelize;
+const Datas = require('../data/ChucVu_NamDinh.json');
 
 exports.findOne = async (req, res, next) => {
   try {
@@ -20,6 +21,31 @@ exports.findOne = async (req, res, next) => {
       .catch((e) => next(e));
   } catch (error) {
     next(error);
+  }
+};
+
+exports.ImportPosition = async (req, res, next) => {
+  try {
+    let count = 0;
+    await Promise.all(
+      Datas.result.map(async (item) => {
+        let OfGroup = item.OfGroup;
+        let ParentGroupCode = OfGroup?.GroupCode ?? '';
+
+        let itemData = {
+          name: item.Name,
+          description: '',
+          code: item.Code,
+        };
+        const itemCreated = await Position.create(itemData);
+        if (itemCreated) count++;
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: count });
+  } catch (error) {
+    console.log(error);
   }
 };
 

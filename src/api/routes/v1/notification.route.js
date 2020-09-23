@@ -11,6 +11,7 @@ router.param('notifiId', controller.load);
 router.route('/sendtoTopic').post(controller.sendtoTopic);
 router.route('/deleteAll').delete(authorize(LOGGED_USER), controller.removeAll);
 router.route('/isReadAll').put(authorize(LOGGED_USER), controller.isReadAll);
+router.route('/isRead').get(controller.isRead);
 
 router
   .route('/')

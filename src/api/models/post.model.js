@@ -1,9 +1,9 @@
 const { DataTypes, Sequelize, Model } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-  class Comment extends Model {}
+  class Post extends Model {}
 
-  Comment.init(
+  Post.init(
     {
       content: {
         type: DataTypes.STRING,
@@ -13,13 +13,25 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.STRING,
         defaultValue: 'text',
       },
+      commentCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      reactionCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      shareCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
     },
     {
       sequelize,
-      modelName: 'comment',
+      modelName: 'post',
       freezeTableName: true,
     },
   );
 
-  return Comment;
+  return Post;
 };

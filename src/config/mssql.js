@@ -35,6 +35,9 @@ db.message = require('../api/models/message.model')(sequelize, Sequelize);
 db.attachment = require('../api/models/attachment.model')(sequelize, Sequelize);
 
 db.notification = require('../api/models/notification.model')(sequelize, Sequelize);
+db.group = require('../api/models/group.model')(sequelize, Sequelize);
+db.post = require('../api/models/post.model')(sequelize, Sequelize);
+db.comment = require('../api/models/comment.model')(sequelize, Sequelize);
 
 const User = db.users;
 const Position = db.positions;
@@ -46,6 +49,9 @@ const UserChatGroup = db.user_chatGroup;
 const Message = db.message;
 const Attachment = db.attachment;
 const Notification = db.notification;
+const Group = db.group;
+const Post = db.post;
+const Comment = db.comment;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
@@ -63,6 +69,12 @@ Office.hasMany(User, { as: 'users' });
 User.belongsTo(Office, {
   foreignKey: 'officeId',
   as: 'office',
+});
+
+Office.hasMany(User, { as: 'nhoms' });
+User.belongsTo(Office, {
+  foreignKey: 'nhomId',
+  as: 'nhom',
 });
 
 User.belongsToMany(Role, {
@@ -126,6 +138,72 @@ Attachment.belongsTo(Message, {
 
 User.hasMany(Attachment, { as: 'attachments' });
 Attachment.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
+Post.hasMany(Attachment, { as: 'attachments' });
+Attachment.belongsTo(Post, {
+  foreignKey: 'postId',
+  as: 'post',
+});
+
+Comment.hasMany(Attachment, { as: 'attachments' });
+Attachment.belongsTo(Comment, {
+  foreignKey: 'commentId',
+  as: 'comment',
+});
+
+User.belongsToMany(Group, {
+  through: 'user_group',
+  as: 'groups',
+  foreignKey: 'userId',
+});
+
+Group.belongsToMany(User, {
+  through: 'user_group',
+  as: 'users',
+  foreignKey: 'groupId',
+});
+
+User.belongsToMany(Group, {
+  through: 'userAdmin_group',
+  as: 'groupsAdmin',
+  foreignKey: 'userId',
+});
+
+Group.belongsToMany(User, {
+  through: 'userAdmin_group',
+  as: 'usersAdmin',
+  foreignKey: 'groupId',
+});
+
+User.hasMany(Post, { as: 'posts' });
+Post.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
+Group.hasMany(Post, { as: 'posts' });
+Post.belongsTo(Group, {
+  foreignKey: 'groupId',
+  as: 'group',
+});
+
+Post.hasMany(Comment, { as: 'comments' });
+Comment.belongsTo(Post, {
+  foreignKey: 'postId',
+  as: 'post',
+});
+
+Comment.hasMany(Comment, { as: 'comments' });
+Comment.belongsTo(Comment, {
+  foreignKey: 'parentId',
+  as: 'comment',
+});
+
+User.hasMany(Comment, { as: 'comments' });
+Comment.belongsTo(User, {
   foreignKey: 'userId',
   as: 'user',
 });

@@ -41,7 +41,7 @@ exports.sendtoTopic = async (req, res, next) => {
     await Promise.all(
       topics.map(async (topic) => {
         const notifi = {
-          data: {},
+          data: dataNotifi,
           notification,
           topic,
         };
@@ -57,11 +57,7 @@ exports.sendtoTopic = async (req, res, next) => {
           const savedNotifi = await notifi.save(); */
 
           const item = await Notification.create({
-            username: topic,
-            title: notification.title,
-            body: notification.body,
-            appType,
-            data: JSON.stringify(dataNotifi),
+            username: topic, title: notification.title, body: notification.body, appType, data: JSON.stringify(dataNotifi),
           });
         }
       }),
@@ -114,10 +110,7 @@ exports.list = async (req, res, next) => {
     const type = req.query.type ? req.query.type : '';
     const { skip, limit } = req.query;
     const notifis = await Notification.list({
-      type,
-      key,
-      skip,
-      limit,
+      type, key, skip, limit,
     });
     res.json(notifis);
   } catch (error) {
@@ -125,8 +118,25 @@ exports.list = async (req, res, next) => {
   }
 };
 
+exports.isRead = async (req, res, next) => {
+  const {
+    id,
+  } = req.query;
+
+  const notifi = await Notification.findOne({
+    where: { id },
+  });
+
+  notifi.isRead = true;
+  await notifi.save();
+
+  res.json({ data: notifi });
+};
+
 exports.findAll = async (req, res, next) => {
-  const { q, page, perpage, username } = req.query;
+  const {
+    q, page, perpage, username,
+  } = req.query;
   const { limit, offset } = getPagination(page, perpage);
   const condition = q ? { name: { [Op.like]: `%${q}%` } } : null;
   const attributes = ['id', 'name', 'code', 'description', 'parentId'];
@@ -135,6 +145,7 @@ exports.findAll = async (req, res, next) => {
     where: { username },
     limit,
     offset,
+
   })
     .then((data) => {
       const response = getPagingData(data, page, limit);
@@ -150,10 +161,7 @@ exports.list_bk = async (req, res, next) => {
     const type = req.query.type ? req.query.type : '';
     const { skip, limit } = req.query;
     const notifis = await Notification.list({
-      type,
-      key,
-      skip,
-      limit,
+      type, key, skip, limit,
     });
     res.json(notifis);
   } catch (error) {
@@ -186,8 +194,7 @@ exports.removeAll = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    Notification.remove({ topic: currentUser.email })
-      .then(() => res.status(httpStatus.OK).end())
+    Notification.remove({ topic: currentUser.email }).then(() => res.status(httpStatus.OK).end())
       .catch((e) => next(e));
   } catch (error) {
     next(error);
@@ -198,8 +205,7 @@ exports.isReadAll = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    Notification.update({ topic: currentUser.email }, { isRead: true })
-      .then(() => res.status(httpStatus.OK).end())
+    Notification.update({ topic: currentUser.email }, { isRead: true }).then(() => res.status(httpStatus.OK).end())
       .catch((e) => next(e));
   } catch (error) {
     next(error);

@@ -1,7 +1,8 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
-const Contact = require('../models/contact.model');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
+
 const multer = require('multer');
 const fsExtra = require('fs-extra');
 const APIError = require('../utils/APIError');
@@ -10,170 +11,127 @@ const { avatarDirectory, avatarTypes, avatarLimitSize } = require('../../config/
 
 const db = require('../../config/mssql');
 const User = db.users;
+const Contact = db.contacts;
 
-exports.load = async (req, res, next, id) => {
+const { Op } = db.Sequelize;
+
+const DataNguoiDung = require('../data/NguoiDung_NamDinh.json');
+
+exports.ImportUser = async (req, res, next) => {
   try {
-    const user = await User.findByPk(id);
-    /*  const user = await User.findOne({
-      where: {
-        userName,
-      },
-    }); */
-    req.locals = { user };
-    return next();
+    let count = 0;
+    await Promise.all(
+      DataNguoiDung.data.map(async (item) => {
+        const rounds = 10;
+        const hash = await bcrypt.hash('Tandan123', rounds);
+
+        let positon = item.Position?.Name ?? null;
+
+        let positionId = null;
+        let officeId = null;
+        let nhomId = null;
+
+        if (positon) {
+          
+        }
+
+        let itemData = {
+          username: item.UserProfile.Account,
+          fullName: item.UserProfile.FullName,
+          displayName: item.UserProfile.FullName,
+          sex: item.UserProfile.Sex,
+          birthday: item.UserProfile.Birthday,
+          email: item.UserProfile.Email,
+          phoneNumber: item.UserProfile.Phone,
+          password: hash,
+        };
+        try {
+          const itemUser = await User.create(itemData);
+          if (itemUser) count++;
+        } catch (error) {}
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: count });
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.GetUserInfo = async (req, res, next) => {
+  try {
+    const { id, username } = req.query;
+    const condition = id ? { id: id } : username ? { username: username } : { id: req.user.id };
+
+    const user = await User.findOne({
+      where: condition,
+      attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+      include: ['office', 'position'],
+    });
+
+    return res.json(user);
   } catch (error) {
     return next(error);
   }
 };
 
-/**
- * Get user
- * @public
- */
-exports.get = (req, res) => res.json(req.locals.user);
-
-exports.getCurrentUser = async (req, res) => {
-  const user = await User.findByPk(req.user.id);
-  return res.json(user);
-};
-
-/**
- * Get logged in user info
- * @public
- */
-exports.loggedIn = async (req, res) => {
-  //return res.json(req.user.transform());
-
-  let user = await User.get(req.user.id);
-  return res.json(user);
-};
-
-/**
- * Update existing user
- * @public
- */
-exports.update = async (req, res, next) => {
-  let user = await User.get(req.user.id);
-  // const ommitRole = user.role !== "admin" ? "role" : "";
-  // const ommitPassword = req.body.password !== "admin" ? "role" : "";
-
-  const updatedUser = omit(req.body, ['role', 'password']);
-  user = Object.assign(user, updatedUser);
-  user
-    .save()
-    .then((savedUser) => res.json(savedUser.transform()))
-    .catch((e) => next(User.checkDuplicateUsername(e)));
-};
-
-/**
- * Update existing user
- * @public
- */
-exports.updatePassword = async (req, res, next) => {
+exports.ListUser = async (req, res, next) => {
   try {
-    let user = await User.get(req.user.id);
-
-    const { oldPassword, newPassword } = req.body;
-    const passwordMatch = await user.passwordMatches(oldPassword);
-    if (passwordMatch) {
-      user = Object.assign(user, { password: newPassword });
-      return user
-        .save()
-        .then(() => res.json({ message: 'update succesfully' }))
-        .catch((e) => next(e));
-    }
-    throw new APIError({
-      message: "Passwords don't match",
-      status: httpStatus.NOT_FOUND,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
- * Get user list
- * @public
- */
-exports.list = async (req, res, next) => {
-  try {
-    // search user to add contact
     let currentUserId = req.user.id;
-    let users = await User.list({ ...req.query });
-    // get userids list
-    let usersId = [];
-    users.forEach((item) => {
-      usersId.push(item.id);
-    });
-    let contacts = await Contact.find({
-      $or: [
-        {
-          $and: [{ userId: { $in: usersId } }, { contactId: currentUserId }],
-        },
-        {
-          $and: [{ userId: currentUserId }, { contactId: { $in: usersId } }],
-        },
-      ],
-    });
-    let responseUsers = [];
-    // users = users.map((user) => user.publicInfoTransform());
 
-    users.forEach((userItem) => {
-      let tempItem = { ...userItem, type: 'notContact' };
+    const { q, page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+    const condition = q ? { fullName: { [Op.like]: `%${q}%` } } : null;
+    const attributes = ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'];
+    const include = ['office', 'position'];
+
+    const users = await User.findAndCountAll({
+      where: condition,
+      limit,
+      offset,
+      attributes,
+      include,
+    });
+
+    let queryContact = {
+      [Op.and]: [{ [Op.or]: [{ userOneId: currentUserId }, { userTwoId: currentUserId }] }],
+    };
+
+    const contacts = await Contact.findAll({ where: queryContact });
+
+    let responseUsers = [];
+    users.rows.forEach((userItem) => {
+      let tempItem = { ...userItem.toJSON(), type: 'notContact' };
       if (userItem.id == currentUserId) {
         tempItem.type = 'you';
       } else {
+        console.log(contacts);
         contacts.forEach((contactItem) => {
-          if (userItem.id.toString() == contactItem.userId.toString()) {
-            // request sent
-            if (!!contactItem.status) {
-              // accepted
+          if (userItem.id === contactItem.userOneId || userItem.id === contactItem.userTwoId) {
+            if (contactItem.status === 1) {
               tempItem.type = 'contact';
+              return;
+            } else if (contactItem.actionUserId === currentUserId) {
+              tempItem.type = 'requestsent';
               return;
             } else {
               tempItem.type = 'request';
               return;
             }
-          } else if (userItem.id.toString() == contactItem.contactId.toString()) {
-            // request
-            if (!!contactItem.status) {
-              // accepted
-              tempItem.type = 'contact';
-              return;
-            } else {
-              tempItem.type = 'requestSent';
-              return;
-            }
           }
         });
       }
+
       responseUsers.push(tempItem);
     });
 
-    // const transformedUsers = users.map(user => user.transform());
-    res.json(responseUsers);
+    const response = getPagingData({ count: users.count, rows: responseUsers }, page, limit);
+
+    return res.json(response);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
-
-/**
- * Delete user
- * @public
- */
-exports.remove = (req, res, next) => {
-  const { user } = req.locals;
-
-  user
-    .remove()
-    .then(() => res.status(httpStatus.NO_CONTENT).end())
-    .catch((e) => next(e));
-};
-
-// let avatarUploadFile = multer({
-//   storage: storageAvatar,
-//   limits: { fileSize: avatarLimitSize },
-// }).single("avatar");
 
 let avatarUploadFile = multer(storageAvatar).single('avatar');
 
@@ -207,4 +165,25 @@ exports.UploadProfilePicture = (req, res, next) => {
       next(error);
     }
   });
+};
+
+const getPagination = (page, perpage) => {
+  const limit = perpage ? +perpage : 10;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: listItems } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return {
+    meta: {
+      total: totalItems,
+      pages: totalPages,
+      page: currentPage,
+      perpage: limit,
+    },
+    data: listItems,
+  };
 };

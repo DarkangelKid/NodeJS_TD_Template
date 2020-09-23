@@ -177,6 +177,10 @@ module.exports = (sequelize, Sequelize) => {
       sex: {
         type: DataTypes.STRING,
       },
+      birthday: {
+        type: DataTypes.DATE,
+        defaultValue: null,
+      },
       address: {
         type: DataTypes.STRING(1000),
       },

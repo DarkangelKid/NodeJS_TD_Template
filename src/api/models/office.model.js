@@ -25,19 +25,19 @@ module.exports = (sequelize, Sequelize) => {
 
   Office.init(
     {
-      parentId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
+      parentCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      code: { type: DataTypes.STRING, allowNull: false },
+      code: { type: DataTypes.STRING, allowNull: false, unique: true },
       active: { type: DataTypes.BOOLEAN, defaultValue: true },
     },
     {

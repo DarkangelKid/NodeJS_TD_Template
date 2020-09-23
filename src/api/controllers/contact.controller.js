@@ -14,11 +14,7 @@ exports.GetContacts = async (req, res, next) => {
 
     const queryType = req.query.type ? req.query.type : '';
 
-    const type = ['request', 'contact', 'requestsent'].includes(
-      queryType.toLowerCase(),
-    )
-      ? queryType.toLowerCase()
-      : 'contact';
+    const type = ['request', 'contact', 'requestsent'].includes(queryType.toLowerCase()) ? queryType.toLowerCase() : 'contact';
     // console.log(`TYPE: ${type}`);
 
     let status = 1;
@@ -34,13 +30,21 @@ exports.GetContacts = async (req, res, next) => {
       case 'requestsent':
         status = 0;
         query = {
-          [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }, { actionUserId: currentUser.id }],
+          [Op.and]: [
+            { status },
+            { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] },
+            { actionUserId: currentUser.id },
+          ],
         };
         break;
       case 'request':
         status = 0;
         query = {
-          [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }, { actionUserId: { [Op.ne]: currentUser.id } }],
+          [Op.and]: [
+            { status },
+            { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] },
+            { actionUserId: { [Op.ne]: currentUser.id } },
+          ],
         };
         break;
 
@@ -64,6 +68,7 @@ exports.GetContacts = async (req, res, next) => {
           attributes: ['id', 'fullName', 'username', 'avatarUrl', 'phoneNumber'],
         });
         user = user.toJSON();
+        user.datacontact =  i;
         dataUsers.push(user);
       }),
     );
@@ -85,6 +90,60 @@ exports.findOne = async (req, res, next) => {
     })
       .then((results) => res.json(results))
       .catch((e) => next(e));
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.CreateContact = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    const contactUsername = req.body.username;
+
+    const contactUser = await User.findOne({where:{username: contactUsername}})
+    if (!contactUser) {
+      throw new APIError({
+        message: 'Không tồn tại người dùng',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const contactUserId = contactUser.id
+
+    const userOneId = currentUser.id < contactUserId ? currentUser.id : contactUserId;
+    const userTwoId = currentUser.id > contactUserId ? currentUser.id : contactUserId;
+
+    if (!userOneId || !userTwoId || userOneId === userTwoId) {
+      throw new APIError({
+        message: 'Something went wrong',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const checkContact = await Contact.findOne({
+      where: {
+        [Op.and]: [{ userOneId }, { userTwoId }],
+      },
+    });
+
+    if (checkContact) {
+      throw new APIError({
+        message: 'Contact already exist',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const item = await Contact.create({
+      userOneId,
+      userTwoId,
+      status: 0,
+      actionUserId: currentUser.id,
+    })
+      .then((result) => result)
+      .catch((err) => next(err));
+
+    res.status(httpStatus.CREATED);
+    return res.json(item);
   } catch (error) {
     next(error);
   }

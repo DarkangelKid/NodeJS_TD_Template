@@ -3,6 +3,8 @@ const { omit } = require('lodash');
 
 const db = require('../../config/mssql');
 
+const DataDonVi = require('../data/DonVi_NamDinh.json');
+
 const Office = db.offices;
 
 const { Op } = db.Sequelize;
@@ -20,6 +22,72 @@ exports.findOne = async (req, res, next) => {
       .catch((e) => next(e));
   } catch (error) {
     next(error);
+  }
+};
+
+exports.ImportOffice = async (req, res, next) => {
+  try {
+    let count = 0;
+    await Promise.all(
+      DataDonVi.results.map(async (item) => {
+        let OfGroup = item.OfGroup;
+        let ParentGroupCode = OfGroup?.GroupCode ?? '';
+
+        let itemData = {
+          name: item.GroupName,
+          description: '',
+          code: item.GroupCode.replace(/-/g, '.'),
+          parentCode: ParentGroupCode.replace(/-/g, '.'),
+        };
+        const itemOffice = await Office.create(itemData);
+        if (itemOffice) count++;
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: count });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.AddParentId = async (req, res, next) => {
+  try {
+    let count = 0;
+    /* await Promise.all(
+      DataDonVi.results.map(async (item) => {
+        let OfGroup = item.OfGroup;
+        let ParentGroupCode = OfGroup?.GroupCode ?? '';
+
+        let itemData = {
+          name: item.GroupName,
+          description: '',
+          code: item.GroupCode.replace(/-/g, '.'),
+          parentCode: ParentGroupCode.replace(/-/g, '.'),
+        };
+        const itemOffice = await Office.create(itemData);
+        if (itemOffice) count++;
+      }),
+    ); */
+
+    let arr = await Office.findAll();
+    await Promise.all(
+      arr.map(async (item) => {
+        let parentCode = item.parentCode;
+        if (parentCode.length > 1) {
+          let parentOffice = await Office.findOne({ where: { code: parentCode } });
+          if (parentOffice) {
+            item.parentId = parentOffice.id;
+            await item.save();
+          }
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: count });
+  } catch (error) {
+    console.log(error);
   }
 };
 

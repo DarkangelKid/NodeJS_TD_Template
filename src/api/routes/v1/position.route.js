@@ -17,6 +17,11 @@ router
   .post(authorize(LOGGED_USER), controller.create);
 
 router
+  .route('/ImportPosition')
+  // tìm kiếm
+  .post(authorize(LOGGED_USER), controller.ImportPosition);
+
+router
   .route('/:id')
   // lấy thông tin
   .get(authorize(), controller.findOne)

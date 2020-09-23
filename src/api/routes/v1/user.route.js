@@ -10,36 +10,14 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
-router.param('userId', controller.load);
+//router.param('userId', controller.load);
 
-// Thay đổi mật khẩu
-router.route('/change-password').patch(authorize(LOGGED_USER), validate(updatePassword), controller.updatePassword);
+router.route('/ImportUser').post(authorize(), controller.ImportUser);
 
-router
-  .route('/')
-  // tìm kiếm người dùng
-  .get(authorize(LOGGED_USER), controller.list)
-  // Cập nhật người dùng
-  .patch(authorize(LOGGED_USER), /* validate(updateUser), */ controller.update);
-
-router
-  .route('/profile')
-  // Lấy thông tin người dùng hiện tại
-  .get(authorize(), controller.loggedIn);
-
-router
-  .route('/current')
-  // Lấy thông tin người dùng hiện tại
-  .get(authorize(), controller.loggedIn);
+router.route('/GetUserInfo').get(authorize(), controller.GetUserInfo);
+router.route('/ListUser').get(authorize(), controller.ListUser);
 
 // Cập nhật ảnh đại diện
 router.route('/UploadProfilePicture').post(authorize(), controller.UploadProfilePicture);
-
-router
-  .route('/:userId')
-  // lấy thông tin người dùng theo id
-  .get(authorize(LOGGED_USER), controller.get)
-  // Xóa người dùng
-  .delete(authorize(LOGGED_USER), controller.remove);
 
 module.exports = router;
