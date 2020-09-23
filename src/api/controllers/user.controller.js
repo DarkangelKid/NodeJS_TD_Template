@@ -23,11 +23,16 @@ exports.ImportUser = async (req, res, next) => {
   try {
     let count = 0;
 
+    console.log('AAAAA');
+
+    let arr = DataNguoiDung.data;
+    console.log(arr.length);
+
     await Promise.all(
-      DataNguoiDung.data.map(async (item) => {
+      arr.map(async (item) => {
         const rounds = 10;
-        const hash = await bcrypt.hash('Tandan123', rounds);
-        console.log(item);
+        //const hash = await bcrypt.hash('Tandan123', rounds);
+
         let positon = item.Position?.Name ?? null;
         let groupCode = item.Group?.GroupCode ?? null;
         let officeCode = item.UserOffice?.GroupCode ?? null;
@@ -72,15 +77,19 @@ exports.ImportUser = async (req, res, next) => {
           birthday: item.UserProfile.Birthday,
           email: item.UserProfile.Email,
           phoneNumber: item.UserProfile.Phone,
-          password: hash,
+          password: '$2a$10$J/870qRZ8o7TitXS4yoziul0COW0GgeN7D143eZkMx.Q0mh8um6/m',
           positionId: positionId,
           officeId: officeId,
           nhomId: nhomId,
         };
+
         try {
           const itemUser = await User.create(itemData);
           if (itemUser) count++;
-        } catch (error) {}
+        } catch (error__) {
+          console.log('LOI');
+          console.log(error__);
+        }
       }),
     );
 
