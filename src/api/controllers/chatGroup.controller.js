@@ -10,6 +10,9 @@ const storageAvatar = require('../utils/storageAvatar');
 
 const User = db.users;
 const ChatGroup = db.chatGroups;
+
+const Office = db.offices;
+
 const User_ChatGroup = db.user_chatGroup;
 
 const avatarUploadFile = multer(storageAvatar).single('avatar');
@@ -32,6 +35,80 @@ exports.getThongTin = async (req, res, next) => {
     })
       .then((results) => res.json(results))
       .catch((e) => next(e));
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.ImportGroup = async (req, res, next) => {
+  try {
+    const offices = await Office.findAll();
+
+    await Promise.all(
+      offices.map(async (item) => {
+        let itemData = {
+          name: item.name,
+          description: '',
+        };
+
+        const itemGroup = await ChatGroup.create(itemData);
+
+        let users = await User.findAll({ where: { [Op.or]: [{ nhomId: item.id }, { officeId: item.id }] } });
+
+        users.map(async (itemUser) => {
+          try {
+            await itemGroup.addUser(itemUser, { through: { type: 0 } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        });
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { users, id } = req.body;
+
+    const item_tmp = await User_ChatGroup.findOne({
+      where: {
+        userId: currentUser.id,
+        chatGroupId: id,
+      },
+    });
+
+    if (item_tmp.type !== 1) {
+      throw new APIError({
+        message: 'Không có quyền.',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const chatGroup = await ChatGroup.findByPk(id);
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findByPk(i);
+            chatGroup.addUser(user_, { through: { type: 0 } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json(chatGroup);
   } catch (error) {
     next(error);
   }

@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const axios = require('axios');
 const convert = require('xml-js');
-const { jwtExpirationInterval } = require('../../config/vars');
+const { jwtExpirationInterval, LOGIN_SSO, URL_API_MANAGER, TOKEN_API_MANAGER } = require('../../config/vars');
 
 const parseXML = require('xml2js').parseString;
 const XMLprocessors = require('xml2js/lib/processors');
@@ -20,7 +20,8 @@ const generateTokenResponse = async (user, accessToken) => {
   const tmp = await RefreshToken.generate(user);
   const refreshToken = tmp.token;
 
-  const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
+  //const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
+  const expiresIn = moment().add(jwtExpirationInterval, 'day');
   return {
     tokenType,
     accessToken,
@@ -54,11 +55,50 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
+    if (LOGIN_SSO === '1') {
+      if (!req.body.username) {
+        throw new APIError({
+          message: 'Chưa nhập thông tin người dùng',
+        });
+      }
+
+      let data = await axios.post(
+        `${URL_API_MANAGER}/danhmuc/LoginUser`,
+        { user: req.body.username, pass: req.body.password },
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN_API_MANAGER}`,
+          },
+        },
+      );
+
+      let token = data.data?.data ?? null;
+      if (!token) {
+        throw new APIError({
+          message: 'Đăng nhập lỗi! Vui lòng đăng nhập lại',
+        });
+      }
+      return res.json({ token });
+    } else {
+      const { user, accessToken } = await User.findAndGenerateToken(req.body);
+
+      const token = await generateTokenResponse(user, accessToken);
+      const user_ = await User.get(user.id);
+      return res.json({ token, user: user.transform() });
+    }
+
+    //return res.json({ token, user: user.transform() });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.login_old = async (req, res, next) => {
+  try {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
 
     const token = await generateTokenResponse(user, accessToken);
     const user_ = await User.get(user.id);
-
     return res.json({ token, user: user.transform() });
   } catch (error) {
     return next(error);
@@ -89,31 +129,35 @@ exports.loginsso = async (req, res, next) => {
     let dataUser = null;
     const result_ = await axios.get(str);
 
-    parseXML(result_.data, {
-      trim: true,
-      normalize: true,
-      explicitArray: false,
-      tagNameProcessors: [XMLprocessors.normalize, XMLprocessors.stripPrefix],
-    }, (err, result) => {
-      if (err) {
-        return ('Response from CAS server was bad.');
-      }
-      try {
-        const failure = result.serviceresponse.authenticationfailure;
-        if (failure) {
-          return (`CAS authentication failed (${failure.$.code}).`);
+    parseXML(
+      result_.data,
+      {
+        trim: true,
+        normalize: true,
+        explicitArray: false,
+        tagNameProcessors: [XMLprocessors.normalize, XMLprocessors.stripPrefix],
+      },
+      (err, result) => {
+        if (err) {
+          return 'Response from CAS server was bad.';
         }
-        const success = result.serviceresponse.authenticationsuccess;
-        if (success) {
-          dataUser = (success.user);
-          // console.log(success.attributes);
-        }
+        try {
+          const failure = result.serviceresponse.authenticationfailure;
+          if (failure) {
+            return `CAS authentication failed (${failure.$.code}).`;
+          }
+          const success = result.serviceresponse.authenticationsuccess;
+          if (success) {
+            dataUser = success.user;
+            // console.log(success.attributes);
+          }
 
-        return ('CAS authentication failed.');
-      } catch (er) {
-        return ('CAS authentication failed.');
-      }
-    });
+          return 'CAS authentication failed.';
+        } catch (er) {
+          return 'CAS authentication failed.';
+        }
+      },
+    );
 
     if (dataUser) {
       const { user, accessToken } = await User.findAndGenerateTokenSSO({ username: dataUser });

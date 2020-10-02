@@ -8,7 +8,7 @@ module.exports = {
       callback(null, fileDirectory);
     },
     filename: (req, file, callback) => {
-      const fileTypes = /pdf|docx|xlsx|csv|txt/;
+      const fileTypes = /pdf|docx|xlsx|csv|txt|zip|doc/;
       // let mimetype = fileTypes.test(file.mimetype);
       const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
       if (extname) {

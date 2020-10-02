@@ -13,6 +13,7 @@ router
   .route('/')
   // tạo mới
   .post(authorize(LOGGED_USER), controller.create);
+  router.route('/ImportGroup').post(authorize(LOGGED_USER), controller.ImportGroup);
 
 router
   .route('/')

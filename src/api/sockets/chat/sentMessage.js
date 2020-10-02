@@ -12,6 +12,8 @@ const sentMessage = async (io, data, clients, user) => {
       }
     }); */
 
+    console.log('GUI TIN CHO GROUP');
+
     const receiverInfo = await ChatGroup.findOne({
       where: { id: data.chatGroupId },
       attributes: ['id', 'name', 'avatarUrl', 'description'],
@@ -28,6 +30,9 @@ const sentMessage = async (io, data, clients, user) => {
       }
     });
   } else if (data.conversationType === 'User') {
+    console.log('GUI TIN CHO NG DUNG' + data.receiverId);
+    console.log(clients[data.receiverId]);
+
     if (clients[data.receiverId]) {
       emitNotifyToArray(clients, data.receiverId, io, 'res-sent-message', data);
     }

@@ -14,10 +14,15 @@ router
   // tìm kiếm
   .get(authorize(LOGGED_USER), controller.GetContacts);
 
-  router
+router
   .route('/CreateContact')
   // tìm kiếm
   .post(authorize(LOGGED_USER), controller.CreateContact);
+
+  router
+  .route('/HandleContact')
+  // tìm kiếm
+  .post(authorize(LOGGED_USER), controller.HandleContact);
 
 router
   .route('/')

@@ -9,6 +9,10 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      code: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       avatarUrl: {
         type: DataTypes.STRING,
         allowNull: true,

@@ -41,4 +41,8 @@ module.exports = {
 
   firebase_service_accout_key_Path: process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH,
   firebase_service_url: process.env.FIREBASE_SERVICE_URL,
+
+  LOGIN_SSO: process.env.LOGIN_SSO,
+  URL_API_MANAGER: process.env.URL_API_MANAGER,
+  TOKEN_API_MANAGER: process.env.TOKEN_API_MANAGER,
 };

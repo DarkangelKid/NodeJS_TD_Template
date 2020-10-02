@@ -65,10 +65,11 @@ exports.GetContacts = async (req, res, next) => {
     await Promise.all(
       contacts.rows.map(async (i) => {
         let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {
-          attributes: ['id', 'fullName', 'username', 'avatarUrl', 'phoneNumber'],
+          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          include: ['office', 'position'],
         });
         user = user.toJSON();
-        user.datacontact =  i;
+        user.datacontact = i;
         dataUsers.push(user);
       }),
     );
@@ -100,7 +101,7 @@ exports.CreateContact = async (req, res, next) => {
     const currentUser = req.user;
     const contactUsername = req.body.username;
 
-    const contactUser = await User.findOne({where:{username: contactUsername}})
+    const contactUser = await User.findOne({ where: { username: contactUsername } });
     if (!contactUser) {
       throw new APIError({
         message: 'Không tồn tại người dùng',
@@ -108,7 +109,7 @@ exports.CreateContact = async (req, res, next) => {
       });
     }
 
-    const contactUserId = contactUser.id
+    const contactUserId = contactUser.id;
 
     const userOneId = currentUser.id < contactUserId ? currentUser.id : contactUserId;
     const userTwoId = currentUser.id > contactUserId ? currentUser.id : contactUserId;
@@ -126,11 +127,18 @@ exports.CreateContact = async (req, res, next) => {
       },
     });
 
-    if (checkContact) {
+    if (checkContact && checkContact.status !== 2) {
       throw new APIError({
         message: 'Contact already exist',
         status: httpStatus.BAD_REQUEST,
       });
+    }
+
+    if (checkContact && checkContact.status === 2) {
+      checkContact.status = 0;
+      checkContact.actionUserId = currentUser.id;
+      await checkContact.save();
+      return res.json(checkContact);
     }
 
     const item = await Contact.create({
@@ -188,6 +196,29 @@ exports.create = async (req, res, next) => {
 
     res.status(httpStatus.CREATED);
     return res.json(item);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.HandleContact = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    const { status, id } = req.body;
+
+    if (!status || !id) {
+      throw new APIError({
+        message: 'Something went wrong',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+    let item = await Contact.findByPk(id);
+
+    item = Object.assign(item, { status, actionUserId: currentUser.id });
+    item
+      .save()
+      .then((data) => res.json(data))
+      .catch((e) => next(e));
   } catch (error) {
     next(error);
   }

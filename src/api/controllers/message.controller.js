@@ -29,9 +29,7 @@ exports.createMessage = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    let {
-      type, message, conversationType, files,
-    } = req.body;
+    let { type, message, conversationType, files } = req.body;
 
     console.log(files);
 
@@ -64,8 +62,17 @@ exports.createMessage = async (req, res, next) => {
     const messageCreated = await Message.create(dataItem);
 
     if (type === 'text') {
-
     } else if (type === 'file') {
+      await Promise.all(
+        files.map(async (i) => {
+          const itemFile = await Attachment.findByPk(i.id);
+
+          console.log(itemFile);
+
+          await messageCreated.addAttachment(itemFile);
+        }),
+      );
+    } else if (type === 'image') {
       await Promise.all(
         files.map(async (i) => {
           const itemFile = await Attachment.findByPk(i.id);
@@ -198,9 +205,11 @@ exports.getMessage = async (req, res, next) => {
     const { conversationId } = req.params;
 
     const currentUser = req.user;
-    const { skip } = req.query;
-    const limit_ = req.query.limit;
-    const { limit, offset } = getPagination(skip, limit_);
+    const offset_ = req.query?.skip ?? 0;
+    const limit_ = req.query?.limit ?? 20;
+
+    const offset = +offset_;
+    const limit = +limit_;
 
     const responeData = {};
 
@@ -213,7 +222,10 @@ exports.getMessage = async (req, res, next) => {
       });
     }
 
-    let receiverInfo = await User.findOne({ where: { username: conversationId }, attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'] });
+    let receiverInfo = await User.findOne({
+      where: { username: conversationId },
+      attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+    });
 
     if (!receiverInfo) {
       receiverInfo = await ChatGroup.findOne({
@@ -234,7 +246,6 @@ exports.getMessage = async (req, res, next) => {
       messages = await Message.findAll({
         where: {
           [Op.or]: [
-
             {
               [Op.and]: [{ conversationType: 'ChatGroup' }, { chatGroupId: conversationId }],
             },
@@ -289,7 +300,6 @@ exports.getMessage = async (req, res, next) => {
                 },
               ],
             },
-
           ],
         },
         limit,
@@ -312,7 +322,6 @@ exports.getMessage = async (req, res, next) => {
             as: 'receiver',
             attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
           },
-
         ],
       });
       responeData.conversationType = 'User';
@@ -703,6 +712,7 @@ const getPagingData = (data, page, limit) => {
 const photosUploadFile = multer(storagePhoto).single('photos');
 
 exports.addPhotos = (req, res, next) => {
+  const currentUser = req.user;
   photosUploadFile(req, res, async (err) => {
     try {
       if (!req.file) {
@@ -719,14 +729,25 @@ exports.addPhotos = (req, res, next) => {
       // delete old file
       fs.unlinkSync(req.file.path);
 
+      const dataItem = {
+        type: 'image',
+        name: `${req.file.filename}.jpg`,
+        path: `/public/images/${req.file.filename}.jpg`,
+        userId: currentUser.id,
+      };
+
+      const messageCreated = await Attachment.create(dataItem);
+      await messageCreated.save();
+
       const temp = {
+        id: messageCreated.id,
         uid: uuidv4(),
         name: `${req.file.filename}.jpg`,
-        path: `/images/message/${req.file.filename}.jpg`,
+        path: `/public/images/${req.file.filename}.jpg`,
         status: 'done',
         response: { status: 'success' },
         linkProps: { download: 'image' },
-        thumbUrl: `${staticUrl}/images/message/${req.file.filename}.jpg`,
+        thumbUrl: `${staticUrl}/public/images/${req.file.filename}.jpg`,
       };
       return res.json(temp);
     } catch (error) {
@@ -750,7 +771,18 @@ exports.addFiles = (req, res, next) => {
         });
       }
 
+      const dataItem = {
+        type: 'file',
+        name: req.file.filename,
+        path: `${req.file.filename}`,
+        userId: currentUser.id,
+      };
+
+      const messageCreated = await Attachment.create(dataItem);
+      await messageCreated.save();
+
       const temp = {
+        id: messageCreated.id,
         uid: uuidv4(),
         name: req.file.filename,
         path: `/files/${req.file.filename}`,
@@ -759,14 +791,7 @@ exports.addFiles = (req, res, next) => {
         linkProps: { download: 'file' },
       };
 
-      const dataItem = {
-        type: 'file', name: req.file.filename, path: `${req.file.filename}`, userId: currentUser.id,
-      };
-
-      const messageCreated = await Attachment.create(dataItem);
-      await messageCreated.save();
-
-      return res.json(messageCreated);
+      return res.json(temp);
     } catch (error) {
       next(error);
     }

@@ -20,6 +20,8 @@ const { pushSocketIdToArray, emitNotifyToArray, removeSocketIdToArray } = requir
  * @param {*} io from scoket.io library
  */
 const initSockets = (io) => {
+  console.log('SOCKETSOCKET');
+
   io.use(
     socketioJwt.authorize({
       secret: jwtSecret,
@@ -30,12 +32,17 @@ const initSockets = (io) => {
 
   io.on('connection', async (socket) => {
     try {
-      const user = await getUserInfo(socket.decoded_token.sub);
+      const user = await getUserInfo(socket.decoded_token.context.user.userName);
+      console.log('useruseruser');
+      console.log(user);
 
       // const user = await getUserInfo(socket.decoded_token.context.user.userName);
       if (user) {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
       } else return;
+
+      console.log('clients');
+      console.log(clients);
 
       // handle disconnect
       socket.on('disconnect', () => {

@@ -5,8 +5,8 @@ module.exports = (sequelize, Sequelize) => {
 
   Comment.init(
     {
-      content: {
-        type: DataTypes.STRING,
+      contentData: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       contentType: {

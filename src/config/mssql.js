@@ -35,9 +35,10 @@ db.message = require('../api/models/message.model')(sequelize, Sequelize);
 db.attachment = require('../api/models/attachment.model')(sequelize, Sequelize);
 
 db.notification = require('../api/models/notification.model')(sequelize, Sequelize);
-db.group = require('../api/models/group.model')(sequelize, Sequelize);
+db.groups = require('../api/models/group.model')(sequelize, Sequelize);
 db.post = require('../api/models/post.model')(sequelize, Sequelize);
 db.comment = require('../api/models/comment.model')(sequelize, Sequelize);
+db.reactions = require('../api/models/reaction.model')(sequelize, Sequelize);
 
 const User = db.users;
 const Position = db.positions;
@@ -49,9 +50,10 @@ const UserChatGroup = db.user_chatGroup;
 const Message = db.message;
 const Attachment = db.attachment;
 const Notification = db.notification;
-const Group = db.group;
+const Group = db.groups;
 const Post = db.post;
 const Comment = db.comment;
+const Reaction = db.reactions;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
@@ -140,6 +142,24 @@ User.hasMany(Attachment, { as: 'attachments' });
 Attachment.belongsTo(User, {
   foreignKey: 'userId',
   as: 'user',
+});
+
+User.hasMany(Reaction, { as: 'reactions' });
+Reaction.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
+Post.hasMany(Reaction, { as: 'reactions' });
+Reaction.belongsTo(Post, {
+  foreignKey: 'postId',
+  as: 'post',
+});
+
+Comment.hasMany(Reaction, { as: 'reactions' });
+Reaction.belongsTo(Comment, {
+  foreignKey: 'commentId',
+  as: 'comment',
 });
 
 Post.hasMany(Attachment, { as: 'attachments' });

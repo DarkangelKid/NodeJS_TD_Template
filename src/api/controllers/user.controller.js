@@ -151,12 +151,19 @@ exports.ListUser = async (req, res, next) => {
           if (userItem.id === contactItem.userOneId || userItem.id === contactItem.userTwoId) {
             if (contactItem.status === 1) {
               tempItem.type = 'contact';
+              tempItem.datacontact = contactItem;
+              return;
+            } else if (contactItem.status === 2) {
+              tempItem.type = 'notContact';
+              tempItem.datacontact = contactItem;
               return;
             } else if (contactItem.actionUserId === currentUserId) {
               tempItem.type = 'requestsent';
+              tempItem.datacontact = contactItem;
               return;
             } else {
               tempItem.type = 'request';
+              tempItem.datacontact = contactItem;
               return;
             }
           }

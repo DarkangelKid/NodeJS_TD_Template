@@ -14,6 +14,16 @@ router.route('/photos').post(authorize(), controller.addPhotos);
 router.route('/files').post(authorize(), controller.addFiles);
 
 router
+  .route('/getConversations')
+  // lấy thông tin
+  .get(authorize(), controller.getConversations);
+
+router
+  .route('/createMessage')
+  // lấy thông tin
+  .post(authorize(), controller.createMessage);
+
+router
   .route('/')
   // Lấy danh sách cuộc trò chuyện và tin nhắn cuối cùng
   .get(authorize(LOGGED_USER), /* validate(list), */ controller.getConversations)
