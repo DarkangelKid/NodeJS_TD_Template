@@ -53,7 +53,7 @@ exports.CreatePost = async (req, res, next) => {
       try {
         let users = group.users;
         users.map((i) => {
-          if (currentUser !== i.username) {
+          if (currentUser.username !== i.username) {
             arr_user.push(i.username);
           }
         });
