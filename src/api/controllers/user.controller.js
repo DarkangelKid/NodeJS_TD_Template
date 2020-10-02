@@ -216,7 +216,7 @@ exports.UploadProfilePicture = (req, res, next) => {
 };
 
 const getPagination = (page, perpage) => {
-  const limit = perpage ? +perpage : 10;
+  const limit = perpage ? +perpage : 100;
   const offset = page ? page * limit : 0;
   return { limit, offset };
 };

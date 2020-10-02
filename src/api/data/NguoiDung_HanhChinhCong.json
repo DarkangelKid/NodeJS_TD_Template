@@ -1,0 +1,2974 @@
+{
+    "data": [
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d6f397-e3f6-4976-93b8-f4ec4bdb0f30",
+                "GroupName": "Phòng phần mềm"
+            },
+            "Position": {
+                "Name": "Quản trị"
+            },
+            "UserOffice": {
+                "GroupCode": "231828f4-3f1b-4244-abc1-b625d4efd4bd",
+                "GroupName": "Công ty"
+            },
+            "UserProfile": {
+                "Account": "demo1",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Quản trị hệ thống",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d6f397-e3f6-4976-93b8-f4ec4bdb0f30",
+                "GroupName": "Phòng phần mềm"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "231828f4-3f1b-4244-abc1-b625d4efd4bd",
+                "GroupName": "Công ty"
+            },
+            "UserProfile": {
+                "Account": "demo2",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Cán bộ văn thư, một cửa",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d6f397-e3f6-4976-93b8-f4ec4bdb0f30",
+                "GroupName": "Phòng phần mềm"
+            },
+            "Position": {
+                "Name": "Giám đốc trung tâm"
+            },
+            "UserOffice": {
+                "GroupCode": "231828f4-3f1b-4244-abc1-b625d4efd4bd",
+                "GroupName": "Công ty"
+            },
+            "UserProfile": {
+                "Account": "demo3",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Lãnh đạo đơn vị",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d6f397-e3f6-4976-93b8-f4ec4bdb0f30",
+                "GroupName": "Phòng phần mềm"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "231828f4-3f1b-4244-abc1-b625d4efd4bd",
+                "GroupName": "Công ty"
+            },
+            "UserProfile": {
+                "Account": "demo4",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Lãnh đạo phòng ban",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d6f397-e3f6-4976-93b8-f4ec4bdb0f30",
+                "GroupName": "Phòng phần mềm"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "231828f4-3f1b-4244-abc1-b625d4efd4bd",
+                "GroupName": "Công ty"
+            },
+            "UserProfile": {
+                "Account": "demo5",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Cán bộ, chuyên viên",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "9b15bf1d-9574-4a22-a6ce-2cbee60f0807",
+                "GroupName": "Thường trực Tỉnh ủy"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "bithu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "9b15bf1d-9574-4a22-a6ce-2cbee60f0807",
+                "GroupName": "Thường trực Tỉnh ủy"
+            },
+            "Position": {
+                "Name": "Phó Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "phobithu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó bí thư Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-01-A100",
+                "GroupName": "Văn phòng Tỉnh ủy"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "chanhvanphong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh Văn phòng Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-01-A100",
+                "GroupName": "Văn phòng Tỉnh ủy"
+            },
+            "Position": {
+                "Name": "Phó Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "phochanhvanphong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó Chánh VP",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-01-A100",
+                "GroupName": "Phòng Hành chính - Cơ yếu"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "vanthu.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư VP Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-01-A100",
+                "GroupName": "Phòng Tổng hợp"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "tptonghop.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Tổng hợp",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-01-A100",
+                "GroupName": "Phòng Tổng hợp"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "cvtonghop.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên tổng hợp",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-01-A100",
+                "GroupName": "Phòng Tài chính Đảng"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "tptaichinhdang.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Tài chính Đảng",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-01-A100",
+                "GroupName": "Phòng Tài chính Đảng"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "cvtaichinhdang.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Tài chính Đảng",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-01-A100",
+                "GroupName": "Phòng Hành chính - Cơ yếu"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "tphccy.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Hành chính - Cơ yếu",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-01-A100",
+                "GroupName": "Phòng Hành chính - Cơ yếu"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "cvhccy.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Hành chính - Cơ yếu",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-01-A100",
+                "GroupName": "Phòng Quản trị"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "tpquantri.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Quản trị",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-01-A100",
+                "GroupName": "Phòng Quản trị"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "cvquantri.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Quản trị",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-06-01-A100",
+                "GroupName": "Phòng Lưu trữ-CNTT"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "tpltcntt.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Lưu trữ-CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-06-01-A100",
+                "GroupName": "Phòng Lưu trữ-CNTT"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "cvltcntt.vptu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Lưu trữ-CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "fb579fa0-80aa-429c-948e-44a80a2bbdb5",
+                "GroupName": "Ban Giám đốc"
+            },
+            "Position": {
+                "Name": "Giám đốc Sở"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "gd.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Giám đốc SKHĐT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "fb579fa0-80aa-429c-948e-44a80a2bbdb5",
+                "GroupName": "Ban Giám đốc"
+            },
+            "Position": {
+                "Name": "Phó giám đốc Sở"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "pgd.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó Giám đốc SKHĐT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "dddbdf5d-8220-42d8-9a1b-69970d4cd873",
+                "GroupName": "Văn phòng Sở"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "cvp.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh văn phòng SKHĐT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "dddbdf5d-8220-42d8-9a1b-69970d4cd873",
+                "GroupName": "Văn phòng Sở"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "vt.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư SKHĐT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "85b0e18d-5721-4fe1-9a98-fd1b8c274c80",
+                "GroupName": "Phòng Quy hoạch"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "tpqh.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Quy hoạch",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "85b0e18d-5721-4fe1-9a98-fd1b8c274c80",
+                "GroupName": "Phòng Quy hoạch"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "cvqh.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Quy hoạch",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "0ccc3fae-7c3d-4e65-8269-93dbc241ff0d",
+                "GroupName": "Thanh tra Sở"
+            },
+            "Position": {
+                "Name": "Chánh thanh tra"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "ctt.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh thanh tra KHDT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "0ccc3fae-7c3d-4e65-8269-93dbc241ff0d",
+                "GroupName": "Thanh tra Sở"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "fedb369f-0f6b-437b-9a68-86ac81df5815",
+                "GroupName": "Sở Kế hoạch và Đầu tư"
+            },
+            "UserProfile": {
+                "Account": "cvtt.khdt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Thanh tra",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e1103ed9-894a-4e35-99a3-e6b625c95755",
+                "GroupName": "Ban Giám đốc"
+            },
+            "Position": {
+                "Name": "Giám đốc Sở"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "gd.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Giám đốc STTTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e1103ed9-894a-4e35-99a3-e6b625c95755",
+                "GroupName": "Ban Giám đốc"
+            },
+            "Position": {
+                "Name": "Phó giám đốc Sở"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "pgd.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó Giám đốc STTTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "458a6c4f-32e5-49b6-b766-b74c1a9aa857",
+                "GroupName": "Văn phòng Sở"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "cvp.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh văn phòng STTTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "458a6c4f-32e5-49b6-b766-b74c1a9aa857",
+                "GroupName": "Văn phòng Sở"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "vt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư STTTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "82ba529b-659e-4923-b190-2166f842b182",
+                "GroupName": "Phòng CNTT"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "tpcntt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "82ba529b-659e-4923-b190-2166f842b182",
+                "GroupName": "Phòng CNTT"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "cvcntt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "cabd8e78-cc7d-4322-93f1-d9543e0942a8",
+                "GroupName": "Phòng BCVT"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "tpbcvt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng BCVT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "cabd8e78-cc7d-4322-93f1-d9543e0942a8",
+                "GroupName": "Phòng BCVT"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "cvbcvt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên BCVT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "d7e54139-2d7c-44af-a327-8075fc0bfddb",
+                "GroupName": "Ban giám đốc "
+            },
+            "Position": {
+                "Name": "Giám đốc trung tâm"
+            },
+            "UserOffice": {
+                "GroupCode": "243de686-af9b-4e77-8948-8a21d051e8e4",
+                "GroupName": "Trung tâm CNTT và TT"
+            },
+            "UserProfile": {
+                "Account": "gdtt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Giám đốc Trung tâm CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "d7e54139-2d7c-44af-a327-8075fc0bfddb",
+                "GroupName": "Ban giám đốc "
+            },
+            "Position": {
+                "Name": "Phó giám đốc Trung tâm"
+            },
+            "UserOffice": {
+                "GroupCode": "243de686-af9b-4e77-8948-8a21d051e8e4",
+                "GroupName": "Trung tâm CNTT và TT"
+            },
+            "UserProfile": {
+                "Account": "pgdtt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó Giám đốc Trung tâm CNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "c83801f7-efb6-444d-847e-479f7cd906a7",
+                "GroupName": "Phòng Hành chính"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "243de686-af9b-4e77-8948-8a21d051e8e4",
+                "GroupName": "Trung tâm CNTT và TT"
+            },
+            "UserProfile": {
+                "Account": "vttt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư TTCNTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "c2b027b8-f653-4c99-9af5-7120560fe12b",
+                "GroupName": "Phòng Kỹ thuật"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "243de686-af9b-4e77-8948-8a21d051e8e4",
+                "GroupName": "Trung tâm CNTT và TT"
+            },
+            "UserProfile": {
+                "Account": "tptt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Kỹ thuật",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "c2b027b8-f653-4c99-9af5-7120560fe12b",
+                "GroupName": "Phòng Kỹ thuật"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "243de686-af9b-4e77-8948-8a21d051e8e4",
+                "GroupName": "Trung tâm CNTT và TT"
+            },
+            "UserProfile": {
+                "Account": "cvtt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Kỹ thuật",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "188e52f6-93db-4e7d-a801-7d36e519ef29",
+                "GroupName": "Thanh tra Sở"
+            },
+            "Position": {
+                "Name": "Chánh thanh tra"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "ctt.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh thanh tra Sở",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "188e52f6-93db-4e7d-a801-7d36e519ef29",
+                "GroupName": "Thanh tra Sở"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "78c143a4-ebaf-4e13-8c0e-981c665260fa",
+                "GroupName": "Sở Thông tin và Truyền thông"
+            },
+            "UserProfile": {
+                "Account": "cvtts.tttt",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Thanh tra",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-01-03-A100",
+                "GroupName": "Thường trực huyện ủy"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "bithu.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư huyện ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-01-03-A100",
+                "GroupName": "Thường trực huyện ủy"
+            },
+            "Position": {
+                "Name": "Phó Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "phobithu.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó bí thư huyện ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-03-A100",
+                "GroupName": "Văn phòng huyện ủy"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "cvp.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh Văn phòng huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-03-A100",
+                "GroupName": "Văn phòng huyện ủy"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-03-A100",
+                "GroupName": "Ban Tổ chức"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "cvbtc.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên ban Tổ chức",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-03-A100",
+                "GroupName": "Ban Tổ chức"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "tbtc.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Tổ chức",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-03-A100",
+                "GroupName": "Ban Tuyên giáo"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "tbtg.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Tuyên giáo",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-03-A100",
+                "GroupName": "Ban Tuyên giáo"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "cvbtg.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên ban Tuyên giáo",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-03-A100",
+                "GroupName": "Đảng ủy xã"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "btdu.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư Đảng ủy xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-03-A100",
+                "GroupName": "Đảng ủy xã"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-03-A100",
+                "GroupName": "Đảng ủy xã"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "cv.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-06-03-A100",
+                "GroupName": "Đảng ủy thị trấn"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "btdu.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư Đảng ủy thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-06-03-A100",
+                "GroupName": "Đảng ủy thị trấn"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-06-03-A100",
+                "GroupName": "Đảng ủy thị trấn"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-03-A100",
+                "GroupName": "Huyện ủy"
+            },
+            "UserProfile": {
+                "Account": "cv.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-01-02-A100",
+                "GroupName": "Thường trực Thành ủy"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "bithu.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư thành ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-01-02-A100",
+                "GroupName": "Thường trực Thành ủy"
+            },
+            "Position": {
+                "Name": "Phó Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "phobithu.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó bí thư thành ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-02-A100",
+                "GroupName": "Văn phòng Thành ủy"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "cvp.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh văn phòng thành ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-02-02-A100",
+                "GroupName": "Văn phòng Thành ủy"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư thành ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-02-A100",
+                "GroupName": "Ban Tổ chức"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "tbtc.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Tổ chức",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-03-02-A100",
+                "GroupName": "Ban Tổ chức"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "cvbtc.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên ban Tổ chức",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-02-A100",
+                "GroupName": "Ban Dân vận"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "tbdv.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Dân vận",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-04-02-A100",
+                "GroupName": "Ban Dân vận"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "cvbdv.thanhuy",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên ban Dân vận",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-02-A100",
+                "GroupName": "Đảng ủy phường"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "bithu.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư Đảng ủy phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-02-A100",
+                "GroupName": "Đảng ủy phường"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-05-02-A100",
+                "GroupName": "Đảng ủy phường"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "cv.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-01-01-H100",
+                "GroupName": "Phòng Hành chính"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "vanthu.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư VPUBND tỉnh",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-02-H100",
+                "GroupName": "Phòng Tổng hợp"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "tptonghop.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Tổng hợp",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-02-H100",
+                "GroupName": "Phòng Tổng hợp"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvtonghop.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên tổng hợp",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-03-H100",
+                "GroupName": "Phòng Văn xã"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "tpvanxa.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Văn xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-03-H100",
+                "GroupName": "Phòng Văn xã"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvvanxa.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Văn xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-04-H100",
+                "GroupName": "Trung tâm tin học"
+            },
+            "Position": {
+                "Name": "Giám đốc trung tâm"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "gdtt.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Giám đốc Trung tâm tin học",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-04-H100",
+                "GroupName": "Trung tâm tin học"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvtt.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Trung tâm tin học",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "7dfa9dae-b169-42bb-b05c-c4cabeeaad2a",
+                "GroupName": "Ban Tiếp công dân"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "tbtcd.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban TCD",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "7dfa9dae-b169-42bb-b05c-c4cabeeaad2a",
+                "GroupName": "Ban Tiếp công dân"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvtcd.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên TCD",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "7dfa9dae-b169-42bb-b05c-c4cabeeaad2a",
+                "GroupName": "Ban Tiếp công dân"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "c9995433-1012-4c25-bf0b-6c404007e826",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvxld.vpub",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên xử lý đơn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "26bcc8e0-160c-4e24-b058-0202e916b453",
+                "GroupName": "Thường trực UBND"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "chutich.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "26bcc8e0-160c-4e24-b058-0202e916b453",
+                "GroupName": "Thường trực UBND"
+            },
+            "Position": {
+                "Name": "Phó Chủ tịch UBND"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "phochutich.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó chủ tịch UBND huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e88ad0ca-2736-4e8f-8925-c5491e2cdb58",
+                "GroupName": "Văn phòng HĐND - UBND huyện"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "cvp.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh Văn phòng huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e88ad0ca-2736-4e8f-8925-c5491e2cdb58",
+                "GroupName": "Văn phòng HĐND - UBND huyện"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "vanthu.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND huyện",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "bda186f8-be6c-4e2e-add0-a181a8eff97c",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "tpnv.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Nội vụ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "bda186f8-be6c-4e2e-add0-a181a8eff97c",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "cvnv.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Nội vụ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "9e1c6640-0ce4-4678-99e0-30ef1a4d490d",
+                "GroupName": "Phòng VHTT"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "tpvhtt.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng VHTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "9e1c6640-0ce4-4678-99e0-30ef1a4d490d",
+                "GroupName": "Phòng VHTT"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "cvvhtt.huyen",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên VHTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "6c58c499-c8a3-4fa7-80e8-9e5f24a4d8b3",
+                "GroupName": "UBND xã"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "ctubnd.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "6c58c499-c8a3-4fa7-80e8-9e5f24a4d8b3",
+                "GroupName": "UBND xã"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "vanthu.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "6c58c499-c8a3-4fa7-80e8-9e5f24a4d8b3",
+                "GroupName": "UBND xã"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "cv.xa",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND xã",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "88f951f0-df2e-4155-94d6-b4ef9ddbb433",
+                "GroupName": "UBND thị trấn"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "chutich.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "88f951f0-df2e-4155-94d6-b4ef9ddbb433",
+                "GroupName": "UBND thị trấn"
+            },
+            "Position": {
+                "Name": "Phó Chủ tịch UBND"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "vanthu.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "88f951f0-df2e-4155-94d6-b4ef9ddbb433",
+                "GroupName": "UBND thị trấn"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "76a9b0ad-1979-4f27-b835-2bc984444e1e",
+                "GroupName": "UBND huyện"
+            },
+            "UserProfile": {
+                "Account": "cv.thitran",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND thị trấn",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "83555b9f-6737-464e-aaa1-c91b37b7da0b",
+                "GroupName": "Thường trực UBND"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "83555b9f-6737-464e-aaa1-c91b37b7da0b",
+                "GroupName": "Thường trực UBND"
+            },
+            "UserProfile": {
+                "Account": "chutich.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND thành phố",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "83555b9f-6737-464e-aaa1-c91b37b7da0b",
+                "GroupName": "Thường trực UBND"
+            },
+            "Position": {
+                "Name": "Phó Chủ tịch UBND"
+            },
+            "UserOffice": {
+                "GroupCode": "83555b9f-6737-464e-aaa1-c91b37b7da0b",
+                "GroupName": "Thường trực UBND"
+            },
+            "UserProfile": {
+                "Account": "phochutich.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó chủ tịch UBND thành phố",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "6b8b6d0a-3709-401e-b783-8431820b5898",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "Position": {
+                "Name": "Chánh văn phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "6b8b6d0a-3709-401e-b783-8431820b5898",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "cvp.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chánh văn phòng thành phố",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "6b8b6d0a-3709-401e-b783-8431820b5898",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "6b8b6d0a-3709-401e-b783-8431820b5898",
+                "GroupName": "Văn phòng HĐND - UBND thành phố"
+            },
+            "UserProfile": {
+                "Account": "vanthu.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND thành phố",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "999af5c6-a5ce-4db7-b949-70ff51ed2f02",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "999af5c6-a5ce-4db7-b949-70ff51ed2f02",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "UserProfile": {
+                "Account": "tpnv.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Nội vụ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "999af5c6-a5ce-4db7-b949-70ff51ed2f02",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "999af5c6-a5ce-4db7-b949-70ff51ed2f02",
+                "GroupName": "Phòng Nội vụ"
+            },
+            "UserProfile": {
+                "Account": "cvnv.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Nội vụ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "22b12c22-fa4d-4fd3-b566-2814539e9ab4",
+                "GroupName": "Phòng VHTT"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "22b12c22-fa4d-4fd3-b566-2814539e9ab4",
+                "GroupName": "Phòng VHTT"
+            },
+            "UserProfile": {
+                "Account": "tpvhtt.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng VHTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "22b12c22-fa4d-4fd3-b566-2814539e9ab4",
+                "GroupName": "Phòng VHTT"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "22b12c22-fa4d-4fd3-b566-2814539e9ab4",
+                "GroupName": "Phòng VHTT"
+            },
+            "UserProfile": {
+                "Account": "cvvhtt.thanhpho",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên VHTT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "UserProfile": {
+                "Account": "chutich.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "UserProfile": {
+                "Account": "vanthu.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư UBND phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "e18a859f-0603-45d5-bed8-f11f589280c1",
+                "GroupName": "UBND phường"
+            },
+            "UserProfile": {
+                "Account": "cv.phuong",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên UBND phường",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "74573489-9181-47d9-a107-e1d35e3abdfe",
+                "GroupName": "Thường trực UBND tỉnh"
+            },
+            "Position": {
+                "Name": null
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-01-H100",
+                "GroupName": "UBND tỉnh"
+            },
+            "UserProfile": {
+                "Account": "chutich",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chủ tịch UBND tỉnh",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "74573489-9181-47d9-a107-e1d35e3abdfe",
+                "GroupName": "Thường trực UBND tỉnh"
+            },
+            "Position": {
+                "Name": "Phó Chủ tịch UBND"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-01-H100",
+                "GroupName": "UBND tỉnh"
+            },
+            "UserProfile": {
+                "Account": "phochutich",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó Chủ tịch UBND tỉnh",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3ce9738-664e-4af2-ba8d-3b8b7a89e9c5",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "5f8a68ca-8b40-4f72-8fc9-80bc67cf9d47",
+                "GroupName": "Ban Tổ chức Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tb.btctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Tổ chức Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3ce9738-664e-4af2-ba8d-3b8b7a89e9c5",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Phó Ban"
+            },
+            "UserOffice": {
+                "GroupCode": "5f8a68ca-8b40-4f72-8fc9-80bc67cf9d47",
+                "GroupName": "Ban Tổ chức Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "pb.btctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó ban Tổ chức Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "f26b805f-caba-455e-961e-b060bdb95250",
+                "GroupName": "Phòng Tổ chức - Cán bộ"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "5f8a68ca-8b40-4f72-8fc9-80bc67cf9d47",
+                "GroupName": "Ban Tổ chức Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tptccb.btctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Tổ chức -Cán bộ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "f26b805f-caba-455e-961e-b060bdb95250",
+                "GroupName": "Phòng Tổ chức - Cán bộ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "5f8a68ca-8b40-4f72-8fc9-80bc67cf9d47",
+                "GroupName": "Ban Tổ chức Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "cvtccb.btctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Tổ chức -Cán bộ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "91e87959-8710-4cdd-b0e1-a61c901fec5b",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "391db89b-2215-42d8-a327-0c434add31a3",
+                "GroupName": "Ban Tuyên giáo Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tb.btgtu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Tuyên giáo Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "91e87959-8710-4cdd-b0e1-a61c901fec5b",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Phó Ban"
+            },
+            "UserOffice": {
+                "GroupCode": "391db89b-2215-42d8-a327-0c434add31a3",
+                "GroupName": "Ban Tuyên giáo Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "pb.btgtu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó ban Tuyên giáo Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "997119f7-60b7-46c1-8ae4-26ba59ad3fa6",
+                "GroupName": "Phòng Văn hóa - Văn nghệ"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "391db89b-2215-42d8-a327-0c434add31a3",
+                "GroupName": "Ban Tuyên giáo Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tpvhvn.btgtu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Văn hóa - Văn nghệ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "997119f7-60b7-46c1-8ae4-26ba59ad3fa6",
+                "GroupName": "Phòng Văn hóa - Văn nghệ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "391db89b-2215-42d8-a327-0c434add31a3",
+                "GroupName": "Ban Tuyên giáo Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "cvvhvn.btgtu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Văn hóa - Văn nghệ",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d30b6d-264a-4d52-941c-162db06f5eea",
+                "GroupName": "Đảng ủy phường 1"
+            },
+            "Position": {
+                "Name": "Bí thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "bithu.phuong1",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bí thư Đảng ủy phường 1",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d30b6d-264a-4d52-941c-162db06f5eea",
+                "GroupName": "Đảng ủy phường 1"
+            },
+            "Position": {
+                "Name": "Văn thư"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "vanthu.phuong1",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Văn thư Đảng ủy phường 1",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "a3d30b6d-264a-4d52-941c-162db06f5eea",
+                "GroupName": "Đảng ủy phường 1"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-02-A100",
+                "GroupName": "Thành ủy"
+            },
+            "UserProfile": {
+                "Account": "cv.phuong1",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên Đảng ủy phường 1",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-10-A100",
+                "GroupName": "Cục thống kê"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-10-A100",
+                "GroupName": "Cục thống kê"
+            },
+            "UserProfile": {
+                "Account": "ctk.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Cục Thống kê",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "ffc7d438-9e74-4c89-b332-bd194c587fc4",
+                "GroupName": "Cục Hải quan"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "ffc7d438-9e74-4c89-b332-bd194c587fc4",
+                "GroupName": "Cục Hải quan"
+            },
+            "UserProfile": {
+                "Account": "chq.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Cục Hải quan",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-12-A100",
+                "GroupName": "Cục thuế"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-12-A100",
+                "GroupName": "Cục thuế"
+            },
+            "UserProfile": {
+                "Account": "ct.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Cục Thuế",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-26-A100",
+                "GroupName": "Sở Tài chính"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-26-A100",
+                "GroupName": "Sở Tài chính"
+            },
+            "UserProfile": {
+                "Account": "stc.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Tài chính",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "cd92e498-c3dc-4d0a-b32e-6eb016e9ef30",
+                "GroupName": "Ngân hàng NN&PTNN"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-00-A100",
+                "GroupName": "Tỉnh uỷ"
+            },
+            "UserProfile": {
+                "Account": "nhnn.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Ngân hàng NN chi nhánh Tỉnh",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-19-A100",
+                "GroupName": "Sở Công thương"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-19-A100",
+                "GroupName": "Sở Công thương"
+            },
+            "UserProfile": {
+                "Account": "sct.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Công thương",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-20-A100",
+                "GroupName": "Sở Du lịch"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-20-A100",
+                "GroupName": "Sở Du lịch"
+            },
+            "UserProfile": {
+                "Account": "sdl.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Du lịch",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-22-A100",
+                "GroupName": "Sở Giao thông - Vận tải"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-22-A100",
+                "GroupName": "Sở Giao thông - Vận tải"
+            },
+            "UserProfile": {
+                "Account": "sgtvt.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Giao thông vận tải",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-27-A100",
+                "GroupName": "Sở Nông nghiệp và Phát triển nông thôn"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-27-A100",
+                "GroupName": "Sở Nông nghiệp và Phát triển nông thôn"
+            },
+            "UserProfile": {
+                "Account": "snn.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở NN và PTNT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-06-A100",
+                "GroupName": "Ban xây dựng nông thôn mới"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-06-A100",
+                "GroupName": "Ban xây dựng nông thôn mới"
+            },
+            "UserProfile": {
+                "Account": "ntm.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Ban Xây dựng nông thôn mới",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-28-A100",
+                "GroupName": "Sở Lao động - Thương binh và Xã hội"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-28-A100",
+                "GroupName": "Sở Lao động - Thương binh và Xã hội"
+            },
+            "UserProfile": {
+                "Account": "sld.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Lao động TB và XH",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-11-A100",
+                "GroupName": "Sở Y tế"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-11-A100",
+                "GroupName": "Sở Y tế"
+            },
+            "UserProfile": {
+                "Account": "syt.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Y tế",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-08-A100",
+                "GroupName": "Bảo hiểm xã hội"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-08-A100",
+                "GroupName": "Bảo hiểm xã hội"
+            },
+            "UserProfile": {
+                "Account": "bhxh.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "BHXH tỉnh",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-21-A100",
+                "GroupName": "Sở Giáo dục và đào tạo"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-21-A100",
+                "GroupName": "Sở Giáo dục và đào tạo"
+            },
+            "UserProfile": {
+                "Account": "sgd.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở GD và ĐT",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-00-13-A100",
+                "GroupName": "Sở Xây dựng"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-13-A100",
+                "GroupName": "Sở Xây dựng"
+            },
+            "UserProfile": {
+                "Account": "sxd.dcs",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Sở Xây dựng",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "64e91637-6025-44af-badc-149cde983d36",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Trưởng ban"
+            },
+            "UserOffice": {
+                "GroupCode": "1f233eb6-7ef6-40ce-94af-a86f3901de80",
+                "GroupName": "Ban Nội chính Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tb.bnctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng ban Nội chính Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "64e91637-6025-44af-badc-149cde983d36",
+                "GroupName": "Lãnh đạo Ban"
+            },
+            "Position": {
+                "Name": "Phó Ban"
+            },
+            "UserOffice": {
+                "GroupCode": "1f233eb6-7ef6-40ce-94af-a86f3901de80",
+                "GroupName": "Ban Nội chính Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "pb.bnctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phó ban Nội chính Tỉnh ủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "443c1b41-ecf0-4bf9-8742-e290af7733f7",
+                "GroupName": "Phòng Theo dõi công tác các cơ quan nội chính"
+            },
+            "Position": {
+                "Name": "Trưởng phòng"
+            },
+            "UserOffice": {
+                "GroupCode": "1f233eb6-7ef6-40ce-94af-a86f3901de80",
+                "GroupName": "Ban Nội chính Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "tptdct.bnctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trưởng phòng Theo dõi công tác các cơ quan nội chính",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "443c1b41-ecf0-4bf9-8742-e290af7733f7",
+                "GroupName": "Phòng Theo dõi công tác các cơ quan nội chính"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "1f233eb6-7ef6-40ce-94af-a86f3901de80",
+                "GroupName": "Ban Nội chính Tỉnh ủy"
+            },
+            "UserProfile": {
+                "Account": "cvtdct.bnctu",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Chuyên viên phòng Theo dõi công tác các cơ quan nội chính",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        }
+    ]
+}

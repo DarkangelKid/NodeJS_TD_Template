@@ -18,6 +18,61 @@ admin.initializeApp({
   databaseURL: firebase_service_url,
 });
 
+exports.sendtoTopicLocal = async (data) => {
+  try {
+    const { topics } = data;
+    const { registrationTokens } = data;
+    const { appType } = data;
+
+    const { notification } = data;
+    const dataNotifi = data.data;
+
+    if (topics.length < 1) {
+      return;
+    }
+
+    const messages = [];
+
+    registrationTokens.map((registrationToken) => {
+      messages.push({
+        data: {},
+        notification,
+        token: registrationToken,
+      });
+    });
+
+    await Promise.all(
+      topics.map(async (topic) => {
+        const notifi = {
+          data: dataNotifi,
+          notification,
+          topic,
+        };
+        messages.push(notifi);
+
+        if (appType !== 'CHAT_Drawer' || appType !== 'TT_HOP') {
+          const item = await Notification.create({
+            username: topic,
+            title: notification.title,
+            body: notification.body,
+            appType,
+            data: JSON.stringify(dataNotifi),
+          });
+        }
+      }),
+    );
+
+    const result = await admin
+      .messaging()
+      .sendAll(messages)
+      .then((response) => response)
+      .catch((error) => next(error));
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 exports.sendtoTopic = async (req, res, next) => {
   try {
     const data = req.body;
@@ -56,14 +111,6 @@ exports.sendtoTopic = async (req, res, next) => {
         messages.push(notifi);
 
         if (appType !== 'CHAT_Drawer' || appType !== 'TT_HOP') {
-          /* const notifi = new Notification({
-            data: dataNotifi,
-            notification,
-            topic,
-            appType,
-          });
-          const savedNotifi = await notifi.save(); */
-
           const item = await Notification.create({
             username: topic,
             title: notification.title,

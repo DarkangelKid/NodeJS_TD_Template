@@ -18,7 +18,6 @@ router.route('/getVoiceNotifi').get(authorize(LOGGED_USER), controller.getVoiceN
 router.route('/GetListNotifi').get(authorize(LOGGED_USER), controller.GetListNotifi);
 router.route('/ChiTietThongBao').get(authorize(LOGGED_USER), controller.ChiTietThongBao);
 
-
 router.route('/').get(controller.findAll);
 
 router

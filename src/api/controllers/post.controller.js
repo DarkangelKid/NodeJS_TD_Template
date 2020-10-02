@@ -3,6 +3,8 @@ const { omit } = require('lodash');
 
 const db = require('../../config/mssql');
 
+const nofitiController = require('./notification.controller');
+
 const DataDonVi = require('../data/DonVi_NamDinh.json');
 
 const Post = db.post;
@@ -35,6 +37,50 @@ exports.CreatePost = async (req, res, next) => {
         }
       }),
     );
+
+    let groupId = itemPost?.groupId ?? null;
+    if (groupId) {
+      let group = await Group.findOne({
+        where: { id: groupId },
+        attributes: ['id', 'name', 'avatarUrl', 'description'],
+        include: {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'username', 'email', 'fullName'],
+        },
+      });
+      let arr_user = [];
+      try {
+        let users = group.users;
+        users.map((i) => {
+          if (currentUser !== i.username) {
+            arr_user.push(i.username);
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    
+
+      let dataSend = {
+        topics: arr_user,
+        registrationTokens: [],
+        notification: {
+          title: `Thông báo mới trong nhóm ${group.name}`,
+          body: `${currentUser.fullName} đã đăng thông báo ${itemPost.contentData}`,
+        },
+        appType: 'TTNB_Drawer',
+        data: {
+          id: `${itemPost.id}`,
+          code: 'ttnb',
+          function: 'ChiTiet',
+        },
+      };
+
+
+      let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+      console.log(resultnotifi)
+    }
 
     res.status(httpStatus.CREATED);
     return res.json(itemPost);
