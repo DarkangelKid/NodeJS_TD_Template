@@ -40,6 +40,53 @@ exports.getThongTin = async (req, res, next) => {
   }
 };
 
+
+exports.GetListGroup = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    console.log(currentUser);
+
+    const { page, perpage } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    const groups = await ChatGroup.findAndCountAll({
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id', 'username'],
+        required: true,
+        where: {
+          id: currentUser.id,
+        },
+      },
+      limit,
+      offset,
+    });
+
+    const dataUsers = [];
+    await Promise.all(
+      groups.rows.map(async (i) => {
+        let user = await ChatGroup.findByPk(i.id, {
+          attributes: ['id', 'name', 'avatarUrl', 'description'],
+          include: {
+            model: User,
+            as: 'users',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          },
+        });
+        user = user.toJSON();
+        dataUsers.push(user);
+      }),
+    );
+
+    const response = getPagingData(Object.assign(groups, { rows: dataUsers }), page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.ImportGroup = async (req, res, next) => {
   try {
     const offices = await Office.findAll();

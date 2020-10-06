@@ -9,11 +9,13 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
+router.route('/ListGroup').get(authorize(LOGGED_USER), controller.GetListGroup);
+
 router
   .route('/')
   // tạo mới
   .post(authorize(LOGGED_USER), controller.create);
-  router.route('/ImportGroup').post(authorize(LOGGED_USER), controller.ImportGroup);
+router.route('/ImportGroup').post(authorize(LOGGED_USER), controller.ImportGroup);
 
 router
   .route('/')

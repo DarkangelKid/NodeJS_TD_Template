@@ -10,6 +10,11 @@ const router = express.Router();
  */
 
 router
+  .route('/GetContactsChatGroup')
+  // tìm kiếm
+  .get(authorize(LOGGED_USER), controller.GetContactsChatGroup);
+
+router
   .route('/GetContacts')
   // tìm kiếm
   .get(authorize(LOGGED_USER), controller.GetContacts);
@@ -19,7 +24,7 @@ router
   // tìm kiếm
   .post(authorize(LOGGED_USER), controller.CreateContact);
 
-  router
+router
   .route('/HandleContact')
   // tìm kiếm
   .post(authorize(LOGGED_USER), controller.HandleContact);

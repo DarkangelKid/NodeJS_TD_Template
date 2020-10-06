@@ -103,6 +103,7 @@ exports.sendtoTopic = async (req, res, next) => {
         token: registrationToken,
       });
     });
+    dataNotifi.appType = appType;
 
     await Promise.all(
       topics.map(async (topic) => {

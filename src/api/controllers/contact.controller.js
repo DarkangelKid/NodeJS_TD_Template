@@ -7,6 +7,8 @@ const nofitiController = require('./notification.controller');
 
 const Contact = db.contacts;
 const User = db.users;
+const ChatGroup = db.chatGroups;
+
 const { Op } = db.Sequelize;
 
 exports.GetContacts = async (req, res, next) => {
@@ -327,6 +329,60 @@ exports.yeucauchoxl = async (req, res, next) => {
     const response = getPagingData(Object.assign(contacts, { rows: dataUsers }), page, limit);
 
     return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.GetContactsChatGroup = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    let status = 1;
+    let query = {
+      [Op.and]: [{ status }, { [Op.or]: [{ userOneId: currentUser.id }, { userTwoId: currentUser.id }] }],
+    };
+
+    const contacts = await Contact.findAndCountAll({
+      where: query,
+    });
+
+    const dataUsers = [];
+    await Promise.all(
+      contacts.rows.map(async (i) => {
+        let user = await User.findByPk(i.userOneId !== currentUser.id ? i.userOneId : i.userTwoId, {
+          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          include: ['office', 'position'],
+        });
+        user = user.toJSON();
+        //user.datacontact = i;
+        user.type = 'User';
+
+        dataUsers.push(user);
+      }),
+    );
+
+    const groups = await ChatGroup.findAndCountAll({
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id', 'username'],
+        required: true,
+        where: {
+          id: currentUser.id,
+        },
+      },
+    });
+
+    groups.rows.map(async (i) => {
+      user = i.toJSON();
+      user.type = 'ChatGroup';
+      user.fullName = user.name;
+      user.username = user.id;
+      dataUsers.push(user);
+    });
+
+    return res.json(dataUsers);
   } catch (error) {
     next(error);
   }
