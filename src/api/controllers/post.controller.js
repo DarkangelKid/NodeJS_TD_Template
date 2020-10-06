@@ -79,7 +79,6 @@ exports.CreatePost = async (req, res, next) => {
 
 
       let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
-      console.log(resultnotifi)
     }
 
     res.status(httpStatus.CREATED);

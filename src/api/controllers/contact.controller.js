@@ -3,6 +3,7 @@ const { omit } = require('lodash');
 
 const APIError = require('../utils/APIError');
 const db = require('../../config/mssql');
+const nofitiController = require('./notification.controller');
 
 const Contact = db.contacts;
 const User = db.users;
@@ -138,6 +139,25 @@ exports.CreateContact = async (req, res, next) => {
       checkContact.status = 0;
       checkContact.actionUserId = currentUser.id;
       await checkContact.save();
+
+      let dataSend = {
+        topics: [contactUser.username],
+        registrationTokens: [],
+        notification: {
+          title: `${currentUser.fullName} đã gửi lời mời kết bạn`,
+          body: `${currentUser.fullName} đã gửi lời mời kết bạn`,
+        },
+        appType: 'TTNB_Drawer',
+        data: {
+          id: `${currentUser.username}`,
+          code: 'ttnb',
+          function: 'KetBan',
+        },
+      };
+
+      let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+      console.log(resultnotifi);
+
       return res.json(checkContact);
     }
 
@@ -146,9 +166,26 @@ exports.CreateContact = async (req, res, next) => {
       userTwoId,
       status: 0,
       actionUserId: currentUser.id,
-    })
-      .then((result) => result)
-      .catch((err) => next(err));
+    });
+
+    let dataSend = {
+      topics: [contactUser.username],
+      registrationTokens: [],
+      notification: {
+        title: `${currentUser.fullName} đã gửi lời mời kết bạn`,
+        body: `${currentUser.fullName} đã gửi lời mời kết bạn`,
+      },
+      appType: 'TTNB_Drawer',
+      data: {
+        id: `${currentUser.username}`,
+        code: 'ttnb',
+        function: 'KetBan',
+      },
+    };
+
+    let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+
+    console.log(resultnotifi);
 
     res.status(httpStatus.CREATED);
     return res.json(item);

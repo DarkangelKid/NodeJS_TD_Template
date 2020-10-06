@@ -14,6 +14,7 @@ const { staticUrl } = require('../../config/vars');
 const storageAvatar = require('../utils/storageAvatar');
 const storagePhoto = require('../utils/storagePhoto');
 const storageFile = require('../utils/storageFile');
+const nofitiController = require('./notification.controller');
 
 const User = db.users;
 const ChatGroup = db.chatGroups;
@@ -30,8 +31,6 @@ exports.createMessage = async (req, res, next) => {
     const currentUser = req.user;
 
     let { type, message, conversationType, files } = req.body;
-
-    console.log(files);
 
     if (!type) type = 'text';
 
@@ -76,9 +75,6 @@ exports.createMessage = async (req, res, next) => {
       await Promise.all(
         files.map(async (i) => {
           const itemFile = await Attachment.findByPk(i.id);
-
-          console.log(itemFile);
-
           await messageCreated.addAttachment(itemFile);
         }),
       );
@@ -137,8 +133,288 @@ exports.createMessage = async (req, res, next) => {
         },
       ],
     });
+    if (conversationType === 'User') {
 
+      let dataSend = {
+        topics: [messageRes.receiver.username],
+        registrationTokens: [],
+        notification: {
+          title: `${currentUser.fullName} đã gửi tin nhắn cho bạn`,
+          body: `${messageRes.message}`,
+        },
+        appType: 'CHAT_Drawer',
+        data: {
+          id: `${currentUser.username}`,
+          code: 'chat',
+          function: 'GuiTinNhan',
+        },
+      };
+
+      let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+    }
     return res.json(messageRes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteMessage = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    const { id } = req.query;
+
+    const message = await Message.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'sender',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+      ],
+    });
+
+    if (currentUser.username === message.sender.username) {
+      let tmp = await message.destroy();
+      return res.json({ data: tmp });
+    }
+
+    return res.json({ data: false });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listPhotos = async (req, res, next) => {
+  try {
+    const conversationId = req.query?.id ?? '';
+
+    const currentUser = req.user;
+    const offset_ = req.query?.skip ?? 0;
+    const limit_ = req.query?.limit ?? 20;
+
+    const offset = +offset_;
+    const limit = +limit_;
+
+    const responeData = {};
+
+    let messages = [];
+
+    if (!conversationId) {
+      throw new APIError({
+        message: 'Không tồn tại conversationId',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    let receiverInfo = await User.findOne({
+      where: { username: conversationId },
+      attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+    });
+
+    if (!receiverInfo) {
+      receiverInfo = await ChatGroup.findOne({
+        where: { id: conversationId },
+        attributes: ['id', 'name', 'avatarUrl', 'description'],
+        include: {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+      });
+      if (!receiverInfo) {
+        throw new APIError({
+          message: 'Something went wrong',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [{ conversationType: 'ChatGroup' }, { chatGroupId: conversationId }],
+            },
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            where: {
+              type: 'image',
+            },
+          },
+        ],
+      });
+      responeData.conversationType = 'ChatGroup';
+      responeData.receiver = receiverInfo;
+      // const response = getPagingData(Object.assign(contacts, { rows: messages }), page, limit);
+    } else {
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { conversationType: 'User' },
+                {
+                  [Op.or]: [
+                    { [Op.and]: [{ senderId: currentUser.id }, { receiverId: receiverInfo.id }] },
+                    { [Op.and]: [{ senderId: receiverInfo.id }, { receiverId: currentUser.id }] },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            where: {
+              type: 'image',
+            },
+          },
+        ],
+      });
+      responeData.conversationType = 'User';
+      responeData.receiver = receiverInfo;
+    }
+    //responeData.messages = messages.reverse();
+
+    let attachments = [];
+
+    messages.map((i) => {
+      //attachments.push(i.attachments[0]);
+      attachments = _.concat(attachments, i.attachments);
+    });
+
+    return res.json(attachments);
+    //return res.json(responeData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listFiles = async (req, res, next) => {
+  try {
+    const conversationId = req.query?.id ?? '';
+
+    const currentUser = req.user;
+    const offset_ = req.query?.skip ?? 0;
+    const limit_ = req.query?.limit ?? 20;
+
+    const offset = +offset_;
+    const limit = +limit_;
+
+    const responeData = {};
+
+    let messages = [];
+
+    if (!conversationId) {
+      throw new APIError({
+        message: 'Không tồn tại conversationId',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    let receiverInfo = await User.findOne({
+      where: { username: conversationId },
+      attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+    });
+
+    if (!receiverInfo) {
+      receiverInfo = await ChatGroup.findOne({
+        where: { id: conversationId },
+        attributes: ['id', 'name', 'avatarUrl', 'description'],
+        include: {
+          model: User,
+          as: 'users',
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
+        },
+      });
+      if (!receiverInfo) {
+        throw new APIError({
+          message: 'Something went wrong',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [{ conversationType: 'ChatGroup' }, { chatGroupId: conversationId }],
+            },
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            where: {
+              type: 'file',
+            },
+          },
+        ],
+      });
+      responeData.conversationType = 'ChatGroup';
+      responeData.receiver = receiverInfo;
+      // const response = getPagingData(Object.assign(contacts, { rows: messages }), page, limit);
+    } else {
+      messages = await Message.findAll({
+        where: {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { conversationType: 'User' },
+                {
+                  [Op.or]: [
+                    { [Op.and]: [{ senderId: currentUser.id }, { receiverId: receiverInfo.id }] },
+                    { [Op.and]: [{ senderId: receiverInfo.id }, { receiverId: currentUser.id }] },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        limit,
+        offset,
+        order: [['updatedAt', 'DESC']],
+
+        include: [
+          {
+            model: Attachment,
+            as: 'attachments',
+            where: {
+              type: 'file',
+            },
+          },
+        ],
+      });
+      responeData.conversationType = 'User';
+      responeData.receiver = receiverInfo;
+    }
+    //responeData.messages = messages.reverse();
+
+    let attachments = [];
+
+    messages.map((i) => {
+      // attachments.push(i.attachments[0]);
+      attachments = _.concat(attachments, i.attachments);
+    });
+
+    return res.json(attachments);
+    //return res.json(responeData);
   } catch (error) {
     next(error);
   }
@@ -234,7 +510,7 @@ exports.getMessage = async (req, res, next) => {
         include: {
           model: User,
           as: 'users',
-          attributes: ['id', 'username', 'email', 'fullName'],
+          attributes: ['id', 'username', 'email', 'fullName', 'avatarUrl'],
         },
       });
       if (!receiverInfo) {

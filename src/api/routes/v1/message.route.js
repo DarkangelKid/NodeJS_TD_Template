@@ -9,9 +9,8 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
-console.log('aaavaoady');
-router.route('/photos').post(authorize(), controller.addPhotos);
-router.route('/files').post(authorize(), controller.addFiles);
+router.route('/photos').post(authorize(), controller.addPhotos).get(authorize(), controller.listPhotos);
+router.route('/files').post(authorize(), controller.addFiles).get(authorize(), controller.listFiles);
 
 router
   .route('/getConversations')
@@ -34,6 +33,11 @@ router
   .route('/getConversation')
   // lấy thông tin
   .get(authorize(), controller.getConversation);
+
+router
+  .route('/deleteMessage')
+  // lấy thông tin
+  .delete(authorize(), controller.deleteMessage);
 
 router
   .route('/:conversationId')

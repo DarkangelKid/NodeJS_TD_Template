@@ -40,6 +40,7 @@ exports.sendtoTopicLocal = async (data) => {
         token: registrationToken,
       });
     });
+    dataNotifi.appType = appType;
 
     await Promise.all(
       topics.map(async (topic) => {
@@ -50,7 +51,8 @@ exports.sendtoTopicLocal = async (data) => {
         };
         messages.push(notifi);
 
-        if (appType !== 'CHAT_Drawer' || appType !== 'TT_HOP') {
+        if (appType !== 'CHAT_Drawer' && appType !== 'TT_HOP') {
+
           const item = await Notification.create({
             username: topic,
             title: notification.title,
@@ -64,6 +66,7 @@ exports.sendtoTopicLocal = async (data) => {
 
     const result = await admin
       .messaging()
+
       .sendAll(messages)
       .then((response) => response)
       .catch((error) => next(error));
