@@ -40,7 +40,6 @@ exports.getThongTin = async (req, res, next) => {
   }
 };
 
-
 exports.GetListGroup = async (req, res, next) => {
   try {
     const currentUser = req.user;
@@ -176,9 +175,9 @@ exports.create = async (req, res, next) => {
 
     await Promise.all(
       users.map(async (i) => {
-        if (i !== currentUser.id) {
+        if (i !== currentUser.username) {
           try {
-            const user_ = await User.findByPk(i);
+            const user_ = await User.findOne({ where: { username: i } });
             chatGroup.addUser(user_, { through: { type: 0 } });
           } catch (error_) {
             console.log(error_);

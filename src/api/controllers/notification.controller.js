@@ -114,7 +114,7 @@ exports.sendtoTopic = async (req, res, next) => {
         };
         messages.push(notifi);
 
-        if (appType !== 'CHAT_Drawer' || appType !== 'TT_HOP') {
+        if (appType !== 'CHAT_Drawer' && appType !== 'TT_HOP') {
           const item = await Notification.create({
             username: topic,
             title: notification.title,
