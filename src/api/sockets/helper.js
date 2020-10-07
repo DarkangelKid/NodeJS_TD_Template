@@ -15,7 +15,8 @@ const removeSocketIdToArray = (clients, userId, socket) => {
   return clients;
 };
 
-const emitNotifyToArray = (clients, userId, io, eventName, data) => clients[userId].forEach((socketId) => io.sockets.connected[socketId].emit(eventName, data));
+const emitNotifyToArray = (clients, userId, io, eventName, data) =>
+  clients[userId].forEach((socketId) => io.sockets.connected[socketId].emit(eventName, data));
 
 module.exports = {
   pushSocketIdToArray,
