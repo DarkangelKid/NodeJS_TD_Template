@@ -9,6 +9,7 @@ const User = db.users;
 const jwtOptions = {
   secretOrKey: jwtSecret,
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+  ignoreExpiration: true,
 };
 
 const jwt = async (payload, done) => {
@@ -18,6 +19,8 @@ const jwt = async (payload, done) => {
         userName: payload.sub,
       },
     }); */
+
+    console.log('vaodayyyyy');
 
     const user = await User.findOne({
       where: {

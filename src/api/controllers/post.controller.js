@@ -1,10 +1,9 @@
 const httpStatus = require('http-status');
 const { omit } = require('lodash');
 
+const APIError = require('../utils/APIError');
 const db = require('../../config/mssql');
-
 const nofitiController = require('./notification.controller');
-
 const DataDonVi = require('../data/DonVi_NamDinh.json');
 
 const Post = db.post;
@@ -60,7 +59,6 @@ exports.CreatePost = async (req, res, next) => {
       } catch (error) {
         console.log(error);
       }
-    
 
       let dataSend = {
         topics: arr_user,
@@ -77,7 +75,6 @@ exports.CreatePost = async (req, res, next) => {
         },
       };
 
-
       let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
     }
 
@@ -92,8 +89,29 @@ exports.GetListPost = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    const { page, perpage, groupId } = req.query;
+    const { page, perpage, user } = req.query;
     const { limit, offset } = getPagination(page, perpage);
+
+    let userId = currentUser.id;
+
+    if (user) {
+      let userObj = await User.findOne({
+        where: {
+          username: user,
+        },
+      });
+      console.log(userObj);
+      if (userObj) {
+        userId = userObj.id;
+      } else {
+        throw new APIError({
+          message: 'Không tồn tại tài khoản',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+    }
+
+    //let userId = user||currentUser.id;
 
     const groups = await Post.findAndCountAll({
       include: [
@@ -118,7 +136,7 @@ exports.GetListPost = async (req, res, next) => {
             attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
             required: true,
             where: {
-              id: currentUser.id,
+              id: userId,
             },
           },
         },

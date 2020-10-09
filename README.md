@@ -177,3 +177,16 @@ Ha Tinh
 10.112.42.50
 1455
 chat/Tandan@123
+
+node_modules\jsonwebtoken\verify.js
+
+comment dong 147
+
+if (typeof payload.exp !== 'undefined' && !options.ignoreExpiration) {
+if (typeof payload.exp !== 'number') {
+return done(new JsonWebTokenError('invalid exp value'));
+}
+if (clockTimestamp >= payload.exp + (options.clockTolerance || 0)) {
+return done(new TokenExpiredError('jwt expired', new Date(payload.exp \_ 1000)));
+}
+}

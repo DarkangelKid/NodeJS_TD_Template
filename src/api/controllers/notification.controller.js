@@ -52,7 +52,6 @@ exports.sendtoTopicLocal = async (data) => {
         messages.push(notifi);
 
         if (appType !== 'CHAT_Drawer' && appType !== 'TT_HOP') {
-
           const item = await Notification.create({
             username: topic,
             title: notification.title,
@@ -348,6 +347,7 @@ exports.GetListNotifi = async (req, res, next) => {
       where: condition,
       limit,
       offset,
+      order: [['updatedAt', 'DESC']],
     })
       .then((data) => {
         const response = getPagingData(data, page, limit);
@@ -368,6 +368,7 @@ exports.findAll = async (req, res, next) => {
     where: condition,
     limit,
     offset,
+    order: [['updatedAt', 'DESC']],
   })
     .then((data) => {
       const response = getPagingData(data, page, limit);

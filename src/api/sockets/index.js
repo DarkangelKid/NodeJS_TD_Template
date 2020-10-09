@@ -34,6 +34,9 @@ const initSockets = (io) => {
     try {
       const user = await getUserInfo(socket.decoded_token.context.user.userName);
 
+      console.log('useruseruseruser');
+      console.log(user);
+
       // const user = await getUserInfo(socket.decoded_token.context.user.userName);
       if (user) {
         clients = pushSocketIdToArray(clients, user.id, socket.id);
