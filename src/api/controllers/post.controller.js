@@ -85,7 +85,10 @@ exports.CreatePost = async (req, res, next) => {
   }
 };
 
-exports.GetListPost = async (req, res, next) => {
+
+
+
+exports.GetListPostUser = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
@@ -101,6 +104,81 @@ exports.GetListPost = async (req, res, next) => {
         },
       });
       console.log(userObj);
+      if (userObj) {
+        userId = userObj.id;
+      } else {
+        throw new APIError({
+          message: 'Không tồn tại tài khoản',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+    }
+
+    //let userId = user||currentUser.id;
+
+    const groups = await Post.findAndCountAll({
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Comment,
+          as: 'comments',
+        },
+        {
+          model: Reaction,
+          as: 'reactions',
+        },
+        {
+          model: Group,
+          as: 'group',
+          include: {
+            model: User,
+            as: 'users',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+            required: true,
+            where: {
+              id: userId,
+            },
+          },
+        },
+        {
+          model: Attachment,
+          as: 'attachments',
+          attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+        },
+      ],
+      limit,
+      offset,
+      order: [['updatedAt', 'DESC']],
+    });
+
+    const response = getPagingData(groups, page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+exports.GetListPost = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { page, perpage, user } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    let userId = currentUser.id;
+
+    if (user) {
+      let userObj = await User.findOne({
+        where: {
+          username: user,
+        },
+      });
       if (userObj) {
         userId = userObj.id;
       } else {

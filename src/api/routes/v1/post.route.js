@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.route('/CreatePost').post(authorize(), controller.CreatePost);
 router.route('/GetListPost').get(authorize(), controller.GetListPost);
+router.route('/GetListPostUser').get(authorize(), controller.GetListPost);
 router.route('/GetListPostInGroup').get(authorize(), controller.GetListPostInGroup);
 
 module.exports = router;

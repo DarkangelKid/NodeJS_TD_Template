@@ -20,8 +20,6 @@ const jwt = async (payload, done) => {
       },
     }); */
 
-    console.log('vaodayyyyy');
-
     const user = await User.findOne({
       where: {
         userName: payload.context.user.userName,

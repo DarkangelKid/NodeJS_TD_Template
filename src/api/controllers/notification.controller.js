@@ -81,7 +81,11 @@ exports.sendtoTopic = async (req, res, next) => {
 
     const { topics } = data;
     const { registrationTokens } = data;
-    const { appType } = data;
+    let { appType } = data;
+
+    /* if (appType === 'TLCH_Drawer##TT_HOP') {
+      appType = 'TT_HOP';
+    } */
 
     const { notification } = data;
     const dataNotifi = data.data;
