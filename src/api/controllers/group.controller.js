@@ -103,7 +103,7 @@ exports.create = async (req, res, next) => {
       users.map(async (i) => {
         if (i !== currentUser.id) {
           try {
-            const user_ = await User.findByPk(i);
+            const user_ = await User.findOne({ where: { username: i } });
             chatGroup.addUser(user_, { through: { type: 0 } });
           } catch (error_) {
             console.log(error_);
@@ -145,7 +145,7 @@ exports.addMember = async (req, res, next) => {
       users.map(async (i) => {
         if (i !== currentUser.id) {
           try {
-            const user_ = await User.findByPk(i);
+            const user_ = await User.findOne({ where: { username: i } });
             chatGroup.addUser(user_, { through: { type: 0 } });
           } catch (error_) {
             console.log(error_);
@@ -185,10 +185,14 @@ exports.removeMember = async (req, res, next) => {
 
     await Promise.all(
       users.map(async (i) => {
+        
         try {
+
+          const user_ = await User.findOne({ where: { username: i } });
+          
           await User_ChatGroup.destroy({
             where: {
-              userId: i,
+              userId: user_.id,
               chatGroupId: id,
             },
           });

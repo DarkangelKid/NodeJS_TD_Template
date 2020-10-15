@@ -85,9 +85,6 @@ exports.CreatePost = async (req, res, next) => {
   }
 };
 
-
-
-
 exports.GetListPostUser = async (req, res, next) => {
   try {
     const currentUser = req.user;
@@ -129,6 +126,11 @@ exports.GetListPostUser = async (req, res, next) => {
         {
           model: Reaction,
           as: 'reactions',
+          include: {
+            model: User,
+            as: 'user',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          },
         },
         {
           model: Group,
@@ -161,8 +163,6 @@ exports.GetListPostUser = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 exports.GetListPost = async (req, res, next) => {
   try {
@@ -204,6 +204,11 @@ exports.GetListPost = async (req, res, next) => {
         {
           model: Reaction,
           as: 'reactions',
+          include: {
+            model: User,
+            as: 'user',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          },
         },
         {
           model: Group,
@@ -258,6 +263,11 @@ exports.GetListPostInGroup = async (req, res, next) => {
         {
           model: Reaction,
           as: 'reactions',
+          include: {
+            model: User,
+            as: 'user',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          },
         },
         {
           model: Group,
