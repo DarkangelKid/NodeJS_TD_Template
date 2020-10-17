@@ -85,6 +85,73 @@ exports.CreatePost = async (req, res, next) => {
   }
 };
 
+exports.EditPost = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { id, contentData } = req.body;
+
+    let itemPost = await Post.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+      ],
+    });
+
+    if (itemPost && currentUser.username === itemPost.user.username) {
+      itemPost = Object.assign(itemPost, { contentData: contentData });
+
+      await itemPost.save();
+    } else {
+      throw new APIError({
+        message: 'Lỗi',
+      });
+    }
+
+    res.status(httpStatus.CREATED);
+    return res.json(itemPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.DeletePost = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+    const itemData = omit(req.body, 'id', 'attachments');
+    itemData.userId = currentUser.id;
+
+    const { id } = req.body;
+
+    let itemPost = await Post.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+      ],
+    });
+
+    console.log(currentUser.username);
+    console.log(itemPost.user.username);
+
+    if (itemPost && currentUser.username === itemPost.user.username) {
+      await itemPost.destroy();
+    } else {
+      throw new APIError({
+        message: 'Lỗi',
+      });
+    }
+
+    res.status(httpStatus.CREATED);
+    return res.json(itemPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.GetListPostUser = async (req, res, next) => {
   try {
     const currentUser = req.user;

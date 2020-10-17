@@ -11,7 +11,10 @@ const router = express.Router();
 
 //router.param('userId', controller.load);
 
+
 router.route('/CreatePost').post(authorize(), controller.CreatePost);
+router.route('/DeletePost').post(authorize(), controller.DeletePost);
+router.route('/EditPost').post(authorize(), controller.EditPost);
 router.route('/GetListPost').get(authorize(), controller.GetListPost);
 router.route('/GetListPostUser').get(authorize(), controller.GetListPost);
 router.route('/GetListPostInGroup').get(authorize(), controller.GetListPostInGroup);

@@ -12,6 +12,8 @@ const router = express.Router();
 //router.param('userId', controller.load);
 
 router.route('/CreateComment').post(authorize(), controller.CreateComment);
+router.route('/DeleteComment').post(authorize(), controller.DeleteComment);
+router.route('/EditComment').post(authorize(), controller.EditComment);
 router.route('/GetListComment').get(authorize(), controller.GetListComment);
 
 module.exports = router;
