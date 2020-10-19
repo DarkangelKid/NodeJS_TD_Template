@@ -10,7 +10,7 @@ const storageAvatar = require('../utils/storageAvatar');
 
 const User = db.users;
 const ChatGroup = db.chatGroups;
-const User_ChatGroup = db.user_chatGroup;
+const User_Group = db.User_Group;
 const Group = db.groups;
 const Office = db.offices;
 
@@ -70,7 +70,7 @@ exports.getThongTin = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    ChatGroup.findOne({
+    Group.findOne({
       where: { id },
       attributes: ['id', 'name', 'avatarUrl', 'description'],
       include: {
@@ -90,11 +90,15 @@ exports.create = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    const { name, description, users } = req.body;
+    let { name, description, users } = req.body;
+
+    if (name.length < 1) {
+      name = 'Nhóm mới';
+    }
 
     const dataItem = { name, description };
 
-    const chatGroup = await ChatGroup.create(dataItem);
+    const chatGroup = await Group.create(dataItem);
 
     const user = await User.findByPk(currentUser.id);
     chatGroup.addUser(user, { through: { type: 1 } });
@@ -125,10 +129,10 @@ exports.addMember = async (req, res, next) => {
 
     const { users, id } = req.body;
 
-    const item_tmp = await User_ChatGroup.findOne({
+    const item_tmp = await User_Group.findOne({
       where: {
         userId: currentUser.id,
-        chatGroupId: id,
+        groupId: id,
       },
     });
 
@@ -139,7 +143,7 @@ exports.addMember = async (req, res, next) => {
       });
     }
 
-    const chatGroup = await ChatGroup.findByPk(id);
+    const chatGroup = await Group.findByPk(id);
 
     await Promise.all(
       users.map(async (i) => {
@@ -167,10 +171,10 @@ exports.removeMember = async (req, res, next) => {
 
     const { users, id } = req.body;
 
-    const item_tmp = await User_ChatGroup.findOne({
+    const item_tmp = await User_Group.findOne({
       where: {
         userId: currentUser.id,
-        chatGroupId: id,
+        groupId: id,
       },
     });
 
@@ -181,19 +185,17 @@ exports.removeMember = async (req, res, next) => {
       });
     }
 
-    const chatGroup = await ChatGroup.findByPk(id);
+    const chatGroup = await Group.findByPk(id);
 
     await Promise.all(
       users.map(async (i) => {
-        
         try {
-
           const user_ = await User.findOne({ where: { username: i } });
-          
-          await User_ChatGroup.destroy({
+
+          await User_Group.destroy({
             where: {
               userId: user_.id,
-              chatGroupId: id,
+              groupId: id,
             },
           });
         } catch (error_) {
@@ -214,10 +216,10 @@ exports.update = async (req, res, next) => {
     const currentUser = req.user;
     const { id } = req.params;
 
-    const item_tmp = await User_ChatGroup.findOne({
+    const item_tmp = await User_Group.findOne({
       where: {
         userId: currentUser.id,
-        chatGroupId: id,
+        groupId: id,
       },
     });
 
@@ -228,7 +230,7 @@ exports.update = async (req, res, next) => {
       });
     }
 
-    let item = await ChatGroup.findByPk(id);
+    let item = await Group.findByPk(id);
     const updatedItem = omit(req.body, ['id']);
 
     item = Object.assign(item, updatedItem);
@@ -245,10 +247,10 @@ exports.remove = async (req, res, next) => {
   const currentUser = req.user;
   const { id } = req.params;
 
-  const item_tmp = await User_ChatGroup.findOne({
+  const item_tmp = await User_Group.findOne({
     where: {
       userId: currentUser.id,
-      chatGroupId: id,
+      groupId: id,
     },
   });
 
@@ -259,7 +261,7 @@ exports.remove = async (req, res, next) => {
     });
   }
 
-  ChatGroup.destroy({
+  Group.destroy({
     where: {
       id,
     },
@@ -345,7 +347,7 @@ exports.updateAvatar = (req, res, next) => {
         });
       }
       const { id } = req.params;
-      let item = await ChatGroup.findByPk(id);
+      let item = await Group.findByPk(id);
       item = Object.assign(item, { avatarUrl: req.file.filename });
 
       await item.save();

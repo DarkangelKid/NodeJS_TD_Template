@@ -164,7 +164,11 @@ exports.create = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    const { name, description, users } = req.body;
+    let { name, description, users } = req.body;
+
+    if (name.length < 1) {
+      name = 'Nhóm mới';
+    }
 
     const dataItem = { name, description };
 

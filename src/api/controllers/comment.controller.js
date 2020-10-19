@@ -132,6 +132,7 @@ exports.GetListComment = async (req, res, next) => {
         {
           model: Comment,
           as: 'comments',
+          order: [['updatedAt', 'DESC']],
         },
         {
           model: Attachment,
@@ -141,6 +142,7 @@ exports.GetListComment = async (req, res, next) => {
       ],
       limit,
       offset,
+      order: [['updatedAt', 'DESC']],
     });
 
     const response = getPagingData(groups, page, limit);
@@ -182,6 +184,7 @@ exports.GetCommentInPost = async (req, res, next) => {
       ],
       limit,
       offset,
+      order: [['updatedAt', 'DESC']],
     });
 
     const response = getPagingData(groups, page, limit);

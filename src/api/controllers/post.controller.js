@@ -189,6 +189,7 @@ exports.GetListPostUser = async (req, res, next) => {
         {
           model: Comment,
           as: 'comments',
+          order: [['updatedAt', 'DESC']],
         },
         {
           model: Reaction,
