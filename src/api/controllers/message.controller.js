@@ -150,7 +150,7 @@ exports.createMessage = async (req, res, next) => {
         },
       };
 
-      let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+      let resultnotifi =  nofitiController.sendtoTopicLocal(dataSend);
     }
     return res.json(messageRes);
   } catch (error) {
