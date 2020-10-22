@@ -134,7 +134,6 @@ exports.createMessage = async (req, res, next) => {
       ],
     });
     if (conversationType === 'User') {
-
       let dataSend = {
         topics: [messageRes.receiver.username],
         registrationTokens: [],
@@ -145,12 +144,13 @@ exports.createMessage = async (req, res, next) => {
         appType: 'CHAT_Drawer',
         data: {
           id: `${currentUser.username}`,
+          messageId: messageCreated.id,
           code: 'chat',
           function: 'GuiTinNhan',
         },
       };
 
-      let resultnotifi =  nofitiController.sendtoTopicLocal(dataSend);
+      let resultnotifi = nofitiController.sendtoTopicLocal(dataSend);
     }
     return res.json(messageRes);
   } catch (error) {
