@@ -70,6 +70,7 @@ exports.CreatePost = async (req, res, next) => {
         appType: 'TTNB_Drawer',
         data: {
           id: `${itemPost.id}`,
+          groupId: groupId,
           code: 'ttnb',
           function: 'ChiTiet',
         },
