@@ -70,13 +70,13 @@ exports.CreatePost = async (req, res, next) => {
         appType: 'TTNB_Drawer',
         data: {
           id: `${itemPost.id}`,
-          groupId: groupId,
+          groupId: `${groupId}`,
           code: 'ttnb',
           function: 'ChiTiet',
         },
       };
 
-      let resultnotifi = await nofitiController.sendtoTopicLocal(dataSend);
+      let resultnotifi = nofitiController.sendtoTopicLocal(dataSend);
     }
 
     res.status(httpStatus.CREATED);

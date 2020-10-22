@@ -144,7 +144,7 @@ exports.createMessage = async (req, res, next) => {
         appType: 'CHAT_Drawer',
         data: {
           id: `${currentUser.username}`,
-          messageId: messageCreated.id,
+          messageId: `${messageCreated.id}`,
           code: 'chat',
           function: 'GuiTinNhan',
         },
