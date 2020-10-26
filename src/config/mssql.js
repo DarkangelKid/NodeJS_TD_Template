@@ -39,6 +39,7 @@ db.groups = require('../api/models/group.model')(sequelize, Sequelize);
 db.post = require('../api/models/post.model')(sequelize, Sequelize);
 db.comment = require('../api/models/comment.model')(sequelize, Sequelize);
 db.reactions = require('../api/models/reaction.model')(sequelize, Sequelize);
+db.note = require('../api/models/note.model')(sequelize, Sequelize);
 
 const User = db.users;
 const Position = db.positions;
@@ -54,6 +55,7 @@ const Group = db.groups;
 const Post = db.post;
 const Comment = db.comment;
 const Reaction = db.reactions;
+const Note = db.note;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
@@ -224,6 +226,12 @@ Comment.belongsTo(Comment, {
 
 User.hasMany(Comment, { as: 'comments' });
 Comment.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
+User.hasMany(Note, { as: 'notes' });
+Note.belongsTo(User, {
   foreignKey: 'userId',
   as: 'user',
 });

@@ -43,6 +43,7 @@ exports.addPhotos = (req, res, next) => {
         uid: uuidv4(),
         name: `${req.file.filename}.jpg`,
         path: `/images/message/${req.file.filename}.jpg`,
+
         status: 'done',
         response: { status: 'success' },
         linkProps: { download: 'image' },
@@ -53,13 +54,17 @@ exports.addPhotos = (req, res, next) => {
         type: 'image',
         name: `${req.file.filename}.jpg`,
         path: `public/images/${req.file.filename}.jpg`,
+        url: `${staticUrl}/public/images/${req.file.filename}.jpg`,
         userId: currentUser.id,
       };
 
       const messageCreated = await Attachment.create(dataItem);
       await messageCreated.save();
 
-      return res.json(messageCreated);
+      //let tmp = Object.assign(messageCreated, { url: `${staticUrl}/images/message/${req.file.filename}.jpg` });
+      //  tmp.url = `${staticUrl}/images/message/${req.file.filename}.jpg`;
+
+      return res.json(dataItem);
     } catch (error) {
       next(error);
     }
