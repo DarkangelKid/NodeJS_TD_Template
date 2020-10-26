@@ -3,9 +3,7 @@ const { omit } = require('lodash');
 
 const db = require('../../config/mssql');
 
-const Permission = db.permissions;
-const Role = db.roles;
-const RolePermission = db.role_permission;
+const Datasync = db.datasync;
 
 const { Op } = db.Sequelize;
 
@@ -20,6 +18,11 @@ exports.createCamera = async (req, res, next) => {
 
 exports.createCybersecurity = async (req, res, next) => {
   try {
+    const item = await Datasync.create({
+      appType: 'Cybersecurity',
+      data: JSON.stringify(req.body),
+    });
+
     res.status(httpStatus.CREATED);
     return res.json({ status: true });
   } catch (error) {
