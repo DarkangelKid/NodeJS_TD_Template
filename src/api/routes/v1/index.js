@@ -14,6 +14,7 @@ const postRoutes = require('./post.route');
 const commentRoutes = require('./comment.route');
 const attachmentRoutes = require('./attachment.route');
 const reactionRoutes = require('./reaction.route');
+const datasyncRoutes = require('./datasync.route')
 
 const router = express.Router();
 
@@ -43,5 +44,7 @@ router.use('/reaction', reactionRoutes);
 router.use('/file', attachmentRoutes);
 
 router.use('/notifi', notificationRoutes);
+
+router.use('/datasync', datasyncRoutes);
 
 module.exports = router;
