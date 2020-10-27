@@ -9,7 +9,7 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
-router.route('/camera').post(authorize(), controller.createCamera);
-router.route('/cybersecurity').post(authorize(), controller.createCybersecurity);
+router.route('/camera').post(controller.createCamera);
+router.route('/cybersecurity').post(controller.createCybersecurity);
 
 module.exports = router;

@@ -9,8 +9,13 @@ const { Op } = db.Sequelize;
 
 exports.createCamera = async (req, res, next) => {
   try {
+    const item = await Datasync.create({
+      appType: 'Camera',
+      data: JSON.stringify(req.body),
+    });
+
     res.status(httpStatus.CREATED);
-    return res.json({ status: true });
+    return res.json(item);
   } catch (error) {
     next(error);
   }
@@ -24,7 +29,7 @@ exports.createCybersecurity = async (req, res, next) => {
     });
 
     res.status(httpStatus.CREATED);
-    return res.json({ status: true });
+    return res.json(item);
   } catch (error) {
     next(error);
   }
