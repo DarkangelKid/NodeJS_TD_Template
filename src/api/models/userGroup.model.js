@@ -1,22 +1,26 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes, Sequelize, Model } = require('sequelize');
 
 module.exports = (sequelize, Sequelize) => {
-	const UserGroup = sequelize.define(
-		'userGroup',
-		{
-			userId: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-			},
-			groupId: {
-				type: DataTypes.INTEGER,
-				allowNull: false
-			}
-		},
-		{
-			freezeTableName: true,
-		},
-	);
+  class User_Group extends Model {}
 
-	return UserGroup;
+  //inspector nguoi kiem duyet
+  //member
+  //..admin
+
+  User_Group.init(
+    {
+      type: {
+        type: DataTypes.STRING,
+		allowNull: true,
+		defaultValue:"member"
+      },
+    },
+    {
+      sequelize,
+      modelName: 'user_group',
+      freezeTableName: true,
+    },
+  );
+
+  return User_Group;
 };

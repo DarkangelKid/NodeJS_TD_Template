@@ -9,8 +9,7 @@ const router = express.Router();
  * Load user when API with userId route parameter is hit
  */
 
-router.route('/photos').post(authorize(), controller.addPhotos);
-router.route('/files').post(authorize(), controller.addFiles);
-
+router.route('/photos').post(controller.addPhotos);
+router.route('/files').post(controller.addFiles);
 
 module.exports = router;

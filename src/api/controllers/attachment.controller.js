@@ -18,13 +18,15 @@ const Attachment = db.attachment;
 
 const { Op } = db.Sequelize;
 
-const photosUploadFile = multer(storagePhoto).single('photos');
+const photosUploadFile = multer(storagePhoto).single('upload');
 
 exports.addPhotos = (req, res, next) => {
   const currentUser = req.user;
 
   photosUploadFile(req, res, async (err) => {
     try {
+      console.log('bbb');
+
       if (!req.file) {
         console.log(err);
         throw new APIError({
@@ -33,6 +35,8 @@ exports.addPhotos = (req, res, next) => {
         });
       }
       const outputFile = `${req.file.path}.jpg`;
+
+      console.log(outputFile);
 
       await sharp(req.file.path).jpeg({ quality: 80 }).toFile(outputFile);
 
@@ -55,7 +59,8 @@ exports.addPhotos = (req, res, next) => {
         name: `${req.file.filename}.jpg`,
         path: `public/images/${req.file.filename}.jpg`,
         url: `${staticUrl}/public/images/${req.file.filename}.jpg`,
-        userId: currentUser.id,
+        uploaded: true,
+        //userId: currentUser.id,
       };
 
       const messageCreated = await Attachment.create(dataItem);
@@ -64,7 +69,7 @@ exports.addPhotos = (req, res, next) => {
       //let tmp = Object.assign(messageCreated, { url: `${staticUrl}/images/message/${req.file.filename}.jpg` });
       //  tmp.url = `${staticUrl}/images/message/${req.file.filename}.jpg`;
 
-      return res.json(dataItem);
+      return res.json({ url: `${staticUrl}/public/images/${req.file.filename}.jpg`, uploaded: true });
     } catch (error) {
       next(error);
     }
@@ -74,7 +79,7 @@ exports.addPhotos = (req, res, next) => {
 const filesUpload = multer(storageFile).single('files');
 
 exports.addFiles = (req, res, next) => {
-  const currentUser = req.user;
+  // const currentUser = req.user;
 
   filesUpload(req, res, async (err) => {
     try {
@@ -99,7 +104,7 @@ exports.addFiles = (req, res, next) => {
         type: 'file',
         name: req.file.filename,
         path: `public/files/${req.file.filename}`,
-        userId: currentUser.id,
+        //  userId: currentUser.id,
       };
 
       const messageCreated = await Attachment.create(dataItem);

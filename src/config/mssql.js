@@ -31,6 +31,7 @@ db.role_permission = require('../api/models/role_permission.model')(sequelize, S
 db.contacts = require('../api/models/contact.model')(sequelize, Sequelize);
 db.chatGroups = require('../api/models/chatGroup.model')(sequelize, Sequelize);
 db.user_chatGroup = require('../api/models/userChatGroup.model')(sequelize, Sequelize);
+db.user_Group = require('../api/models/userGroup.model')(sequelize, Sequelize);
 db.message = require('../api/models/message.model')(sequelize, Sequelize);
 db.attachment = require('../api/models/attachment.model')(sequelize, Sequelize);
 
@@ -49,6 +50,7 @@ const Role = db.roles;
 const ChatGroup = db.chatGroups;
 const Permission = db.permissions;
 const UserChatGroup = db.user_chatGroup;
+const UserGroup = db.user_Group;
 const Message = db.message;
 const Attachment = db.attachment;
 const Notification = db.notification;

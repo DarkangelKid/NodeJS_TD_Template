@@ -19,6 +19,8 @@ router.route('/GetInforGroup').get(authorize(LOGGED_USER), controller.GetInforGr
 
 router.route('/member').post(authorize(LOGGED_USER), controller.addMember).delete(authorize(), controller.removeMember);
 
+router.route('/role').post(authorize(LOGGED_USER), controller.editRoleMember);
+
 router.route('/avatar/:id').post(authorize(LOGGED_USER), controller.updateAvatar);
 
 router

@@ -9,8 +9,7 @@ const db = require('../../config/mssql');
 const storageAvatar = require('../utils/storageAvatar');
 
 const User = db.users;
-const ChatGroup = db.chatGroups;
-const User_Group = db.User_Group;
+const User_Group = db.user_Group;
 const Group = db.groups;
 const Office = db.offices;
 
@@ -52,20 +51,6 @@ exports.ImportGroup = async (req, res, next) => {
   }
 };
 
-exports.GetListGroup1 = async (req, res, next) => {
-  try {
-    const currentUser = req.user;
-
-    const { page, perpage } = req.query;
-    const { limit, offset } = getPagination(page, perpage);
-
-    res.status(httpStatus.CREATED);
-    return res.json({ status: true });
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.getThongTin = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -90,25 +75,86 @@ exports.create = async (req, res, next) => {
   try {
     const currentUser = req.user;
 
-    let { name, description, users } = req.body;
+    let { name, description, users, privacy, configPost, configJoinMember } = req.body;
 
     if (name.length < 1) {
       name = 'Nhóm mới';
     }
 
-    const dataItem = { name, description };
+    if (!privacy) {
+      privacy = 0;
+    }
+    if (!configPost) {
+      configPost = 0;
+    }
+    if (!configJoinMember) {
+      configJoinMember = 0;
+    }
+
+    const dataItem = { name, description, privacy, configPost, configJoinMember };
 
     const chatGroup = await Group.create(dataItem);
 
     const user = await User.findByPk(currentUser.id);
-    chatGroup.addUser(user, { through: { type: 1 } });
+    chatGroup.addUser(user, { through: { type: 'admin' } });
 
     await Promise.all(
       users.map(async (i) => {
         if (i !== currentUser.id) {
           try {
             const user_ = await User.findOne({ where: { username: i } });
-            chatGroup.addUser(user_, { through: { type: 0 } });
+            chatGroup.addUser(user_, { through: { type: 'member' } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    res.status(httpStatus.CREATED);
+    return res.json(chatGroup);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.editRoleMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { users, id, type } = req.body;
+
+    const item_tmp = await User_Group.findOne({
+      where: {
+        userId: currentUser.id,
+        groupId: id,
+      },
+    });
+
+    if (item_tmp.type && item_tmp.type !== 'admin') {
+      throw new APIError({
+        message: 'Không có quyền.',
+        status: httpStatus.BAD_REQUEST,
+      });
+    }
+
+    const chatGroup = await Group.findByPk(id);
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findOne({ where: { username: i } });
+            // chatGroup.addUser(user_, { through: { type: 'member' } });
+            const item_group = await User_Group.findOne({
+              where: {
+                userId: user_.id,
+                groupId: id,
+              },
+            });
+
+            item_group.type = type;
+            await item_group.save();
           } catch (error_) {
             console.log(error_);
           }
@@ -136,7 +182,7 @@ exports.addMember = async (req, res, next) => {
       },
     });
 
-    if (item_tmp.type !== 1) {
+    if (item_tmp.type && item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền.',
         status: httpStatus.BAD_REQUEST,
@@ -150,7 +196,7 @@ exports.addMember = async (req, res, next) => {
         if (i !== currentUser.id) {
           try {
             const user_ = await User.findOne({ where: { username: i } });
-            chatGroup.addUser(user_, { through: { type: 0 } });
+            chatGroup.addUser(user_, { through: { type: 'member' } });
           } catch (error_) {
             console.log(error_);
           }
@@ -178,7 +224,7 @@ exports.removeMember = async (req, res, next) => {
       },
     });
 
-    if (item_tmp.type !== 1) {
+    if (item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền.',
         status: httpStatus.BAD_REQUEST,
@@ -223,7 +269,7 @@ exports.update = async (req, res, next) => {
       },
     });
 
-    if (item_tmp.type !== 1) {
+    if (item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền sửa.',
         status: httpStatus.BAD_REQUEST,
@@ -254,7 +300,7 @@ exports.remove = async (req, res, next) => {
     },
   });
 
-  if (item_tmp.type !== 1) {
+  if (item_tmp.type !== 'admin') {
     throw new APIError({
       message: 'Không có quyền.',
       status: httpStatus.BAD_REQUEST,
@@ -294,7 +340,6 @@ exports.GetInforGroup = async (req, res, next) => {
 exports.GetListGroup = async (req, res, next) => {
   try {
     const currentUser = req.user;
-    console.log(currentUser);
 
     const { page, perpage } = req.query;
     const { limit, offset } = getPagination(page, perpage);
