@@ -134,7 +134,7 @@ exports.editRoleMember = async (req, res, next) => {
     if (item_tmp.type && item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền.',
-        status: httpStatus.BAD_REQUEST,
+        status: httpStatus.OK,
       });
     }
 
@@ -185,7 +185,7 @@ exports.addMember = async (req, res, next) => {
     if (item_tmp.type && item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền.',
-        status: httpStatus.BAD_REQUEST,
+        status: httpStatus.OK,
       });
     }
 
@@ -227,7 +227,7 @@ exports.removeMember = async (req, res, next) => {
     if (item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền.',
-        status: httpStatus.BAD_REQUEST,
+        status: httpStatus.OK,
       });
     }
 
@@ -272,7 +272,7 @@ exports.update = async (req, res, next) => {
     if (item_tmp.type !== 'admin') {
       throw new APIError({
         message: 'Không có quyền sửa.',
-        status: httpStatus.BAD_REQUEST,
+        status: httpStatus.OK,
       });
     }
 
@@ -303,7 +303,7 @@ exports.remove = async (req, res, next) => {
   if (item_tmp.type !== 'admin') {
     throw new APIError({
       message: 'Không có quyền.',
-      status: httpStatus.BAD_REQUEST,
+      status: httpStatus.OK,
     });
   }
 
