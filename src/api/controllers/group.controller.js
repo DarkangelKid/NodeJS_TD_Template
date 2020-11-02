@@ -20,7 +20,14 @@ const { Op } = db.Sequelize;
 
 exports.ImportGroup = async (req, res, next) => {
   try {
-    const offices = await Office.findAll();
+    const offices = await Office.findAll({
+      where: {
+        createdAt: {
+          [Op.lt]: new Date(),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
+        },
+      },
+    });
 
     await Promise.all(
       offices.map(async (item) => {
@@ -34,6 +41,8 @@ exports.ImportGroup = async (req, res, next) => {
 
         let users = await User.findAll({ where: { [Op.or]: [{ nhomId: item.id }, { officeId: item.id }] } });
 
+        console.log(users.length);
+
         users.map(async (itemUser) => {
           try {
             await itemGroup.addUser(itemUser);
@@ -45,7 +54,7 @@ exports.ImportGroup = async (req, res, next) => {
     );
 
     res.status(httpStatus.CREATED);
-    return res.json({ status: true });
+    return res.json({ status: offices.length });
   } catch (error) {
     next(error);
   }

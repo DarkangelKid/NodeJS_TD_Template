@@ -88,7 +88,14 @@ exports.GetListGroup = async (req, res, next) => {
 
 exports.ImportGroup = async (req, res, next) => {
   try {
-    const offices = await Office.findAll();
+    const offices = await Office.findAll({
+      where: {
+        createdAt: {
+          [Op.lt]: new Date(),
+          [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000),
+        },
+      },
+    });
 
     await Promise.all(
       offices.map(async (item) => {
@@ -103,7 +110,11 @@ exports.ImportGroup = async (req, res, next) => {
 
         users.map(async (itemUser) => {
           try {
-            await itemGroup.addUser(itemUser, { through: { type: 0 } });
+            try {
+              await itemGroup.addUser(itemUser, { through: { type: 0 } });
+            } catch (error_) {
+              console.log(error_);
+            }
           } catch (error_) {
             console.log(error_);
           }

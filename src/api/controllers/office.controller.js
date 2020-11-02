@@ -29,7 +29,7 @@ exports.ImportOffice = async (req, res, next) => {
   try {
     let count = 0;
     await Promise.all(
-      DataDonVi.results.map(async (item) => {
+      DataDonVi.data.map(async (item) => {
         let OfGroup = item.OfGroup;
         let ParentGroupCode = OfGroup?.GroupCode ?? '';
 
@@ -39,8 +39,14 @@ exports.ImportOffice = async (req, res, next) => {
           code: item.GroupCode.replace(/-/g, '.'),
           parentCode: ParentGroupCode.replace(/-/g, '.'),
         };
-        const itemOffice = await Office.create(itemData);
-        if (itemOffice) count++;
+
+        try {
+          const itemOffice = await Office.create(itemData);
+          if (itemOffice) count++;
+        } catch (error__) {
+          console.log('LOI');
+          console.log(error__);
+        }
       }),
     );
 
@@ -54,22 +60,6 @@ exports.ImportOffice = async (req, res, next) => {
 exports.AddParentId = async (req, res, next) => {
   try {
     let count = 0;
-    /* await Promise.all(
-      DataDonVi.results.map(async (item) => {
-        let OfGroup = item.OfGroup;
-        let ParentGroupCode = OfGroup?.GroupCode ?? '';
-
-        let itemData = {
-          name: item.GroupName,
-          description: '',
-          code: item.GroupCode.replace(/-/g, '.'),
-          parentCode: ParentGroupCode.replace(/-/g, '.'),
-        };
-        const itemOffice = await Office.create(itemData);
-        if (itemOffice) count++;
-      }),
-    ); */
-
     let arr = await Office.findAll();
     await Promise.all(
       arr.map(async (item) => {
@@ -78,7 +68,14 @@ exports.AddParentId = async (req, res, next) => {
           let parentOffice = await Office.findOne({ where: { code: parentCode } });
           if (parentOffice) {
             item.parentId = parentOffice.id;
-            await item.save();
+
+            try {
+              await item.save();
+              count++;
+            } catch (error__) {
+              console.log('LOI');
+              console.log(error__);
+            }
           }
         }
       }),

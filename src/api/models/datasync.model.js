@@ -17,6 +17,47 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+
+      fidelity: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+      },
+      fidelity_text: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      countryCode: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      countryName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      geo_latitude: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      geo_longitude: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      timestamp: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+      },
+      event_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      violate_type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      time: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
     },
     {
       sequelize,
