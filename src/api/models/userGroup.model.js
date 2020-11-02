@@ -11,8 +11,8 @@ module.exports = (sequelize, Sequelize) => {
     {
       type: {
         type: DataTypes.STRING,
-		allowNull: true,
-		defaultValue:"member"
+        allowNull: true,
+        defaultValue: 'member',
       },
     },
     {

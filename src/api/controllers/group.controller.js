@@ -20,6 +20,84 @@ const { Op } = db.Sequelize;
 
 exports.ImportGroup = async (req, res, next) => {
   try {
+    const offices = await Office.findAll();
+    var count = 0;
+
+    await Promise.all(
+      offices.map(async (item) => {
+        let itemData = {
+          name: item.name,
+          code: item.code,
+          description: '11',
+        };
+
+        let itemGroup = await Group.findOne({
+          where: {
+            code: item.code,
+          },
+        });
+
+        // const itemGroup = await Group.create(itemData);
+
+        let users = await User.findAll({ where: { [Op.or]: [{ nhomId: item.id }, { officeId: item.id }] } });
+
+        console.log(users.length);
+
+        await Promise.all(
+          users.map(async (itemUser) => {
+            try {
+              let usergroup = await User_Group.findAll({
+                where: {
+                  userId: itemUser.id,
+                  groupId: itemGroup.id,
+                },
+              });
+
+              if (usergroup.length < 1) {
+                // console.log('vaodayvadoay VVVVV');
+                count++;
+                await itemGroup.addUser(itemUser, { through: { type: 'member' } });
+              }
+              //  await itemGroup.addUser(itemUser);
+              //    await itemGroup.addUser(itemUser, { through: { type: 'member' } });
+            } catch (error_) {
+              console.log(error_);
+            }
+          }),
+        );
+      }),
+    );
+
+    /*
+ const chatGroup = await Group.create(dataItem);
+
+    const user = await User.findByPk(currentUser.id);
+    chatGroup.addUser(user, { through: { type: 'admin' } });
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findOne({ where: { username: i } });
+            chatGroup.addUser(user_, { through: { type: 'member' } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    */
+
+    res.status(httpStatus.CREATED);
+    return res.json({ status: count });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.ImportGroup_1 = async (req, res, next) => {
+  try {
     const offices = await Office.findAll({
       where: {
         createdAt: {
@@ -34,10 +112,10 @@ exports.ImportGroup = async (req, res, next) => {
         let itemData = {
           name: item.name,
           code: item.code,
-          description: '',
+          description: '11',
         };
 
-        const itemGroup = await Group.create(itemData);
+        // const itemGroup = await Group.create(itemData);
 
         let users = await User.findAll({ where: { [Op.or]: [{ nhomId: item.id }, { officeId: item.id }] } });
 
@@ -45,13 +123,35 @@ exports.ImportGroup = async (req, res, next) => {
 
         users.map(async (itemUser) => {
           try {
-            await itemGroup.addUser(itemUser);
+            //  await itemGroup.addUser(itemUser);
+            //    await itemGroup.addUser(itemUser, { through: { type: 'member' } });
           } catch (error_) {
             console.log(error_);
           }
         });
       }),
     );
+
+    /*
+ const chatGroup = await Group.create(dataItem);
+
+    const user = await User.findByPk(currentUser.id);
+    chatGroup.addUser(user, { through: { type: 'admin' } });
+
+    await Promise.all(
+      users.map(async (i) => {
+        if (i !== currentUser.id) {
+          try {
+            const user_ = await User.findOne({ where: { username: i } });
+            chatGroup.addUser(user_, { through: { type: 'member' } });
+          } catch (error_) {
+            console.log(error_);
+          }
+        }
+      }),
+    );
+
+    */
 
     res.status(httpStatus.CREATED);
     return res.json({ status: offices.length });
