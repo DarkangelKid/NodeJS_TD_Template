@@ -33,62 +33,72 @@ exports.ImportUser = async (req, res, next) => {
         const rounds = 10;
         //const hash = await bcrypt.hash('Tandan123', rounds);
 
-        let positon = item.Position?.Name ?? null;
-        let groupCode = item.Group?.GroupCode ?? null;
-        let officeCode = item.UserOffice?.GroupCode ?? null;
+        let usertmp = await User.findAll({
+          where: {
+            username: item.UserProfile.Account,
+          },
+        });
 
-        let positionId = null;
-        let officeId = null;
-        let nhomId = null;
+        if (usertmp.length < 1) {
+          
 
-        if (groupCode) {
-          groupCode = groupCode.replace(/-/g, '.');
+           let positon = item.Position?.Name ?? null;
+          let groupCode = item.Group?.GroupCode ?? null;
+          let officeCode = item.UserOffice?.GroupCode ?? null;
 
-          let officeItem = await Office.findOne({ where: { code: groupCode } });
+          let positionId = null;
+          let officeId = null;
+          let nhomId = null;
 
-          if (officeItem) {
-            nhomId = officeItem.id;
+          if (groupCode) {
+            groupCode = groupCode.replace(/-/g, '.');
+
+            let officeItem = await Office.findOne({ where: { code: groupCode } });
+
+            if (officeItem) {
+              nhomId = officeItem.id;
+            }
           }
-        }
 
-        if (officeCode) {
-          officeCode = officeCode.replace(/-/g, '.');
+          if (officeCode) {
+            officeCode = officeCode.replace(/-/g, '.');
 
-          let officeItem = await Office.findOne({ where: { code: officeCode } });
+            let officeItem = await Office.findOne({ where: { code: officeCode } });
 
-          if (officeItem) {
-            officeId = officeItem.id;
+            if (officeItem) {
+              officeId = officeItem.id;
+            }
           }
-        }
 
-        if (positon) {
-          let officeItem = await Position.findOne({ where: { name: positon } });
+          if (positon) {
+            let officeItem = await Position.findOne({ where: { name: positon } });
 
-          if (officeItem) {
-            positionId = officeItem.id;
+            if (officeItem) {
+              positionId = officeItem.id;
+            }
           }
-        }
 
-        let itemData = {
-          username: item.UserProfile.Account,
-          fullName: item.UserProfile.FullName,
-          displayName: item.UserProfile.FullName,
-          sex: item.UserProfile.Sex,
-          birthday: item.UserProfile.Birthday,
-          email: item.UserProfile.Email,
-          phoneNumber: item.UserProfile.Phone,
-          password: '$2a$10$J/870qRZ8o7TitXS4yoziul0COW0GgeN7D143eZkMx.Q0mh8um6/m',
-          positionId: positionId,
-          officeId: officeId,
-          nhomId: nhomId,
-        };
+          let itemData = {
+            username: item.UserProfile.Account,
+            fullName: item.UserProfile.FullName,
+            displayName: item.UserProfile.FullName,
+            sex: item.UserProfile.Sex,
+            birthday: item.UserProfile.Birthday,
+            email: item.UserProfile.Email,
+            phoneNumber: item.UserProfile.Phone,
+            password: '$2a$10$J/870qRZ8o7TitXS4yoziul0COW0GgeN7D143eZkMx.Q0mh8um6/m',
+            positionId: positionId,
+            officeId: officeId,
+            nhomId: nhomId,
+          };
 
-        try {
-          const itemUser = await User.create(itemData);
-          if (itemUser) count++;
-        } catch (error__) {
-          console.log('LOI');
-          console.log(error__);
+          try {
+            const itemUser = await User.create(itemData);
+            if (itemUser) count++;
+          } catch (error__) {
+            console.log('LOI');
+            console.log(error__);
+          } 
         }
       }),
     );

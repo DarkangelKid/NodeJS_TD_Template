@@ -351,7 +351,7 @@ exports.GetListNotifi = async (req, res, next) => {
       where: condition,
       limit,
       offset,
-      order: [['updatedAt', 'DESC']],
+      order: [['createdAt', 'DESC']],
     })
       .then((data) => {
         const response = getPagingData(data, page, limit);
@@ -372,7 +372,7 @@ exports.findAll = async (req, res, next) => {
     where: condition,
     limit,
     offset,
-    order: [['updatedAt', 'DESC']],
+    order: [['createdAt', 'DESC']],
   })
     .then((data) => {
       const response = getPagingData(data, page, limit);

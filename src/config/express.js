@@ -19,6 +19,13 @@ const initSockets = require('../api/sockets');
 
 var CASAuthentication = require('../api/controllers/CASAuthentication');
 
+var schedule = require('node-schedule');
+var cronExpress = '*/5 * * * * * *';
+var autoJob = schedule.scheduleJob(cronExpress, function (fireDate) {
+  console.log('running job!');
+  console.log(fireDate);
+});
+
 /**
  * Express instance
  * @public

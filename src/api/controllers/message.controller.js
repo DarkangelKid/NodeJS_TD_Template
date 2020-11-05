@@ -237,7 +237,7 @@ exports.listPhotos = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -271,7 +271,7 @@ exports.listPhotos = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -355,7 +355,7 @@ exports.listFiles = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -389,7 +389,7 @@ exports.listFiles = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -445,7 +445,7 @@ exports.getConversation = async (req, res, next) => {
         ],
       },
 
-      order: [['updatedAt', 'DESC']],
+      order: [['createdAt', 'DESC']],
 
       include: [
         {
@@ -529,7 +529,7 @@ exports.getMessage = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -580,7 +580,7 @@ exports.getMessage = async (req, res, next) => {
         },
         limit,
         offset,
-        order: [['updatedAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
 
         include: [
           {
@@ -622,7 +622,7 @@ exports.getConversations = async (req, res, next) => {
       where: {
         [Op.and]: [{ conversationType: 'User' }, { [Op.or]: [{ senderId: currentUser.id }, { receiverId: currentUser.id }] }],
       },
-      order: [['updatedAt', 'DESC']],
+      order: [['createdAt', 'DESC']],
 
       include: [
         {
@@ -666,7 +666,7 @@ exports.getConversations = async (req, res, next) => {
         const item = await Message.findAll({
           where: { chatGroupId: i.id },
           limit: 1,
-          order: [['updatedAt', 'DESC']],
+          order: [['createdAt', 'DESC']],
           include: [
             {
               model: User,

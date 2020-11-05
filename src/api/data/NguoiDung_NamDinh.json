@@ -3017,15 +3017,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-19-24-H40",
-                "GroupName": "Trung tâm Văn hóa, thông tin, thể thao"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "Position": {
                 "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "UserProfile": {
                 "Account": "nguyentuananh.ndh",
@@ -3039,15 +3039,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-19-24-H40",
-                "GroupName": "Trung tâm Văn hóa, thông tin, thể thao"
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
             },
             "Position": {
                 "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
             },
             "UserProfile": {
                 "Account": "nguyenthiphuong.ndh",
@@ -3219,7 +3219,7 @@
                 "GroupName": "Phòng Văn hóa và Thông tin"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -3457,8 +3457,8 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-19-24-H40",
-                "GroupName": "Trung tâm Văn hóa, thông tin, thể thao"
+                "GroupCode": "787256bd-d2b1-47ce-84e4-666319090b0e",
+                "GroupName": "Chi nhánh VP ĐK đất đai TP"
             },
             "Position": {
                 "Name": "Chuyên viên"
@@ -3523,15 +3523,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-19-24-H40",
-                "GroupName": "Trung tâm Văn hóa, thông tin, thể thao"
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
             },
             "Position": {
-                "Name": "Chuyên viên"
+                "Name": "Phó Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
             },
             "UserProfile": {
                 "Account": "tranthihoa.ndh",
@@ -3831,15 +3831,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-17-24-H40",
-                "GroupName": "Trung tâm giới thiệu việc làm"
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
             },
             "Position": {
                 "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
             },
             "UserProfile": {
                 "Account": "vuthihien.ndh",
@@ -3963,15 +3963,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-04-24-H40",
-                "GroupName": "Ban QL khu di tích LSVH Đền Trần-Chùa Tháp"
+                "GroupCode": "000-35-24-H40",
+                "GroupName": "UBND phường Trần Quang Khải"
             },
             "Position": {
                 "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-35-24-H40",
+                "GroupName": "UBND phường Trần Quang Khải"
             },
             "UserProfile": {
                 "Account": "tranthimai.ndh",
@@ -4451,7 +4451,7 @@
                 "GroupName": "Phòng Giáo dục và Đào tạo"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -4473,7 +4473,7 @@
                 "GroupName": "Phòng Giáo dục và Đào tạo"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -4649,7 +4649,7 @@
                 "GroupName": "Phòng Quản lý đô thị"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -4671,7 +4671,7 @@
                 "GroupName": "Phòng Quản lý đô thị"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó văn phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -4781,7 +4781,7 @@
                 "GroupName": "Phòng Văn hóa và Thông tin"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -4799,11 +4799,11 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-04-24-H40",
-                "GroupName": "Ban QL khu di tích LSVH Đền Trần-Chùa Tháp"
+                "GroupCode": "000-14-24-H40",
+                "GroupName": "Phòng Văn hóa và Thông tin"
             },
             "Position": {
-                "Name": "Phó giám đốc"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5045,7 +5045,7 @@
                 "GroupName": "Phòng Tư pháp"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5199,7 +5199,7 @@
                 "GroupName": "Phòng Kinh tế"
             },
             "Position": {
-                "Name": "Chuyên viên"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5287,7 +5287,7 @@
                 "GroupName": "Phòng Kinh tế"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5507,7 +5507,7 @@
                 "GroupName": "Phòng Tài chính - Kế hoạch"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5529,7 +5529,7 @@
                 "GroupName": "Phòng Tài chính - Kế hoạch"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5811,15 +5811,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-12-24-H40",
-                "GroupName": "Phòng Tài nguyên và Môi trường"
+                "GroupCode": "000-24-24-H40",
+                "GroupName": "UBND phường Hạ Long"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "000-00-24-H40",
-                "GroupName": "UBND Thành phố Nam Định"
+                "GroupCode": "000-24-24-H40",
+                "GroupName": "UBND phường Hạ Long"
             },
             "UserProfile": {
                 "Account": "tranvanchanh.ndh",
@@ -5837,7 +5837,7 @@
                 "GroupName": "Phòng Tài nguyên và Môi trường"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5925,7 +5925,7 @@
                 "GroupName": "Thanh tra"
             },
             "Position": {
-                "Name": "Chuyên viên"
+                "Name": "Thanh tra viên"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5969,7 +5969,7 @@
                 "GroupName": "Thanh tra"
             },
             "Position": {
-                "Name": "Phó Chánh thanh tra"
+                "Name": "Phó chánh thanh tra"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -5991,7 +5991,7 @@
                 "GroupName": "Thanh tra"
             },
             "Position": {
-                "Name": "Phó Chánh thanh tra"
+                "Name": "Phó chánh thanh tra"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6145,7 +6145,7 @@
                 "GroupName": "Phòng LĐTB và xã hội"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6167,7 +6167,7 @@
                 "GroupName": "Phòng LĐTB và xã hội"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6207,8 +6207,8 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-09-24-H40",
-                "GroupName": "Phòng Nội vụ"
+                "GroupCode": "000-12-24-H40",
+                "GroupName": "Phòng Tài nguyên và Môi trường"
             },
             "Position": {
                 "Name": "Chuyên viên"
@@ -6343,7 +6343,7 @@
                 "GroupName": "Phòng Nội vụ"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6365,7 +6365,7 @@
                 "GroupName": "Phòng Nội vụ"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6475,7 +6475,7 @@
                 "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
-                "Name": "Chuyên viên"
+                "Name": "Thanh tra viên"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6563,7 +6563,7 @@
                 "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
-                "Name": "Phó văn phòng"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6607,7 +6607,7 @@
                 "GroupName": "Phòng Tài nguyên và Môi trường"
             },
             "Position": {
-                "Name": "Phó phòng"
+                "Name": "Phó Trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6625,8 +6625,8 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-20-24-H40",
-                "GroupName": "Văn phòng HĐND - UBND"
+                "GroupCode": "000-09-24-H40",
+                "GroupName": "Phòng Nội vụ"
             },
             "Position": {
                 "Name": "Chánh văn phòng"
@@ -6651,7 +6651,7 @@
                 "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Phó trưởng ban"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6673,7 +6673,7 @@
                 "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Phó trưởng ban"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6695,7 +6695,7 @@
                 "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Trưởng ban"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -6713,8 +6713,8 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "EF96D1A5-2CD9-BE9E-511F-E98A693FFF02",
-                "GroupName": "Lãnh đạo Thành phố"
+                "GroupCode": "000-20-24-H40",
+                "GroupName": "Văn phòng HĐND - UBND"
             },
             "Position": {
                 "Name": "Phó chủ tịch"
@@ -9177,15 +9177,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-21-24-H40",
+                "GroupName": "UBND phường Bà Triệu"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-21-24-H40",
+                "GroupName": "UBND phường Bà Triệu"
             },
             "UserProfile": {
                 "Account": "tranthily.ndh",
@@ -9705,15 +9705,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "UserProfile": {
                 "Account": "tranthithanhnhan.ndh",
@@ -10585,15 +10585,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "UserProfile": {
                 "Account": "nguyenthihuyen.ndh",
@@ -10959,15 +10959,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-15-24-H40",
+                "GroupName": "Phòng Y tế"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
             },
             "UserProfile": {
                 "Account": "nguyenthithuhien.ndh",
@@ -11069,15 +11069,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "UserProfile": {
                 "Account": "trankhanhhuyen.ndh",
@@ -11399,15 +11399,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-34-24-H40",
+                "GroupName": "UBND phường Trần Hưng Đạo"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "F134AC3E-3983-3920-6A21-9BC70ECD6384",
-                "GroupName": "Trường THCS Phùng Chí Kiên"
+                "GroupCode": "000-34-24-H40",
+                "GroupName": "UBND phường Trần Hưng Đạo"
             },
             "UserProfile": {
                 "Account": "trantthanhhuong.ndh",
@@ -11509,15 +11509,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "409A37C1-267A-4E70-0E2D-88FCF21646D5",
-                "GroupName": "Trường tiểu học Kim Đồng"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "UserProfile": {
                 "Account": "tranthongnhung.ndh",
@@ -12565,15 +12565,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
             },
             "UserProfile": {
                 "Account": "hoangthiphuong.ndh",
@@ -12939,15 +12939,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-39-24-H40",
+                "GroupName": "UBND phường Vị Hoàng"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "C10CE664-8F71-8A28-1023-6E890B6C4BDC",
-                "GroupName": "Trường tiểu học Chu Văn An"
+                "GroupCode": "000-39-24-H40",
+                "GroupName": "UBND phường Vị Hoàng"
             },
             "UserProfile": {
                 "Account": "nguyenngocanh.ndh",
@@ -14105,15 +14105,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "867E7AD4-4481-485C-0095-EC75D7F03D6A",
-                "GroupName": "Trường tiểu học Hồ Tùng Mậu"
+                "GroupCode": "000-32-24-H40",
+                "GroupName": "UBND phường Thống Nhất"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "867E7AD4-4481-485C-0095-EC75D7F03D6A",
-                "GroupName": "Trường tiểu học Hồ Tùng Mậu"
+                "GroupCode": "000-32-24-H40",
+                "GroupName": "UBND phường Thống Nhất"
             },
             "UserProfile": {
                 "Account": "nguyenthingoc.ndh",
@@ -15337,15 +15337,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "DEC074B5-5D66-5A01-14CE-168BBF060E99",
-                "GroupName": "Trường tiểu học Lê Hồng Sơn"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "DEC074B5-5D66-5A01-14CE-168BBF060E99",
-                "GroupName": "Trường tiểu học Lê Hồng Sơn"
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
             },
             "UserProfile": {
                 "Account": "tranthithuhuyen.ndh",
@@ -16041,15 +16041,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "5014C061-74BF-6254-71F0-DCC12AEF6267",
-                "GroupName": "Trường tiểu học Lộc An"
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
             },
             "Position": {
-                "Name": "Ban giám hiệu"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "5014C061-74BF-6254-71F0-DCC12AEF6267",
-                "GroupName": "Trường tiểu học Lộc An"
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
             },
             "UserProfile": {
                 "Account": "vuthithom.ndh",
@@ -16833,15 +16833,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "E654B0BE-5911-579A-05C3-CFFB654E3DB5",
-                "GroupName": "Trường tiểu học Nam Phong"
+                "GroupCode": "000-37-24-H40",
+                "GroupName": "UBND phường Trường Thi"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "E654B0BE-5911-579A-05C3-CFFB654E3DB5",
-                "GroupName": "Trường tiểu học Nam Phong"
+                "GroupCode": "000-37-24-H40",
+                "GroupName": "UBND phường Trường Thi"
             },
             "UserProfile": {
                 "Account": "nguyentthuhuyen.ndh",
@@ -17317,15 +17317,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "3CBAB9C9-77B6-29C3-1466-49E07E683CD4",
-                "GroupName": "Trường tiểu học Nam Vân"
+                "GroupCode": "000-08-24-H40",
+                "GroupName": "Phòng LĐTB và xã hội"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "3CBAB9C9-77B6-29C3-1466-49E07E683CD4",
-                "GroupName": "Trường tiểu học Nam Vân"
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
             },
             "UserProfile": {
                 "Account": "tranthithuha.ndh",
@@ -18615,15 +18615,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "40CEB2C9-68E9-2128-4ABE-E865A18573F4",
-                "GroupName": "Trường tiểu học Lộc Hòa"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "40CEB2C9-68E9-2128-4ABE-E865A18573F4",
-                "GroupName": "Trường tiểu học Lộc Hòa"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "UserProfile": {
                 "Account": "phamthithuhuong.ndh",
@@ -19165,15 +19165,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "7B500DB6-1258-8803-1989-66BA1AA22AD7",
-                "GroupName": "Trường tiểu học Nguyễn Văn Cừ"
+                "GroupCode": "000-36-24-H40",
+                "GroupName": "UBND phường Trần Tế Xương"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "7B500DB6-1258-8803-1989-66BA1AA22AD7",
-                "GroupName": "Trường tiểu học Nguyễn Văn Cừ"
+                "GroupCode": "000-36-24-H40",
+                "GroupName": "UBND phường Trần Tế Xương"
             },
             "UserProfile": {
                 "Account": "tranthilananh.ndh",
@@ -19253,15 +19253,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "7B500DB6-1258-8803-1989-66BA1AA22AD7",
-                "GroupName": "Trường tiểu học Nguyễn Văn Cừ"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "7B500DB6-1258-8803-1989-66BA1AA22AD7",
-                "GroupName": "Trường tiểu học Nguyễn Văn Cừ"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "UserProfile": {
                 "Account": "nguyenthibinh.ndh",
@@ -19473,15 +19473,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "0C68EB1F-177D-64C3-762F-C73739613B30",
-                "GroupName": "Trường tiểu học Nguyễn Văn Trỗi"
+                "GroupCode": "000-39-24-H40",
+                "GroupName": "UBND phường Vị Hoàng"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "0C68EB1F-177D-64C3-762F-C73739613B30",
-                "GroupName": "Trường tiểu học Nguyễn Văn Trỗi"
+                "GroupCode": "000-39-24-H40",
+                "GroupName": "UBND phường Vị Hoàng"
             },
             "UserProfile": {
                 "Account": "dinhthihuyen.ndh",
@@ -19913,15 +19913,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-30-24-H40",
+                "GroupName": "UBND phường Phan Đình Phùng"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-30-24-H40",
+                "GroupName": "UBND phường Phan Đình Phùng"
             },
             "UserProfile": {
                 "Account": "phamthithuhuyen.ndh",
@@ -20177,15 +20177,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "UserProfile": {
                 "Account": "tranthihong.ndh",
@@ -20265,15 +20265,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "07EFD88E-4E8F-48E9-8D6C-5671F9FD40C4",
-                "GroupName": "Trường tiểu học Nguyễn Viết Xuân"
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
             },
             "UserProfile": {
                 "Account": "nguyenthiyen.ndh",
@@ -20463,15 +20463,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "B3DCA4AB-54F4-75EE-411E-F8BD06792EFD",
-                "GroupName": "Trường tiểu học Phạm Ngọc Thái"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "B3DCA4AB-54F4-75EE-411E-F8BD06792EFD",
-                "GroupName": "Trường tiểu học Phạm Ngọc Thái"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "UserProfile": {
                 "Account": "dinhthutrang.ndh",
@@ -22553,15 +22553,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "E5DFB781-324C-3D1A-0F23-50318FD96A6D",
-                "GroupName": "Trường tiểu học Trần Tế Xương"
+                "GroupCode": "000-26-24-H40",
+                "GroupName": "UBND phường Lộc Vượng"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "E5DFB781-324C-3D1A-0F23-50318FD96A6D",
-                "GroupName": "Trường tiểu học Trần Tế Xương"
+                "GroupCode": "000-26-24-H40",
+                "GroupName": "UBND phường Lộc Vượng"
             },
             "UserProfile": {
                 "Account": "tranthilan.ndh",
@@ -23829,15 +23829,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "8C4BE871-65EA-A60D-662C-FFF8CDF59F8D",
-                "GroupName": "Trường mầm non 2/9"
+                "GroupCode": "787256bd-d2b1-47ce-84e4-666319090b0e",
+                "GroupName": "Chi nhánh VP ĐK đất đai TP"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "8C4BE871-65EA-A60D-662C-FFF8CDF59F8D",
-                "GroupName": "Trường mầm non 2/9"
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
             },
             "UserProfile": {
                 "Account": "nguyentthuhuong.ndh",
@@ -24137,21 +24137,21 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "6B43A988-4253-8DEB-2A84-194BA5BB73C2",
-                "GroupName": "Trường mầm non 8/3"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "6B43A988-4253-8DEB-2A84-194BA5BB73C2",
-                "GroupName": "Trường mầm non 8/3"
+                "GroupCode": "000-45-24-H40",
+                "GroupName": "UBND xã Nam Vân"
             },
             "UserProfile": {
                 "Account": "dothithuhuyen.ndh",
                 "Birthday": null,
                 "Email": null,
-                "FullName": "Đỗ Thị Thu Hiền",
+                "FullName": "Đỗ Thị Thu Huyền",
                 "Phone": null,
                 "Sex": null
             }
@@ -25303,15 +25303,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "437E892D-8E82-8D4E-8C28-1307AE0044FC",
-                "GroupName": "Trường mầm non Hoa Mai"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "437E892D-8E82-8D4E-8C28-1307AE0044FC",
-                "GroupName": "Trường mầm non Hoa Mai"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "UserProfile": {
                 "Account": "phamthihoangyen.ndh",
@@ -26799,15 +26799,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "5C1AA00F-205F-4707-343A-F3267B3A2CF0",
-                "GroupName": "Trường mầm non Lộc An"
+                "GroupCode": "000-29-24-H40",
+                "GroupName": "UBND phường Nguyễn Du"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "5C1AA00F-205F-4707-343A-F3267B3A2CF0",
-                "GroupName": "Trường mầm non Lộc An"
+                "GroupCode": "000-29-24-H40",
+                "GroupName": "UBND phường Nguyễn Du"
             },
             "UserProfile": {
                 "Account": "phamthithanh.ndh",
@@ -28339,15 +28339,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "74237FFB-226A-473A-52B5-20BC79DD7EED",
-                "GroupName": "Trường mầm non Nam Vân"
+                "GroupCode": "000-23-24-H40",
+                "GroupName": "UBND phường Cửa Nam"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Phó Chủ tịch"
             },
             "UserOffice": {
-                "GroupCode": "74237FFB-226A-473A-52B5-20BC79DD7EED",
-                "GroupName": "Trường mầm non Nam Vân"
+                "GroupCode": "000-23-24-H40",
+                "GroupName": "UBND phường Cửa Nam"
             },
             "UserProfile": {
                 "Account": "phamthithuyduong.ndh",
@@ -29901,15 +29901,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "4D3A12B8-7E56-4234-6F35-4DAE92869DC5",
-                "GroupName": "Trường mầm non Số 4"
+                "GroupCode": "787256bd-d2b1-47ce-84e4-666319090b0e",
+                "GroupName": "Chi nhánh VP ĐK đất đai TP"
             },
             "Position": {
-                "Name": "Ban giám hiệu"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "4D3A12B8-7E56-4234-6F35-4DAE92869DC5",
-                "GroupName": "Trường mầm non Số 4"
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
             },
             "UserProfile": {
                 "Account": "tranthihuonglien.ndh",
@@ -30451,15 +30451,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "E8B1D10D-4CD7-57B3-66E5-2A0B73782AD1",
-                "GroupName": "Trường mầm non Thống Nhất"
+                "GroupCode": "000-31-24-H40",
+                "GroupName": "UBND phường Quang Trung"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "E8B1D10D-4CD7-57B3-66E5-2A0B73782AD1",
-                "GroupName": "Trường mầm non Thống Nhất"
+                "GroupCode": "000-31-24-H40",
+                "GroupName": "UBND phường Quang Trung"
             },
             "UserProfile": {
                 "Account": "tranthiquy.ndh",
@@ -33927,15 +33927,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "80B61803-1A05-7D59-2ECC-DE3C3D779145",
-                "GroupName": "Trường THCS Lương Thế Vinh"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "Position": {
-                "Name": "Ban giám hiệu"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "80B61803-1A05-7D59-2ECC-DE3C3D779145",
-                "GroupName": "Trường THCS Lương Thế Vinh"
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
             },
             "UserProfile": {
                 "Account": "tranthithutrang.ndh",
@@ -34169,15 +34169,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "80B61803-1A05-7D59-2ECC-DE3C3D779145",
-                "GroupName": "Trường THCS Lương Thế Vinh"
+                "GroupCode": "000-32-24-H40",
+                "GroupName": "UBND phường Thống Nhất"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "80B61803-1A05-7D59-2ECC-DE3C3D779145",
-                "GroupName": "Trường THCS Lương Thế Vinh"
+                "GroupCode": "000-32-24-H40",
+                "GroupName": "UBND phường Thống Nhất"
             },
             "UserProfile": {
                 "Account": "maithihang.ndh",
@@ -35797,15 +35797,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "F6046FCD-3E99-89EB-07E3-059427751C92",
-                "GroupName": "Trường THCS Mỹ Xá"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "F6046FCD-3E99-89EB-07E3-059427751C92",
-                "GroupName": "Trường THCS Mỹ Xá"
+                "GroupCode": "000-40-24-H40",
+                "GroupName": "UBND phường Vị Xuyên"
             },
             "UserProfile": {
                 "Account": "tranvanduong.ndh",
@@ -36259,15 +36259,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "ACC371F6-950A-15CD-7A8B-24BEE2859561",
-                "GroupName": "Trường THCS Nam Phong"
+                "GroupCode": "000-26-24-H40",
+                "GroupName": "UBND phường Lộc Vượng"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "ACC371F6-950A-15CD-7A8B-24BEE2859561",
-                "GroupName": "Trường THCS Nam Phong"
+                "GroupCode": "000-26-24-H40",
+                "GroupName": "UBND phường Lộc Vượng"
             },
             "UserProfile": {
                 "Account": "tranthilinh.ndh",
@@ -36853,15 +36853,15 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "5D830D7E-6AB8-A69A-7681-512B00022BFD",
-                "GroupName": "Trường THCS Tô Hiệu"
+                "GroupCode": "787256bd-d2b1-47ce-84e4-666319090b0e",
+                "GroupName": "Chi nhánh VP ĐK đất đai TP"
             },
             "Position": {
-                "Name": "Giáo viên"
+                "Name": "Chuyên viên"
             },
             "UserOffice": {
-                "GroupCode": "5D830D7E-6AB8-A69A-7681-512B00022BFD",
-                "GroupName": "Trường THCS Tô Hiệu"
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
             },
             "UserProfile": {
                 "Account": "tranthiluyen.ndh",
@@ -90819,8 +90819,8 @@
         {
             "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
             "Group": {
-                "GroupCode": "000-39-24-H40",
-                "GroupName": "UBND phường Vị Hoàng"
+                "GroupCode": "000-21-24-H40",
+                "GroupName": "UBND phường Bà Triệu"
             },
             "Position": {
                 "Name": "Chủ tịch"
@@ -91153,7 +91153,7 @@
                 "GroupName": "Chi Cục thuế"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -91175,7 +91175,7 @@
                 "GroupName": "Chi Cục thuế"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Phó trưởng phòng"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -91219,7 +91219,7 @@
                 "GroupName": "Chi Cục thuế"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Phó trưởng ban"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -91241,7 +91241,7 @@
                 "GroupName": "Chi Cục thuế"
             },
             "Position": {
-                "Name": "Trưởng phòng"
+                "Name": "Trưởng ban"
             },
             "UserOffice": {
                 "GroupCode": "000-00-24-H40",
@@ -94376,6 +94376,490 @@
                 "Birthday": null,
                 "Email": null,
                 "FullName": "Chu Hồng Loan",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-27-24-H40",
+                "GroupName": "UBND phường Năng Tĩnh"
+            },
+            "UserProfile": {
+                "Account": "nguyentuananhnt.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Tuấn Anh",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "UserProfile": {
+                "Account": "buithilan.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Bùi Thị Lan",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "UserProfile": {
+                "Account": "ngotiendo.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Ngô Tiến Độ",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "Position": {
+                "Name": "Phó Chủ tịch xã"
+            },
+            "UserOffice": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "UserProfile": {
+                "Account": "phamtronglinh.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Phạm Trọng Linh",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-41-24-H40",
+                "GroupName": "UBND xã Lộc An"
+            },
+            "UserProfile": {
+                "Account": "tranthongphuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trần Thị Hồng Phượng",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-28-24-H40",
+                "GroupName": "UBND phường Ngô Quyền"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
+            },
+            "UserProfile": {
+                "Account": "hoangtdieuhuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Hoàng Thị Diệu Hương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-13-24-H40",
+                "GroupName": "Phòng Tư pháp"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
+            },
+            "UserProfile": {
+                "Account": "hoangttphuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Hoàng Thị Thanh Phượng",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-20-24-H40",
+                "GroupName": "Văn phòng HĐND - UBND"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-00-24-H40",
+                "GroupName": "UBND Thành phố Nam Định"
+            },
+            "UserProfile": {
+                "Account": "nguyentthuylinh.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Thùy Linh",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
+            },
+            "UserProfile": {
+                "Account": "nguyentthanhnhan.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Thanh Nhàn",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-38-24-H40",
+                "GroupName": "UBND phường Văn Miếu"
+            },
+            "UserProfile": {
+                "Account": "nguyentthuphuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Thu Phương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-35-24-H40",
+                "GroupName": "UBND phường Trần Quang Khải"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-35-24-H40",
+                "GroupName": "UBND phường Trần Quang Khải"
+            },
+            "UserProfile": {
+                "Account": "admintqk.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Admin Trần Quang Khải",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-34-24-H40",
+                "GroupName": "UBND phường Trần Hưng Đạo"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-34-24-H40",
+                "GroupName": "UBND phường Trần Hưng Đạo"
+            },
+            "UserProfile": {
+                "Account": "nguyenththuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Hoài Hương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
+            },
+            "UserProfile": {
+                "Account": "admintdn.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Admin Trần Đăng Ninh",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
+            },
+            "Position": {
+                "Name": "Chủ tịch"
+            },
+            "UserOffice": {
+                "GroupCode": "000-33-24-H40",
+                "GroupName": "UBND phường Trần Đăng Ninh"
+            },
+            "UserProfile": {
+                "Account": "luongtthuphuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Lương Thị Thu Phương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-31-24-H40",
+                "GroupName": "UBND phường Quang Trung"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-31-24-H40",
+                "GroupName": "UBND phường Quang Trung"
+            },
+            "UserProfile": {
+                "Account": "nguyentbichngoc.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Bích Ngọc",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-30-24-H40",
+                "GroupName": "UBND phường Phan Đình Phùng"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-30-24-H40",
+                "GroupName": "UBND phường Phan Đình Phùng"
+            },
+            "UserProfile": {
+                "Account": "adminpdp.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Admin",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "UserProfile": {
+                "Account": "nguyennminhtan.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Nhật Minh Tân",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "UserProfile": {
+                "Account": "trinhtthuyduong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Trịnh Thị Thuỳ Dương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
+            },
+            "UserProfile": {
+                "Account": "nguyentkhanhninh.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Thị Khánh Ninh",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-21-24-H40",
+                "GroupName": "UBND phường Bà Triệu"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-21-24-H40",
+                "GroupName": "UBND phường Bà Triệu"
+            },
+            "UserProfile": {
+                "Account": "duongtthuyhuong.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Dương Thị Thuỳ Hương",
+                "Phone": null,
+                "Sex": null
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-22-24-H40",
+                "GroupName": "UBND phường Cửa Bắc"
+            },
+            "UserProfile": {
+                "Account": "nguyenxuanthuy.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Nguyễn Xuân Thủy",
+                "Phone": null,
+                "Sex": "Nam"
+            }
+        },
+        {
+            "__type": "UserInfomation:#TD.QuanLyMaDinhDanh.Service",
+            "Group": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "Position": {
+                "Name": "Chuyên viên"
+            },
+            "UserOffice": {
+                "GroupCode": "000-25-24-H40",
+                "GroupName": "UBND phường Lộc Hạ"
+            },
+            "UserProfile": {
+                "Account": "doanthilieu.ndh",
+                "Birthday": null,
+                "Email": null,
+                "FullName": "Đoàn Thị Liễu",
                 "Phone": null,
                 "Sex": "Nam"
             }
