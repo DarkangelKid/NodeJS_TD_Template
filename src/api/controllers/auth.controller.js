@@ -1,150 +1,194 @@
 const httpStatus = require('http-status');
 const moment = require('moment-timezone');
 const { omit } = require('lodash');
-const User = require('../models/user.model');
-const RefreshToken = require('../models/refreshToken.model');
-const PasswordResetToken = require('../models/passwordResetToken.model');
-const { jwtExpirationInterval } = require('../../config/vars');
-const APIError = require('../utils/APIError');
-const emailProvider = require('../services/emails/emailProvider');
+const bcrypt = require('bcryptjs');
+const jwt = require('jwt-simple');
+const axios = require('axios');
+const convert = require('xml-js');
+const { jwtExpirationInterval, LOGIN_SSO, URL_API_MANAGER, TOKEN_API_MANAGER } = require('../../config/vars');
 
-/**
- * Returns a formated object with tokens
- * @private
- */
-function generateTokenResponse(user, accessToken) {
+const parseXML = require('xml2js').parseString;
+const XMLprocessors = require('xml2js/lib/processors');
+
+const db = require('../../config/mssql');
+
+const RefreshToken = db.refreshTokens;
+const User = db.users;
+
+const generateTokenResponse = async (user, accessToken) => {
   const tokenType = 'Bearer';
-  const refreshToken = RefreshToken.generate(user).token;
-  const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
+  const tmp = await RefreshToken.generate(user);
+  const refreshToken = tmp.token;
+
+  //const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
+  const expiresIn = moment().add(jwtExpirationInterval, 'day');
   return {
     tokenType,
     accessToken,
     refreshToken,
     expiresIn,
   };
-}
+};
 
-/**
- * Returns jwt token if registration was successful
- * @public
- */
 exports.register = async (req, res, next) => {
   try {
     const userData = omit(req.body, 'role');
-    const user = await new User(userData).save();
-    const userTransformed = user.transform();
-    const token = generateTokenResponse(user, user.token());
+
+    const rounds = 10;
+
+    const hash = await bcrypt.hash(userData.password, rounds);
+    userData.password = hash;
+
+    const user = await User.create(userData)
+      .then((result) => result)
+      .catch((err) => next(err));
+
+    const token = await generateTokenResponse(user, user.token());
+
     res.status(httpStatus.CREATED);
-    return res.json({ token, user: userTransformed });
+    return res.json({ token, user: user.transform() });
   } catch (error) {
-    return next(User.checkDuplicateEmail(error));
+    console.log(error);
+    // return next(User.checkDuplicateEmail(error));
   }
 };
 
-/**
- * Returns jwt token if valid username and password is provided
- * @public
- */
 exports.login = async (req, res, next) => {
   try {
-    const { user, accessToken } = await User.findAndGenerateToken(req.body);
-    const token = generateTokenResponse(user, accessToken);
-    const userTransformed = user.transform();
-    return res.json({ token, user: userTransformed });
+    if (LOGIN_SSO === '1') {
+      if (!req.body.username) {
+        throw new APIError({
+          message: 'Chưa nhập thông tin người dùng',
+        });
+      }
+
+      let data = await axios.post(
+        `${URL_API_MANAGER}/danhmuc/LoginUser`,
+        { user: req.body.username, pass: req.body.password },
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN_API_MANAGER}`,
+          },
+        },
+      );
+
+      let token = data.data?.data ?? null;
+      if (!token) {
+        throw new APIError({
+          message: 'Đăng nhập lỗi! Vui lòng đăng nhập lại',
+        });
+      }
+      return res.json({ token });
+    } else {
+      const { user, accessToken } = await User.findAndGenerateToken(req.body);
+
+      const token = await generateTokenResponse(user, accessToken);
+      const user_ = await User.get(user.id);
+      return res.json({ token, user: user.transform() });
+    }
+
+    //return res.json({ token, user: user.transform() });
   } catch (error) {
     return next(error);
   }
 };
 
-/**
- * login with an existing user or creates a new one if valid accessToken token
- * Returns jwt token
- * @public
- */
-exports.oAuth = async (req, res, next) => {
+exports.login_old = async (req, res, next) => {
   try {
-    const { user } = req;
-    const accessToken = user.token();
-    const token = generateTokenResponse(user, accessToken);
-    const userTransformed = user.transform();
-    return res.json({ token, user: userTransformed });
+    const { user, accessToken } = await User.findAndGenerateToken(req.body);
+
+    const token = await generateTokenResponse(user, accessToken);
+    const user_ = await User.get(user.id);
+    return res.json({ token, user: user.transform() });
   } catch (error) {
     return next(error);
   }
 };
 
-/**
- * Returns a new jwt when given a valid refresh token
- * @public
+exports.loginsso = async (req, res, next) => {
+  try {
+    const { ticket } = req.query;
+
+    const str = `https://dangnhap.namdinh.gov.vn/p3/serviceValidate?ticket=${ticket}&service=https://chat.namdinh.gov.vn/v1/auth/login`;
+    // console.log(str);
+    // return res.redirect(str);
+    /*  const dataUser = await axios.get(str)
+      .then((response) => {
+        const jsonData = JSON.parse(convert.xml2json(response.data, { compact: true, spaces: 2 }));
+        console.log(jsonData);
+        return jsonData;
+        // return res.send(jsonData);
+      })
+      .catch((error) => {
+        console.log('error');
+        console.log(error);
+        return null;
+      })
+      .then(() => null);
  */
+    let dataUser = null;
+    const result_ = await axios.get(str);
+
+    parseXML(
+      result_.data,
+      {
+        trim: true,
+        normalize: true,
+        explicitArray: false,
+        tagNameProcessors: [XMLprocessors.normalize, XMLprocessors.stripPrefix],
+      },
+      (err, result) => {
+        if (err) {
+          return 'Response from CAS server was bad.';
+        }
+        try {
+          const failure = result.serviceresponse.authenticationfailure;
+          if (failure) {
+            return `CAS authentication failed (${failure.$.code}).`;
+          }
+          const success = result.serviceresponse.authenticationsuccess;
+          if (success) {
+            dataUser = success.user;
+            // console.log(success.attributes);
+          }
+
+          return 'CAS authentication failed.';
+        } catch (er) {
+          return 'CAS authentication failed.';
+        }
+      },
+    );
+
+    if (dataUser) {
+      const { user, accessToken } = await User.findAndGenerateTokenSSO({ username: dataUser });
+
+      const token = await generateTokenResponse(user, accessToken);
+      const user_ = await User.get(user.id);
+
+      return res.redirect(`https://chat.namdinh.gov.vn/loginwithtoken&token=${token.accessToken}`);
+
+      // return res.json({ token, user: user.transform() });
+    }
+
+    return res.redirect('https://chat.namdinh.gov.vn');
+  } catch (error) {
+    return next(error);
+  }
+};
+
 exports.refresh = async (req, res, next) => {
   try {
-    const { email, refreshToken } = req.body;
-    const refreshObject = await RefreshToken.findOneAndRemove({
-      userEmail: email,
-      token: refreshToken,
+    const { username, refreshToken } = req.body;
+    const refreshObject = await RefreshToken.findOne({
+      where: {
+        username,
+        token: refreshToken,
+      },
     });
-    const { user, accessToken } = await User.findAndGenerateToken({
-      email,
-      refreshObject,
-    });
-    const response = generateTokenResponse(user, accessToken);
+    const { user, accessToken } = await User.findAndGenerateToken({ username, refreshObject });
+
+    const response = await generateTokenResponse(user, accessToken);
     return res.json(response);
-  } catch (error) {
-    return next(error);
-  }
-};
-
-exports.sendPasswordReset = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email }).exec();
-
-    if (user) {
-      const passwordResetObj = await PasswordResetToken.generate(user);
-      emailProvider.sendPasswordReset(passwordResetObj);
-      res.status(httpStatus.OK);
-      return res.json('success');
-    }
-    throw new APIError({
-      status: httpStatus.UNAUTHORIZED,
-      message: 'No account found with that email',
-    });
-  } catch (error) {
-    return next(error);
-  }
-};
-
-exports.resetPassword = async (req, res, next) => {
-  try {
-    const { email, password, resetToken } = req.body;
-    const resetTokenObject = await PasswordResetToken.findOneAndRemove({
-      userEmail: email,
-      resetToken,
-    });
-
-    const err = {
-      status: httpStatus.UNAUTHORIZED,
-      isPublic: true,
-    };
-    if (!resetTokenObject) {
-      err.message = 'Cannot find matching reset token';
-      throw new APIError(err);
-    }
-    if (moment().isAfter(resetTokenObject.expires)) {
-      err.message = 'Reset token is expired';
-      throw new APIError(err);
-    }
-
-    const user = await User.findOne({
-      email: resetTokenObject.userEmail,
-    }).exec();
-    user.password = password;
-    await user.save();
-    emailProvider.sendPasswordChangeEmail(user);
-
-    res.status(httpStatus.OK);
-    return res.json('Password Updated');
   } catch (error) {
     return next(error);
   }

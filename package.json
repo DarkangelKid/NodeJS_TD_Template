@@ -2,7 +2,7 @@
   "name": "td_nodejs_template",
   "version": "1.0.0",
   "description": "TD NodeJS templage - Nodejs Express, Mongodb, Docker RESTful APIs",
-  "url" : "http://127.0.0.1",
+  "url": "http://127.0.0.1",
   "title": "TD Nodejs Template RESTful APIs",
   "main": "index.js",
   "scripts": {
@@ -43,7 +43,10 @@
     "dotenv": "^8.2.0",
     "email-templates": "^7.0.5",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "express-validation": "^3.0.5",
+    "firebase-admin": "^8.13.0",
+    "fs-extra": "^9.0.1",
     "helmet": "^3.23.3",
     "http-status": "^1.4.2",
     "jwt-simple": "^0.5.6",
@@ -52,13 +55,24 @@
     "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.20",
     "morgan": "^1.10.0",
+    "mssql": "^6.2.1",
+    "multer": "^1.4.2",
+    "node-schedule": "^1.3.2",
     "nodemailer": "^6.4.10",
+    "nodemailer-smtp-transport": "^2.7.4",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1",
     "passport-jwt": "^4.0.0",
     "pm2": "^4.4.0",
+    "sequelize": "^6.3.4",
+    "sharp": "^0.25.4",
+    "socket.io": "^2.3.0",
+    "socketio-jwt": "^4.6.2",
+    "tedious": "^9.1.0",
     "uuid": "^8.2.0",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xml-js": "^1.6.11",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "apidoc": "^0.23.0",
@@ -67,5 +81,5 @@
     "eslint-plugin-import": "^2.22.0",
     "nodemon": "^2.0.4"
   },
-  "apidoc": { }
+  "apidoc": {}
 }

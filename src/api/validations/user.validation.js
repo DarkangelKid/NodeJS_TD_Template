@@ -1,5 +1,4 @@
 const Joi = require('@hapi/joi');
-const User = require('../models/user.model');
 
 module.exports = {
   // GET /v1/users
@@ -9,47 +8,23 @@ module.exports = {
       perPage: Joi.number().min(1).max(100),
       name: Joi.string(),
       email: Joi.string(),
-      role: Joi.string(),
-    }),
-  },
-
-  // POST /v1/users
-  createUser: {
-    body: Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
-      name: Joi.string().max(128),
-      role: Joi.string(),
-    }),
-  },
-
-  // PUT /v1/users/:userId
-  replaceUser: {
-    body: Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(128).required(),
-      name: Joi.string().max(128),
-      role: Joi.string(),
-    }),
-    params: Joi.object({
-      userId: Joi.string()
-        .regex(/^[a-fA-F0-9]{24}$/)
-        .required(),
     }),
   },
 
   // PATCH /v1/users/:userId
   updateUser: {
     body: Joi.object({
-      email: Joi.string().email(),
-      password: Joi.string().min(6).max(128),
-      name: Joi.string().max(128),
-      role: Joi.string(),
+      email: Joi.string(),
+      firstname: Joi.string().max(128),
+      lastname: Joi.string().max(128),
     }),
-    params: Joi.object({
-      userId: Joi.string()
-        .regex(/^[a-fA-F0-9]{24}$/)
-        .required(),
+  },
+
+  // PATCH /v1/users/:userId
+  updatePassword: {
+    body: Joi.object({
+      oldPassword: Joi.string().min(1).max(128).required(),
+      newPassword: Joi.string().min(1).max(128).required(),
     }),
   },
 };

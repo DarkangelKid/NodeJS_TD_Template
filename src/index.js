@@ -2,17 +2,18 @@
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
 const { port, env } = require('./config/vars');
 const logger = require('./config/logger');
-const app = require('./config/express');
-const mongoose = require('./config/mongoose');
+const server = require('./config/express');
+const db = require('./config/mssql');
 
-// open mongoose connection
-mongoose.connect();
+db.sequelize.sync();
+
+//db.sequelize.sync({ force: true });
 
 // listen to requests
-app.listen(port, () => logger.info(`server started on port ${port} (${env})`));
+server.listen(port, () => logger.info(`server started on port ${port} (${env})`));
 
 /**
-* Exports express
-* @public
-*/
-module.exports = app;
+ * Exports express
+ * @public
+ */
+module.exports = server;

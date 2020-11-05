@@ -1,54 +1,48 @@
-const mongoose = require('mongoose');
+const { DataTypes, Sequelize, Model } = require('sequelize');
 const crypto = require('crypto');
 const moment = require('moment-timezone');
 
-/**
- * Refresh Token Schema
- * @private
- */
-const refreshTokenSchema = new mongoose.Schema({
-  token: {
-    type: String,
-    required: true,
-    index: true,
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  userEmail: {
-    type: 'String',
-    ref: 'User',
-    required: true,
-  },
-  expires: { type: Date },
-});
+module.exports = (sequelize, Sequelize) => {
+  class RefreshToken extends Model {
+    static async generate(user) {
+      const userId = user.id;
+      const { username } = user;
+      const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
+      const expires = moment().add(30, 'days').toDate();
 
-refreshTokenSchema.statics = {
+      const tmp = await RefreshToken.create({
+        token,
+        userId,
+        username,
+        expires,
+      });
 
-  /**
-   * Generate a refresh token object and saves it into the database
-   *
-   * @param {User} user
-   * @returns {RefreshToken}
-   */
-  generate(user) {
-    const userId = user._id;
-    const userEmail = user.email;
-    const token = `${userId}.${crypto.randomBytes(40).toString('hex')}`;
-    const expires = moment().add(30, 'days').toDate();
-    const tokenObject = new RefreshToken({
-      token, userId, userEmail, expires,
-    });
-    tokenObject.save();
-    return tokenObject;
-  },
+      return tmp;
+    }
+  }
+  RefreshToken.init(
+    {
+      token: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      username: {
+        type: DataTypes.STRING,
+      },
+      expires: {
+        type: DataTypes.DATE,
+      },
+    },
+    {
+      sequelize,
+      modelName: 'refreshToken',
+      freezeTableName: true,
+    },
+  );
 
+  return RefreshToken;
 };
-
-/**
- * @typedef RefreshToken
- */
-const RefreshToken = mongoose.model('RefreshToken', refreshTokenSchema);
-module.exports = RefreshToken;

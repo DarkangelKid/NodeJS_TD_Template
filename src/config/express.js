@@ -1,4 +1,6 @@
 const express = require('express');
+var session = require('express-session');
+
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compress = require('compression');
@@ -6,16 +8,39 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const helmet = require('helmet');
 const passport = require('passport');
+const http = require('http');
+const socketio = require('socket.io');
+const path = require('path');
 const routes = require('../api/routes/v1');
 const { logs } = require('./vars');
 const strategies = require('./passport');
 const error = require('../api/middlewares/error');
+const initSockets = require('../api/sockets');
+
+var CASAuthentication = require('../api/controllers/CASAuthentication');
+
+var schedule = require('node-schedule');
+var cronExpress = '*/5 * * * * * *';
+var autoJob = schedule.scheduleJob(cronExpress, function (fireDate) {
+  console.log('running job!');
+  console.log(fireDate);
+});
 
 /**
-* Express instance
-* @public
-*/
+ * Express instance
+ * @public
+ */
+
 const app = express();
+
+// static file
+app.use('/public', express.static(path.join(__dirname, '../../public')));
+
+app.use(express.static(path.join(__dirname, '../../build')));
+
+// Init server with socket.io and express app
+const server = http.createServer(app);
+const io = socketio(server, { path: '/chat/socket.io' });
 
 // request logging. dev: console | production: file
 app.use(morgan(logs));
@@ -40,11 +65,14 @@ app.use(cors());
 // enable authentication
 app.use(passport.initialize());
 passport.use('jwt', strategies.jwt);
-passport.use('facebook', strategies.facebook);
-passport.use('google', strategies.google);
 
 // mount api v1 routes
 app.use('/v1', routes);
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../build', 'index.html'));
+});
+// Init all sockets
+initSockets(io);
 
 // if error is not an instanceOf APIError, convert it.
 app.use(error.converter);
@@ -55,4 +83,4 @@ app.use(error.notFound);
 // error handler, send stacktrace only during development
 app.use(error.handler);
 
-module.exports = app;
+module.exports = server;
