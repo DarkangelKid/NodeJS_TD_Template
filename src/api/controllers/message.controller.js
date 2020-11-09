@@ -684,7 +684,9 @@ exports.getConversations = async (req, res, next) => {
             },
           ],
         });
-        groupMessages.push(item[0]);
+        if (item[0] !== null) {
+          groupMessages.push(item[0]);
+        }
       }),
     );
 
