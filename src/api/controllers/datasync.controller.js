@@ -214,10 +214,10 @@ exports.CybersecurityIPBiTanCong = async (req, res, next) => {
   try {
     let { fromdate, todate } = req.query;
     let query =
-      ' SELECT Top 10 [dstip] as diachi, COUNT(dstip) as luot FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC';
+      ' SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC';
 
     if (fromdate && todate) {
-      query = `SELECT Top 10 [dstip] as diachi, COUNT(dstip) as luot FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
+      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -231,10 +231,10 @@ exports.CybersecurityIPTanCong = async (req, res, next) => {
   try {
     const { fromdate, todate } = req.query;
     let query =
-      'SELECT Top 10 [srcip] as diachi, COUNT(srcip) as luot FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC';
+      'SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC';
 
     if (fromdate && todate) {
-      query = `SELECT Top 10 [srcip] as diachi, COUNT(srcip) as luot FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
+      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -249,10 +249,10 @@ exports.CybersecurityQuocGiaTanCong = async (req, res, next) => {
   try {
     const { fromdate, todate } = req.query;
     let query =
-      'SELECT Top 10 [srcip_geo_countryName] as diachi, COUNT(srcip_geo_countryName) as luot FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC';
+      'SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC';
 
     if (fromdate && todate) {
-      query = `SELECT Top 10 [srcip_geo_countryName] as diachi, COUNT(srcip_geo_countryName) as luot FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
+      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -267,10 +267,10 @@ exports.CybersecurityTongHopCuocTanCong = async (req, res, next) => {
   try {
     const { fromdate, todate } = req.query;
     let query =
-      'SELECT Top 10 [event_name] as diachi, COUNT(event_name) as luot FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC';
+      'SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC';
 
     if (fromdate && todate) {
-      query = `SELECT Top 10 [event_name] as diachi, COUNT(event_name) as luot FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
+      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
