@@ -13,7 +13,8 @@ const User = db.users;
 const Group = db.groups;
 const Comment = db.comment;
 const Reaction = db.reactions;
-
+const sequelize = db.sequelize;
+const Sequelize = db.Sequelize;
 const { Op } = db.Sequelize;
 
 exports.CreatePost = async (req, res, next) => {
@@ -261,15 +262,26 @@ exports.GetListPost = async (req, res, next) => {
     //let userId = user||currentUser.id;
 
     const groups = await Post.findAndCountAll({
+      where: {
+        [Op.or]: [
+          {
+            userId: userId,
+          },
+
+          Sequelize.literal(
+            `EXISTS (SELECT * FROM [user_group] WHERE [post].[groupId] = [user_group].[groupId] AND [post].[userId] = [user_group].[userId] AND [post].[userId] = ${userId})`,
+          ),
+        ],
+      },
       include: [
         {
           model: User,
           as: 'user',
+          attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
         },
         {
           model: Comment,
           as: 'comments',
-          order: [['createdAt', 'DESC']],
         },
         {
           model: Reaction,
@@ -279,7 +291,75 @@ exports.GetListPost = async (req, res, next) => {
             as: 'user',
             attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
           },
-          order: [['createdAt', 'DESC']],
+        },
+        {
+          model: Group,
+          as: 'group',
+        },
+        {
+          model: Attachment,
+          as: 'attachments',
+          attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+        },
+      ],
+      limit,
+      offset,
+      order: [['createdAt', 'DESC']],
+    });
+
+    const response = getPagingData(groups, page, limit);
+
+    return res.json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.GetListPost_old = async (req, res, next) => {
+  try {
+    const currentUser = req.user;
+
+    const { page, perpage, user } = req.query;
+    const { limit, offset } = getPagination(page, perpage);
+
+    let userId = currentUser.id;
+
+    if (user) {
+      let userObj = await User.findOne({
+        where: {
+          username: user,
+        },
+      });
+      if (userObj) {
+        userId = userObj.id;
+      } else {
+        throw new APIError({
+          message: 'Không tồn tại tài khoản',
+          status: httpStatus.BAD_REQUEST,
+        });
+      }
+    }
+
+    //let userId = user||currentUser.id;
+
+    const groups = await Post.findAndCountAll({
+      include: [
+        {
+          model: User,
+          as: 'user',
+        },
+        {
+          model: Comment,
+          as: 'comments',
+        },
+        {
+          model: Reaction,
+          as: 'reactions',
+          include: {
+            model: User,
+            as: 'user',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+          },
         },
         {
           model: Group,
@@ -293,13 +373,11 @@ exports.GetListPost = async (req, res, next) => {
               id: userId,
             },
           },
-          order: [['createdAt', 'DESC']],
         },
         {
           model: Attachment,
           as: 'attachments',
           attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
-          order: [['createdAt', 'DESC']],
         },
       ],
       limit,
