@@ -269,6 +269,7 @@ exports.GetListPost = async (req, res, next) => {
         {
           model: Comment,
           as: 'comments',
+          order: [['createdAt', 'DESC']],
         },
         {
           model: Reaction,
@@ -278,6 +279,7 @@ exports.GetListPost = async (req, res, next) => {
             as: 'user',
             attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
           },
+          order: [['createdAt', 'DESC']],
         },
         {
           model: Group,
@@ -291,11 +293,13 @@ exports.GetListPost = async (req, res, next) => {
               id: userId,
             },
           },
+          order: [['createdAt', 'DESC']],
         },
         {
           model: Attachment,
           as: 'attachments',
           attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+          order: [['createdAt', 'DESC']],
         },
       ],
       limit,
