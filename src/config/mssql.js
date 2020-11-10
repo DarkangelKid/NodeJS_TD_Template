@@ -42,6 +42,8 @@ db.comment = require('../api/models/comment.model')(sequelize, Sequelize);
 db.reactions = require('../api/models/reaction.model')(sequelize, Sequelize);
 db.note = require('../api/models/note.model')(sequelize, Sequelize);
 db.datasync = require('../api/models/datasync.model')(sequelize, Sequelize);
+db.anmsync = require('../api/models/ANMsync.model')(sequelize, Sequelize);
+db.camerasync = require('../api/models/CAMERAsync.model')(sequelize, Sequelize);
 
 const User = db.users;
 const Position = db.positions;
@@ -60,6 +62,8 @@ const Comment = db.comment;
 const Reaction = db.reactions;
 const Note = db.note;
 const Datasync = db.datasync;
+const ANMsync = db.anmsync;
+const CAMERAsync = db.camerasync;
 
 Position.hasMany(User, { as: 'users' });
 User.belongsTo(Position, {
