@@ -198,3 +198,19 @@ exports.CybersecurityTongHopCuocTanCong = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.CybersecurityDoTinCay = async (req, res, next) => {
+  try {
+    const { fromdate, todate } = req.query;
+    let query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+    if (fromdate && todate) {
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+    }
+
+    const items = await sequelize.query(query, { type: QueryTypes.SELECT });
+
+    return res.json(items);
+  } catch (error) {
+    next(error);
+  }
+};

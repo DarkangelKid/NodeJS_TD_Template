@@ -18,7 +18,9 @@ router.route('/CybersecurityIPBiTanCong').get(controller.CybersecurityIPBiTanCon
 router.route('/CybersecurityIPTanCong').get(controller.CybersecurityIPTanCong);
 router.route('/CybersecurityQuocGiaTanCong').get(controller.CybersecurityQuocGiaTanCong);
 router.route('/CybersecurityTongHopCuocTanCong').get(controller.CybersecurityTongHopCuocTanCong);
+router.route('/CybersecurityDoTinCay').get(controller.CybersecurityDoTinCay);
 
+//
 
 //router.route('/autojob').get(controller.autoJob);
 
