@@ -209,6 +209,39 @@ exports.CybersecurityDoTinCay = async (req, res, next) => {
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
 
+    items.map((i) => {
+      switch (i.category) {
+        case 'Critical':
+          i.category = 'Nghiêm trọng';
+          break;
+        case 'Major':
+          i.category = 'Ảnh hưởng';
+          break;
+        case 'Minor':
+          i.category = 'Trung bình';
+          break;
+        default:
+          i.category = 'Không đáng kể';
+          break;
+      }
+    });
+
+    return res.json(items);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.CybersecurityDoTinCay_bk = async (req, res, next) => {
+  try {
+    const { fromdate, todate } = req.query;
+    let query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Nghiêm trọng' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Ảnh hưởng' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Trung bình' ELSE 'Không đáng kể' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Nghiêm trọng' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Ảnh hưởng' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Trung bình' ELSE 'Không đáng kể' END`;
+    if (fromdate && todate) {
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Nghiêm trọng' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Ảnh hưởng' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Trung bình' ELSE 'Không đáng kể' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Nghiêm trọng' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Ảnh hưởng' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Trung bình' ELSE 'Không đáng kể' END`;
+    }
+
+    const items = await sequelize.query(query, { type: QueryTypes.SELECT });
+
     return res.json(items);
   } catch (error) {
     next(error);
