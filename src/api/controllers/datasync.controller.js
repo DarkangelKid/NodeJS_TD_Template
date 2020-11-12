@@ -224,7 +224,8 @@ exports.CybersecurityDoTinCay = async (req, res, next) => {
       query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
     }
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] as DATE) = '${fromdate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
