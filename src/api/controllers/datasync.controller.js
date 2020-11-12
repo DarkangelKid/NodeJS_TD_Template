@@ -135,7 +135,7 @@ exports.CybersecurityIPBiTanCong = async (req, res, next) => {
       ' SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
+      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
     }
     if (fromdate && todate && fromdate === todate) {
       query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
@@ -155,7 +155,7 @@ exports.CybersecurityIPTanCong = async (req, res, next) => {
       'SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
+      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
@@ -177,7 +177,9 @@ exports.CybersecurityQuocGiaTanCong = async (req, res, next) => {
       'SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
+      // query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
+
+      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' ) GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
@@ -199,7 +201,7 @@ exports.CybersecurityTongHopCuocTanCong = async (req, res, next) => {
       'SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
+      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
@@ -218,8 +220,11 @@ exports.CybersecurityDoTinCay = async (req, res, next) => {
   try {
     const { fromdate, todate } = req.query;
     let query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
-    if (fromdate && todate) {
-      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+    if (fromdate && todate && fromdate !== todate) {
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+    }
+    if (fromdate && todate && fromdate === todate) {
+      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
