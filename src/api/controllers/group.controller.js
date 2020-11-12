@@ -164,17 +164,15 @@ exports.getThongTin = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    Group.findOne({
-      where: { id },
-      attributes: ['id', 'name', 'avatarUrl', 'description'],
+    const groups = await Group.findOne({
+      where: { id: id },
       include: {
         model: User,
         as: 'users',
-        attributes: ['id', 'username', 'email', 'fullName'],
+        attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
       },
-    })
-      .then((results) => res.json(results))
-      .catch((e) => next(e));
+    });
+    return res.json(groups);
   } catch (error) {
     next(error);
   }

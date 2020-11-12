@@ -114,7 +114,9 @@ exports.GetListComment = async (req, res, next) => {
     const { limit, offset } = getPagination(page, perpage);
 
     const groups = await Comment.findAndCountAll({
-      where: { postId: postId, commentId: null },
+      where: { postId: postId, parentId: null },
+      raw: true,
+      nest: true,
       include: [
         {
           model: User,
@@ -130,13 +132,10 @@ exports.GetListComment = async (req, res, next) => {
             attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
           },
         },
-        {
+        /* {
           model: Comment,
           as: 'comments',
-
-          order: [['createdAt', 'DESC']],
-         
-        },
+        }, */
         {
           model: Attachment,
           as: 'attachments',
@@ -148,9 +147,50 @@ exports.GetListComment = async (req, res, next) => {
       order: [['createdAt', 'DESC']],
     });
 
-    const response = getPagingData(groups, page, limit);
+    let response = getPagingData(groups, page, limit);
 
-    return res.json(response);
+    let datatmp = response.data;
+
+    await Promise.all(
+      datatmp.map(async (item) => {
+        let comments = [];
+        const childComment = await Comment.findAll({
+          where: {
+            parentId: item.id,
+          },
+          raw: true,
+          nest: true,
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+            },
+            {
+              model: Post,
+              as: 'post',
+              include: {
+                model: User,
+                as: 'user',
+                attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
+              },
+            },
+
+            {
+              model: Attachment,
+              as: 'attachments',
+              attributes: ['id', 'name', 'path', 'fileUrl', 'type'],
+            },
+          ],
+        });
+
+        item.comments = [...childComment];
+        return item;
+      
+      }),
+    );
+
+    return res.json({ data: datatmp });
   } catch (error) {
     next(error);
   }
