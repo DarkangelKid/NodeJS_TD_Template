@@ -114,7 +114,7 @@ exports.GetListComment = async (req, res, next) => {
     const { limit, offset } = getPagination(page, perpage);
 
     const groups = await Comment.findAndCountAll({
-      where: { postId: postId },
+      where: { postId: postId, commentId: null },
       include: [
         {
           model: User,
@@ -127,12 +127,15 @@ exports.GetListComment = async (req, res, next) => {
           include: {
             model: User,
             as: 'user',
+            attributes: ['id', 'username', 'fullName', 'email', 'avatarUrl', 'address', 'displayName', 'birthday', 'sex'],
           },
         },
         {
           model: Comment,
           as: 'comments',
+
           order: [['createdAt', 'DESC']],
+         
         },
         {
           model: Attachment,
