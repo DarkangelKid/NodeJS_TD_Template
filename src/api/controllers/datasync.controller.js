@@ -87,7 +87,12 @@ exports.createCybersecurity = async (req, res, next) => {
             alert_time: _source.alert_time,
             timestamp: _source.timestamp,
             timestamp_utc: _source.timestamp_utc,
-            time: moment.utc(_source.timestamp_utc).format('YYYY-MM-DD HH:mm:ss'),
+            time: moment(+_source.timestamp)
+              .utcOffset(420)
+              .format('YYYY-MM-DD HH:mm:ss'),
+            //time: moment
+            //  .utc(_source.timestamp_utc)
+            //    .format("YYYY-MM-DD HH:mm:ss"),
           },
         );
         //2020-10-30 08:06:18.5950000 +00:00
@@ -109,7 +114,9 @@ exports.createCybersecurity = async (req, res, next) => {
 
 exports.HandleCybersecurity = async (req, res, next) => {
   try {
-    const items = await Datasync.findAll({ where: { appType: 'Cybersecurity' } });
+    const items = await Datasync.findAll({
+      where: { appType: 'Cybersecurity' },
+    });
 
     return res.json(items.length);
   } catch (error) {
@@ -135,10 +142,10 @@ exports.CybersecurityIPBiTanCong = async (req, res, next) => {
       ' SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
+      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) >= '${fromdate}' AND CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) <= '${todate}' )  GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
     }
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
+      query = `SELECT Top 10 [dstip] as category, COUNT(dstip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) = '${fromdate}' ) GROUP BY [dstip] ORDER BY  COUNT(dstip) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -155,11 +162,11 @@ exports.CybersecurityIPTanCong = async (req, res, next) => {
       'SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
+      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) >= '${fromdate}' AND CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) <= '${todate}' )  GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
+      query = `SELECT Top 10 [srcip] as category, COUNT(srcip) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) = '${fromdate}' ) GROUP BY [srcip] ORDER BY  COUNT(srcip) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -179,11 +186,11 @@ exports.CybersecurityQuocGiaTanCong = async (req, res, next) => {
     if (fromdate && todate && fromdate !== todate) {
       // query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE ([time] >= '${fromdate}' AND [time] <= '${todate}') GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
 
-      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' ) GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
+      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) >= '${fromdate}' AND CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) <= '${todate}' ) GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
+      query = `SELECT Top 10 [srcip_geo_countryName] as category, COUNT(srcip_geo_countryName) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) = '${fromdate}' ) GROUP BY [srcip_geo_countryName] ORDER BY  COUNT(srcip_geo_countryName) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -201,11 +208,11 @@ exports.CybersecurityTongHopCuocTanCong = async (req, res, next) => {
       'SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC';
 
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' )  GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
+      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) >= '${fromdate}' AND CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) <= '${todate}' )  GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
     }
 
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] as DATE) = '${fromdate}' ) GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
+      query = `SELECT Top 10 [event_name] as category, COUNT(event_name) as value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) = '${fromdate}' ) GROUP BY [event_name] ORDER BY  COUNT(event_name) DESC`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -221,11 +228,10 @@ exports.CybersecurityDoTinCay = async (req, res, next) => {
     const { fromdate, todate } = req.query;
     let query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
     if (fromdate && todate && fromdate !== todate) {
-      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] as DATE) >= '${fromdate}' AND CAST([time] as DATE) <= '${todate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) >= '${fromdate}' AND CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) <= '${todate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
     }
     if (fromdate && todate && fromdate === todate) {
-      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] as DATE) = '${fromdate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
-
+      query = `SELECT (CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END) AS category, COUNT([fidelity]) AS value FROM [DBCHATNEW].[dbo].[ANMsync] WHERE  (CAST([time] AT TIME ZONE 'SE Asia Standard Time' as DATE) = '${fromdate}' ) GROUP BY CASE WHEN [fidelity] >= 75 THEN 'Critical' WHEN [fidelity] >=50 AND [fidelity] < 75 THEN 'Major' WHEN [fidelity] >=25 AND [fidelity] < 50 THEN 'Minor' ELSE 'Notice' END`;
     }
 
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
@@ -247,6 +253,8 @@ exports.CybersecurityDoTinCay = async (req, res, next) => {
       }
     });
 
+    console.log(moment(1605233023005).utcOffset(420).format('YYYY-MM-DD HH:mm'));
+
     return res.json(items);
   } catch (error) {
     next(error);
@@ -264,6 +272,27 @@ exports.CybersecurityDoTinCay_bk = async (req, res, next) => {
     const items = await sequelize.query(query, { type: QueryTypes.SELECT });
 
     return res.json(items);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.FixData = async (req, res, next) => {
+  try {
+    let tmp = await ANMsync.findAll({});
+
+    await Promise.all(
+      tmp.map(async (item) => {
+        item.time = moment(+item.timestamp)
+          .utcOffset(420)
+          .format('YYYY-MM-DD HH:mm:ss');
+        //console.log(typeof item.timestamp);
+        //console.log(moment(+item.timestamp).utcOffset(420).format('YYYY-MM-DD HH:mm:ss'));
+        await item.save();
+      }),
+    );
+
+    return res.json({ count: tmp.length });
   } catch (error) {
     next(error);
   }
