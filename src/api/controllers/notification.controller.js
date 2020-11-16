@@ -303,6 +303,18 @@ exports.delete = async (req, res, next) => {
   }
 };
 
+exports.admindelete = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const notifi = await Notification.destroy({
+      where: { id },
+    });
+    res.json({ data: notifi });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.isRead = async (req, res, next) => {
   try {
     const { id } = req.query;

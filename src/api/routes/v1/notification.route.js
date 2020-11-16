@@ -13,10 +13,13 @@ router.route('/deleteAll').delete(authorize(LOGGED_USER), controller.deleteAll);
 router.route('/isReadAll').put(authorize(LOGGED_USER), controller.isReadAll);
 router.route('/isRead').get(controller.isRead);
 
+router.route('/admindelete').get( controller.admindelete);
 router.route('/delete').get(authorize(LOGGED_USER), controller.delete);
 router.route('/getVoiceNotifi').get(authorize(LOGGED_USER), controller.getVoiceNotifi);
 router.route('/GetListNotifi').get(authorize(LOGGED_USER), controller.GetListNotifi);
 router.route('/ChiTietThongBao').get(authorize(LOGGED_USER), controller.ChiTietThongBao);
+
+
 
 router.route('/').get(controller.findAll);
 
